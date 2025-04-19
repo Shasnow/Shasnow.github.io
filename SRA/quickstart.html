@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StarRailAssistant | 快速上手</title>
+  <link rel="stylesheet" type="text/css" href="asset/css/index.css">
+  <style>
+    /* 针对快速上手页面的额外样式 */
+    .guide-section {
+      margin: 30px auto;
+      max-width: 800px;
+    }
+
+    .guide-step {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .guide-step:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-step h3 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+
+    .guide-step p {
+      text-align: left;
+      color: #555;
+    }
+
+    .guide-step img {
+      display: block;
+      margin: 10px auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .note {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 15px;
+      background: #fff7e6;
+      border: 1px solid #ffcc80;
+      border-radius: 8px;
+      color: #8a6d3b;
+    }
+
+    .note h4 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+    .note ul{
+      padding-left: 10px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>StarRailAssistant</h1>
+  <nav>
+    <a href="index.html">首页</a>
+    <a href="https://github.com/Shasnow/StarRailAssistant">GitHub</a>
+    <a href="index.html#features">特色</a>
+    <a href="index.html#function">功能</a>
+    <a href="download.html">下载</a>
+    <a href="quickstart.html">快速上手</a>
+    <a href="api.html">开发</a>
+    <a href="https://github.com/Shasnow/StarRailAssistant/wiki/FAQ">常见问题</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>快速上手</h2>
+  <p>一步步了解如何安装、配置和使用 StarRailAssistant。</p>
+</section>
+
+<section class="guide-section">
+  <div class="guide-step">
+    <h3>下载</h3>
+    <p>前往 <a href="download.html" style="color: #007bff; text-decoration: none;">下载页面 </a>选择任意渠道进行下载。</p>
+    <img src="asset/img/download.png" alt="下载示例">
+  </div>
+
+  <div class="guide-step">
+    <h3>安装与启动</h3>
+    <p>SRA采用绿色免安装形式，解压下载的文件，运行 `SRA.exe` 启动程序。</p>
+    <img src="asset/img/software.png" alt="程序示例">
+    <p>推荐为SRA创建快捷方式，但不要修改源程序的位置。</p>
+    <p>如果是首次运行，可能需要以管理员身份运行。</p>
+    <p>&nbsp;</p>
+    <p>启动成功后，将同时弹出公告及主界面。点击确认可关闭公告，点击不再提醒可关闭公告并在直到版本更新的一段时间内不再弹出。</p>
+    <img src="asset/img/sofewaremain.png" alt="software">
+  </div>
+  <div class="guide-step">
+    <h3>运行前配置</h3>
+    <p>在首次任务前，需要点击上方‘设置’标签页调整SRA设置，包括：</p>
+    <p>键位设置：如果你更改了键位，比如将活动改成F5，每日实训改成F1。需要在此处同步更改。</p>
+    <p>屏幕缩放：此项需要调整到你的电脑的实际缩放
+      <img src="asset/img/sf.png" alt="缩放">
+      <img src="asset/img/sf2.png" alt="缩放">
+    </p>
+    <p>其他设置项将在后面介绍。</p>
+
+  </div>
+<section class="note">
+  <h4>注意事项</h4>
+  <ul>
+    <li>确保游戏分辨率为1920*1080。</li>
+    <li>首次运行时可能需要管理员权限。</li>
+  </ul>
+  </section>
+  <div class="guide-step">
+    <h3>任务配置</h3>
+    <p>在主界面的左侧进行任务配置，勾选一个任务代表你启用它</p>
+    <img src="asset/img/mission.png" alt="任务配置示例" width="300">
+    <h3>启动游戏</h3>
+    <p>在这个任务中，可以设置渠道（官服/b服）、是否用启动器启动、是否自动登录。
+      如果使用启动器启动，在下方的文件选择框中选择你的米哈游启动器的路径;
+      如果不使用启动器，则在下方选择游戏本体的路径。
+      如果使用错误的文件路径，无法通过路径检查。</p>
+      <div class="note">
+        <h4>有效的路径示例</h4>
+        <p>D:/Star Rail/Game/StarRail.exe</p>
+      </div>
+    <p>
+      接下来选择是否自动登录，如果启用，必须在输入框内填入内容，当启动游戏时如果游戏处于未登录状态，程序会自动填入你输入的账号密码并登录。
+      如果不启用，请确保你的游戏处于登录状态。
+    </p>  
+    <p>
+      <br>
+      如果勾选在本地保存密码，账号和密码将以加密的方式存储在本地; 如果不勾选，只会存储密码。
+    </p>
+    <br>
+    <h3>清开拓力</h3>
+    <p>在这个任务中，可以设置是否补充体力、通过何种方式补充、挑战的关卡等。</p>
+    <p>补充体力：每次补充60点，即取出60后备开拓力或使用一罐燃料或消耗星琼。</p>
+    <p> 对于每类副本，勾选则代表启用，可以设置指定关卡，连战次数、挑战次数等。</p>
+    <p>可以勾选多类副本。当体力不足而未补充体力时，此后的战斗均不会执行。</p>
+    <h3>领取奖励</h3>
+    <p>在这个任务中包含了所有的每日奖励，如每日实训，无名勋礼。部分是默认启用的。</p>
+    <p>还可以领取兑换码奖励，勾选此项，并在兑换码输入框内输入兑换码，可以输入多个兑换码，兑换码之间用空格或换行分隔。</p>
+    <h3>模拟宇宙</h3>
+    <p>目前只支持差分宇宙-周期演算 刷单层，即反复刷取第一层获取等级。</p>
+    <p class="note">注意：此项不支持与其它任务一同执行，因为它有特殊要求。</p>
+    <p>要执行差分宇宙任务，首先需要手动进入差分宇宙的主界面，如下图：</p>
+    <img src="asset/img/cfyz.png" alt="差分宇宙">
+    <p>务必在此处开始执行，不在此界面将导致无法正常执行。</p>
+    <h3>结束后</h3>
+    <p>此任务用于控制任务结束后的行为，如登出账号、退出SRA、退出游戏、关机或休眠</p>
+  </div>
+
+  <div class="guide-step">
+    <h3>执行与停止</h3>
+    <p>在左侧最下方有执行按钮，完成任务配置后点击执行开始执行任务</p>
+    <p>如果想要停止任务，请按停止按钮。开始执行后，在右侧日志区可以观察运行日志。</p>
+    <img src="asset/img/start.png" alt="开始">
+  </div>
+
+  <div class="guide-step">
+    <h3>多账号托管</h3>
+    <p class="note">仅限SRA v0.8.0+</p>
+    <p>在0.8.0版本中，更新类多账号配置相关功能。</p>
+    <p>点击上方‘多账号’进入标签页</p>
+    <img src="asset/img/dzh.png" alt="多账号">
+    <p>每个‘配置方案’对应着一个账号的托管方案。</p>
+    <p>假设将要为A、B、C三个账号托管，对于账号A：</p>
+    <p>使用默认方案Default，到控制台中勾选需要执行的功能，在使用多账号时，这些功能是<b>必须要</b>勾选的：
+      <div class="note">
+        <ul>
+          <li>自动登录（同时填充账号与密码）</li>
+          <li>在本地保存密码</li>
+          <li>退出当前账号</li>
+        </ul>
+      </div>
+      这些选项是<b>不能</b>勾选的：
+      <div class="note">
+        <ul>
+          <li>模拟宇宙</li>
+          <li>退出游戏</li>
+          <li>退出SRA</li>
+          <li>关机或休眠</li>
+        </ul>
+      </div>
+    </p>
+    <p>完成任务配置后，不是点击开始，而是回到‘多账号’页，点击‘保存当前配置到此方案’，此时账号A的托管方案就配置完成并保存了。</p>
+    <p>对于账号B：</p>
+    <p>选择‘新建方案’，输入一个方案名称，例如‘planB’；点击‘当前方案’右侧选框，可以看到我们新建的planB，选中它，接下来像配置刚才的方案那样配置planB即可。记得保存方案。</p>
+    <p>如果你的账号B与A的托管计划完全相同，可直接点击‘将当前配置另存为新方案’，即可复制一份方案，不过记得修改这份方案的账号与密码。</p>
+    <p>对于账号C：同上。</p>
+    <p>现在我们有了三份方案，分别为Default、planB、planC，在‘多账号’页面勾选‘当前方案结束时切换下一个方案’，准备开始多账号托管。</p>
+    <p>为了使多账号托管按预期运行，建议先运行游戏并退出当前登录的账号，进入下面的界面：</p>
+    <img src="asset/img/login.png" alt="登录">
+    <p>回到SRA，点击‘开始’，即可开始一趟多账号托管之旅。</p>
+  </div>
+  <div class="guide-step">
+    <h3>设置</h3>
+    <p></p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 StarRailAssistant. 保留所有权利。</p>
+</footer>
+</body>
+</html>

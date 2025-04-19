@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发文档 | StraRailAssistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: large;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background-color: #f4f4f4;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+        }
+        
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            margin: 10px 0;
+        }
+        .sidebar li li {
+            padding-left: 15px;
+        }
+        
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+        
+        .content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 20px;
+        }
+
+        .content h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section h2 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        code {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>&lt;/> 开发文档</h2>
+    <ul>
+        <li><a href="#introduction">前言</a></li>
+        <li ><a href="#learning">学习<span onclick="toggleDropdown(0)">&#9660;</span></a>
+            <ul class="dropdown" id="dropdown0">
+                <li><a href="#environment">环境</a></li>
+            </ul>
+        </li>
+        <li><a href="#conventions">约定</a></li>
+        <li><a href="#api">SRA API<span onclick="toggleDropdown(1)">&#9660;</span></a>
+            <ul class="dropdown" id="dropdown1">
+                <li><a href="">鼠标事件</a></li>
+                <li><a href="">键盘事件</a></li>
+                <li><a href="">画面检测</a></li>
+                <li><a href="">电源操作</a></li>
+                <li><a href="">进程操作</a></li>
+                <li><a href="">配置操作</a></li>
+                <li><a href="">日志操作</a></li>
+                <li><a href="">对话框</a></li>
+                <li><a href="#directory">目录</a></li>
+                <li><a href="#module">模块</a></li>
+                <li><a href="#json">json文件</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="content">
+    <h1 id="introduction">前言</h1>
+    <p>感谢您在百忙之中阅读SRA开发文档。SRA使用Python语言开发，这个文档将向你展示从Python基础开始的SRA开发。如果你已经有相关基础，可以跳过这部分然后开始阅读SRA API</p>
+
+    <div class="section" id="learning">
+        <h2>学习</h2>
+        <p id="environment">环境:</p>
+        <ul>
+            <li>Python 3.11.5</li>
+            <li>PyCharm Community Edition</li>
+            <li>如果你有更喜欢的配置，可以使用自己的配置。</li>
+            <li>~</li>
+        </ul>
+        <p>Python 基础</p>
+        <ul>
+            <li>第一个Python程序
+                <code lang="Python">print("hello world")</code>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section" id="conventions">
+        <h2>约定</h2>
+        <p>为SRA进行开发时，建议遵守下面的约定</p>
+        <ul>
+            <li>变量名
+                <p>变量应当使用用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。</p>
+            </li>
+            <li>方法名<p>同变量名。</p></li>
+            <li>类名<p>使用用英文命名，每个单词均首字母大写，单词之间紧密相连。</p></li>
+        </ul>
+        
+    </div>
+
+    <div class="section" id="api">
+        <h2>SRA API</h2>
+        <p>The API uses the following error codes:</p>
+        <h3 id="mouse">鼠标事件</h3>
+        <ul>
+            <li>点击对象
+                <p><code>click_img(cls, img_path, x_add=0, y_add=0, wait_time=2.0, title="崩坏：星穹铁道") -> None:</code><br>
+                    参数：<br>
+                    img_path (str): 要点击的对象的图片的路径。<br>
+                    x_add (int): 点击位置相较于对象的几何中心在屏幕x轴上的偏移量。<br>
+                    y_add (int): 点击位置相较于对象的几何中心在屏幕y轴上的偏移量。<br>
+                    wait_time (float): 执行点击操作前的等待时间(s)<br>
+                    title (str): 执行点击的窗口名。<br>
+                </p>
+            </li>
+            <li>点击位置</li>
+        </ul>
+        <p id="directory">目录</p>
+        <ul>
+            <li>res
+                <p>这个目录包含了img、ui两个子目录，其中img用于存放图像识别所用到的资源图片(png格式)，ui用于存放QT的.ui文件。该目录还存放有程序图标，公告栏底部表情文件。</p>
+            </li>
+            <li>data
+                <p>这个目录用于存放用户配置文件及数据文件。</p>
+            </li>
+            <li>tools
+                <p>这个目录用于存放外部工具，如7z。</p>
+            </li>
+            <li>SRACore
+                <p>这个目录用于存放SRA框架的核心代码。</p>
+            </li>
+            <li>extension
+                <p>这个目录用于存放扩展功能所需的文件。</p>
+            </li>
+        </ul>
+        <p id="module">模块</p>
+        <ul>
+            <li>SRACore.core
+                <p>此目录存放SRA中实现的功能模块，这些模块不会做具体介绍</p>
+                <ul>
+                    <li>AutoPlot
+                        <p>此模块实现了“自动对话”功能</p>
+                        <ul>
+                            <li>方法
+                                <p><code>exist()</code><br>
+                                    是SRACore.util.SRAOperator.SRAOperator中同名方法的备份，将在对应位置介绍。
+                                </p>
+                            </li>
+                            <li>类
+                                <p><code>PlotListener</code><br>
+                                    继承自PySide6.QtCore.QThread, 剧情监听器，顾名思义，用于监听游戏是否进入剧情。<br>
+                                    信号：<code>plot_start</code>: 当进入剧情时发出。<br>
+                                    <code>plot_end</code> 当离开剧情时发出。<br><br>
+                                    <code>AutoPlot</code><br>
+                                    继承自PySide6.QtCore.QThread, 自动对话，是自动对话功能的核心操作类，当其启动时，在游戏中检测对话状态，模拟用户按下键盘按键。
+                                    <br><br>
+                                    <code>Main</code><br>
+                                    实例化AutoPlot,PlotListener子线程，实现程序中的自动对话功能。
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>SRACloud
+                        <p>此模块用于实现SRA对云游戏的适配，由于技术难题未投入使用</p>
+                    </li>
+                    <li>SRAssistant
+                        <p>此模块用于实现非扩展功能，程序中主界面包含的功能全都在这里实现</p>
+                    </li>
+                </ul>
+            </li>
+            <li>SRACore.extensions</li>
+            <li>SRACore.util</li>
+            <li>SRAUpdater</li>
+            <li>SRA</li>
+        </ul>
+        <p id="json">json文件</p>
+        <ul>
+            <li>version.json</li>
+            <li>config.json</li>
+            <li>hash.json</li>
+        </ul>
+    </div>
+</div>
+<script>
+    function toggleDropdown(i) {
+        const dropdown = document.getElementsByClassName('dropdown')[i];
+        dropdown.classList.toggle('active');
+    }
+</script>
+</body>
+</html>
