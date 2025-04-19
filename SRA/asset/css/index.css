@@ -42,10 +42,33 @@ nav a:hover {
     text-decoration: underline;
 }
 
+@media (max-width: 768px) { /* 针对宽度小于768px的设备，比如手机 */
+    header {
+        flex-direction: column; /* 垂直排列标题和导航 */
+        align-items: flex-start; /* 左对齐内容 */
+        padding: 1rem; /* 减小内边距 */
+    }
+
+    header h1 {
+        font-size: 1.2rem; /* 调整标题大小 */
+        margin-bottom: 0.5rem; /* 增加标题和导航之间的间距 */
+    }
+
+    nav {
+        flex-direction: column; /* 垂直排列导航链接 */
+        width: 100%; /* 导航栏宽度填满容器 */
+        gap: 0.5rem; /* 减少导航链接之间的间距 */
+    }
+
+    nav a {
+        font-size: 1rem; /* 调整字体大小 */
+    }
+}
+
 /* Hero 区域样式 */
 .hero {
     text-align: center;
-    padding: 6rem 2rem 4rem;
+    padding: 8rem 2rem 4rem;
     background: linear-gradient(135deg, #459efd, #5b19b7);
     color: white;
 }
@@ -139,4 +162,26 @@ footer {
     background-color: #007bff;
     color: white;
     margin-top: 2rem;
+}
+ 
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* 显示汉堡菜单按钮 */
+    }
+ 
+    #nav-menu {
+        display: none; /* 默认隐藏导航菜单 */
+    }
+ 
+    #nav-menu.active {
+        display: flex; /* 激活时显示导航菜单 */
+    }
 }
