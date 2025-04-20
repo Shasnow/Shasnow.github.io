@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
             border-radius: 8px;
             text-align: center;
         }
+
         .download-btn {
             display: inline-block;
             padding: 15px 30px;
@@ -27,9 +29,11 @@
             transition: background-color 0.3s ease;
             margin: 10px;
         }
+
         .download-btn:hover {
             background-color: #45a049;
         }
+
         .system-requirements {
             max-width: 800px;
             margin: 40px auto;
@@ -38,20 +42,24 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
+
         .system-requirements h3 {
             color: #333;
             margin-bottom: 10px;
         }
+
         .system-requirements ul {
             list-style: none;
             padding: 0;
         }
+
         .system-requirements ul li {
             margin: 5px 0;
             color: #555;
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>StarRailAssistant</h1>
@@ -60,7 +68,7 @@
             <a href="index.html">首页</a>
             <a href="https://github.com/Shasnow/StarRailAssistant">GitHub</a>
             <a href="index.html#features">特色</a>
-            <a href="index.html#function">功能</a>
+            <a href="sponsor.html">赞助</a>
             <a href="download.html">下载</a>
             <a href="quickstart.html">快速上手</a>
             <a href="api.html">开发</a>
@@ -75,15 +83,21 @@
 
     <main>
         <section class="download-section">
+            <p>下载</p>
             <a href="https://github.com/Shasnow/StarRailAssistant/releases/latest" class="download-btn">从Github下载</a>
             <p>SRA已集成Mirror酱，可从Mirror酱下载</p>
-            <a href="https://mirrorchyan.com/zh/projects" class="download-btn">从Mirror酱下载</a>
+            <a href="https://mirrorchyan.com/zh/projects?rid=StarRailAssistant" class="download-btn">从Mirror酱下载</a>
             <p>Mirror酱作为第三方分发平台，仅对下载加速服务收取费用，不代表 SRA 需付费订阅。</p>
             <p>Mirror酱也可以负责接下来的更新工作。</p>
-            <a href="https://github.com/Shasnow/StarRailAssistant/releases/latest" class="download-btn">从Cloudflare下载</a>
+            <a href="https://github.com/Shasnow/StarRailAssistant/releases/latest"
+                class="download-btn">从Cloudflare下载</a>
             <p>来自Cloudflare的文件并不总是最新的。</p>
         </section>
-
+        <section class="download-section">
+            <p>其他下载</p>
+            <p>SRA更新器</p>
+            <a href="https://github.com/Shasnow/SRAUpdater/releases/latest" class="download-btn">从Github下载</a>
+        </section>
         <section class="system-requirements">
             <h3>系统要求</h3>
             <ul>
@@ -97,7 +111,8 @@
 
     <footer>
         <p>&copy; 2025 StarRailAssistant. 保留所有权利。</p>
-    </footer>    
+    </footer>
+    <script src="asset/js/index.js"></script>
 </body>
-<script src="asset/js/index.js"></script>
+
 </html>

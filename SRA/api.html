@@ -3,71 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>开发文档 | StraRailAssistant</title>
+    <title>StarRailAssistant | 开发文档</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            font-size: large;
             margin: 0;
             padding: 0;
             display: flex;
+            background-color: #f9f9f9;
+            color: #333;
         }
-        
+
+        /* 侧边栏样式 */
         .sidebar {
-            width: 200px;
+            width: 250px;
             height: 100vh;
-            background-color: #f4f4f4;
-            padding: 15px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            background-color: #2c3e50;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
+            color: #ecf0f1;
+            transform: translateX(0); /* 默认展开 */
+            transition: transform 0.3s ease; /* 添加平滑动画 */
+            z-index: 1000;
         }
-        
+
+        .sidebar[data-collapsed="true"] {
+            transform: translateX(-250px); /* 收起状态 */
+        }
+
         .sidebar h2 {
-            font-size: 1.5em;
+            font-size: 1.8em;
             margin-top: 0;
+            color: #ecf0f1;
+            cursor: pointer;
         }
-        
+
         .sidebar ul {
             list-style-type: none;
             padding: 0;
         }
-        
+
         .sidebar li {
-            margin: 10px 0;
+            margin: 15px 0;
         }
-        .sidebar li li {
-            padding-left: 15px;
-        }
-        
+
         .sidebar a {
             text-decoration: none;
-            color: #333;
+            color: #ecf0f1;
             display: block;
-            padding: 8px;
+            padding: 10px;
             border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        
+
         .sidebar a:hover {
-            background-color: #ddd;
+            background-color: #34495e;
         }
 
         .dropdown {
             display: none;
+            padding-left: 15px;
         }
 
         .active {
             display: block;
         }
-        
+
+        /* 切换按钮样式 (默认隐藏) */
+        .toggle-btn {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            top: 20px;
+            left: 270px; /* 默认展开时按钮位置 */
+            z-index: 1001;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border: none;
+            border-radius: 50%;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar[data-collapsed="true"] ~ .toggle-btn {
+            left: 20px; /* 收起时按钮位置 */
+        }
+
+        /* 内容样式 */
         .content {
-            margin-left: 250px;
+            margin-left: 270px;
             flex: 1;
-            padding: 20px;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar[data-collapsed="true"] ~ .content {
+            margin-left: 20px; /* 收起时内容区域缩小 */
         }
 
         .content h1 {
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #ddd;
             padding-bottom: 10px;
+            color: #2c3e50;
         }
 
         .section {
@@ -77,20 +115,55 @@
         .section h2 {
             border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
+            color: #2c3e50;
         }
+
         code {
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 180px;
+            }
+            .sidebar h2{
+                font-size: 1.4rem;
+            }
+
+            .toggle-btn {
+                display: block; /* 小屏幕显示切换按钮 */
+                left: 220px; /* 默认展开时按钮位置 */
+            }
+
+            .sidebar[data-collapsed="true"] ~ .toggle-btn {
+                left: 10px; /* 收起时按钮位置 */
+            }
+
+            .content {
+                margin-left: 220px;
+                padding: 20px;
+            }
+
+            .sidebar[data-collapsed="true"] ~ .content {
+                margin-left: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="sidebar">
+<!-- 侧边栏 -->
+<div class="sidebar" data-collapsed="false">
+    <h2 onclick="location.href=('index.html')">StarRailAssistant</h2>
     <h2>&lt;/> 开发文档</h2>
     <ul>
         <li><a href="#introduction">前言</a></li>
-        <li ><a href="#learning">学习<span onclick="toggleDropdown(0)">&#9660;</span></a>
+        <li><a href="#learning">学习<span onclick="toggleDropdown(0)">&#9660;</span></a>
             <ul class="dropdown" id="dropdown0">
                 <li><a href="#environment">环境</a></li>
             </ul>
@@ -98,14 +171,14 @@
         <li><a href="#conventions">约定</a></li>
         <li><a href="#api">SRA API<span onclick="toggleDropdown(1)">&#9660;</span></a>
             <ul class="dropdown" id="dropdown1">
-                <li><a href="">鼠标事件</a></li>
-                <li><a href="">键盘事件</a></li>
-                <li><a href="">画面检测</a></li>
-                <li><a href="">电源操作</a></li>
-                <li><a href="">进程操作</a></li>
-                <li><a href="">配置操作</a></li>
-                <li><a href="">日志操作</a></li>
-                <li><a href="">对话框</a></li>
+                <li><a href="#mouse">鼠标事件</a></li>
+                <li><a href="#keyboard">键盘事件</a></li>
+                <li><a href="#image">画面检测</a></li>
+                <li><a href="#power">电源操作</a></li>
+                <li><a href="#process">进程操作</a></li>
+                <li><a href="#config">配置操作</a></li>
+                <li><a href="#log">日志操作</a></li>
+                <li><a href="#dialog">对话框</a></li>
                 <li><a href="#directory">目录</a></li>
                 <li><a href="#module">模块</a></li>
                 <li><a href="#json">json文件</a></li>
@@ -114,11 +187,15 @@
     </ul>
 </div>
 
+<!-- 切换按钮 -->
+<button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+<!-- 内容 -->
 <div class="content">
     <h1>此页面尚在编辑中</h1>
     <h1 id="introduction">前言</h1>
     <p>感谢您在百忙之中阅读SRA开发文档。SRA使用Python语言开发，这个文档将向你展示从Python基础开始的SRA开发。如果你已经有相关基础，可以跳过这部分然后开始阅读SRA API</p>
-
+ 
     <div class="section" id="learning">
         <h2>学习</h2>
         <p id="environment">环境:</p>
@@ -126,32 +203,29 @@
             <li>Python 3.11.5</li>
             <li>PyCharm Community Edition</li>
             <li>如果你有更喜欢的配置，可以使用自己的配置。</li>
-            <li>~</li>
         </ul>
         <p>Python 基础</p>
         <ul>
             <li>第一个Python程序
-                <code lang="Python">print("hello world")</code>
+                <code>print("hello world")</code>
             </li>
         </ul>
     </div>
-
+ 
     <div class="section" id="conventions">
         <h2>约定</h2>
         <p>为SRA进行开发时，建议遵守下面的约定</p>
         <ul>
             <li>变量名
-                <p>变量应当使用用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。</p>
+                <p>变量应当使用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。</p>
             </li>
             <li>方法名<p>同变量名。</p></li>
-            <li>类名<p>使用用英文命名，每个单词均首字母大写，单词之间紧密相连。</p></li>
+            <li>类名<p>使用英文命名，每个单词均首字母大写，单词之间紧密相连。</p></li>
         </ul>
-        
     </div>
-
+ 
     <div class="section" id="api">
         <h2>SRA API</h2>
-        <p>The API uses the following error codes:</p>
         <h3 id="mouse">鼠标事件</h3>
         <ul>
             <li>点击对象
@@ -164,75 +238,25 @@
                     title (str): 执行点击的窗口名。<br>
                 </p>
             </li>
-            <li>点击位置</li>
         </ul>
         <p id="directory">目录</p>
         <ul>
             <li>res
                 <p>这个目录包含了img、ui两个子目录，其中img用于存放图像识别所用到的资源图片(png格式)，ui用于存放QT的.ui文件。该目录还存放有程序图标，公告栏底部表情文件。</p>
             </li>
-            <li>data
-                <p>这个目录用于存放用户配置文件及数据文件。</p>
-            </li>
-            <li>tools
-                <p>这个目录用于存放外部工具，如7z。</p>
-            </li>
-            <li>SRACore
-                <p>这个目录用于存放SRA框架的核心代码。</p>
-            </li>
-            <li>extension
-                <p>这个目录用于存放扩展功能所需的文件。</p>
-            </li>
-        </ul>
-        <p id="module">模块</p>
-        <ul>
-            <li>SRACore.core
-                <p>此目录存放SRA中实现的功能模块，这些模块不会做具体介绍</p>
-                <ul>
-                    <li>AutoPlot
-                        <p>此模块实现了“自动对话”功能</p>
-                        <ul>
-                            <li>方法
-                                <p><code>exist()</code><br>
-                                    是SRACore.util.SRAOperator.SRAOperator中同名方法的备份，将在对应位置介绍。
-                                </p>
-                            </li>
-                            <li>类
-                                <p><code>PlotListener</code><br>
-                                    继承自PySide6.QtCore.QThread, 剧情监听器，顾名思义，用于监听游戏是否进入剧情。<br>
-                                    信号：<code>plot_start</code>: 当进入剧情时发出。<br>
-                                    <code>plot_end</code> 当离开剧情时发出。<br><br>
-                                    <code>AutoPlot</code><br>
-                                    继承自PySide6.QtCore.QThread, 自动对话，是自动对话功能的核心操作类，当其启动时，在游戏中检测对话状态，模拟用户按下键盘按键。
-                                    <br><br>
-                                    <code>Main</code><br>
-                                    实例化AutoPlot,PlotListener子线程，实现程序中的自动对话功能。
-                                </p>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>SRACloud
-                        <p>此模块用于实现SRA对云游戏的适配，由于技术难题未投入使用</p>
-                    </li>
-                    <li>SRAssistant
-                        <p>此模块用于实现非扩展功能，程序中主界面包含的功能全都在这里实现</p>
-                    </li>
-                </ul>
-            </li>
-            <li>SRACore.extensions</li>
-            <li>SRACore.util</li>
-            <li>SRAUpdater</li>
-            <li>SRA</li>
-        </ul>
-        <p id="json">json文件</p>
-        <ul>
-            <li>version.json</li>
-            <li>config.json</li>
-            <li>hash.json</li>
         </ul>
     </div>
 </div>
+
 <script>
+    // 切换侧边栏展开/收起
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const isCollapsed = sidebar.getAttribute('data-collapsed') === 'true';
+        sidebar.setAttribute('data-collapsed', !isCollapsed);
+    }
+
+    // 切换下拉菜单
     function toggleDropdown(i) {
         const dropdown = document.getElementsByClassName('dropdown')[i];
         dropdown.classList.toggle('active');
