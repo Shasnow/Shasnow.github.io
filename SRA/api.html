@@ -71,10 +71,6 @@
             padding-left: 15px;
         }
 
-        .active {
-            display: block;
-        }
-
         /* 切换按钮样式 (默认隐藏) */
         .toggle-btn {
             display: none;
@@ -232,7 +228,7 @@
     </div>
 
     <!-- 切换按钮 -->
-    <button class="toggle-btn" onclick="toggleSidebar()" type="menu">☰</button>
+    <button class="toggle-btn" onclick="toggleSidebar()" id="menu">☰</button>
 
     <!-- 内容 -->
     <div class="content">
@@ -291,13 +287,13 @@ else:<br>
                 <li>循环语句
                     <p>Python 有 <code>for</code> 和 <code>while</code> 两种循环。</p>
                     <pre>
-<p><code>for</code> 循环示例：</p>
+<code>for</code> 循环示例：
 <code>
 fruits = ["apple", "banana", "cherry"]<br>
 for fruit in fruits:<br>
     print(fruit)
 </code>
-<p><code>while</code> 循环示例：</p>
+<code>while</code> 循环示例：
 <code>
 count = 0<br>
 while count &lt; 5:<br>
@@ -966,21 +962,20 @@ print("Hello, 'world'!")
             <ul>
                 <li>run(): 插件启动时调用的方法。</li>
                 <li>PluginBase: 所有插件的基类。插件必须继承此类。</li>
-                <li>PlufinManager.register(): 注册插件线程。</li>
+                <li>PluginManager.register(): 注册插件线程。</li>
             </ul>
             <p id="plugin-example">插件示例</p>
-            <p>下面是一个简单的插件示例：</p>
+            <p>下面是一个简单的无UI插件示例：</p>
             <pre>
             <code>
                 __init__.py
 
-                from SRACore.util.Plugins import PluginBase, PlufinManager
+                from SRACore.util.Plugins import PluginBase, PluginManager
 
                 NAME = "MyPlugin"
                 VERSION = "1.0.0"
                 DESCRIPTION = "A plugin for SRA"
                 AUTHOR = "John Doe"
-                UI = None
 
                 def run():
                     # 插件启动时调用的方法
@@ -1004,7 +999,7 @@ print("Hello, 'world'!")
             <ul>
                 <li>插件必须含有__init__.py,并在其中实现run()方法。</li>
                 <li>插件必须含有一个主类, 继承PluginBase类。</li>
-                <li>插件必须使用PlufinManager.register()方法注册到多线程运行。</li>
+                <li>插件必须使用PluginManager.register()方法注册到多线程运行。</li>
                 <li>使用源码的插件尽量仅使用SRA API或Python标准库中的内容。</li>
             </ul>
         </div>
@@ -1016,13 +1011,13 @@ print("Hello, 'world'!")
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             const isCollapsed = sidebar.getAttribute('data-collapsed') === 'true';
-            sidebar.setAttribute('data-collapsed', !isCollapsed);
+            sidebar.setAttribute('data-collapsed', String(!isCollapsed));
         }
 
         // 切换下拉菜单
         function toggleDropdown(i) {
             const dropdown = document.getElementsByClassName('dropdown')[i];
-            dropdown.classList.toggle('active');
+            dropdown.style.display=dropdown.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>

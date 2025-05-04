@@ -7,6 +7,7 @@
   <title>快速上手 | StarRailAssistant</title>
   <link rel="shortcut icon" href="asset/img/SRAicon.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="asset/css/index.css">
+  <link rel="stylesheet" type="text/css" href="asset/css/quickstart.css">
   <style>
     /* 针对快速上手页面的额外样式 */
     .guide-section {
@@ -35,6 +36,14 @@
     .guide-step p {
       text-align: left;
       color: #555;
+      font-size: large;
+      line-height: 2rem;
+    }
+
+    .guide-step hr {
+      margin: 20px 0;
+      border: none;
+      border-top: 5px solid #ddd;
     }
 
     .guide-step img {
@@ -46,15 +55,12 @@
       border: 1px solid #ddd;
     }
 
-    .note {
-      margin: 20px auto;
-      max-width: 800px;
-      padding: 15px;
-      background: #fff7e6;
-      border: 1px solid #ffcc80;
-      border-radius: 8px;
-      color: #8a6d3b;
+    .guide-step table {
+      border-collapse: collapse;
+      margin-top: 10px;
     }
+
+    
 
     .code {
       margin: 20px auto;
@@ -65,6 +71,15 @@
       border-radius: 8px;
       color: #323232;
     }
+    .note {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 15px;
+      background: #fff7e6;
+      border: 1px solid #ffcc80;
+      border-radius: 8px;
+      color: #8a6d3b;
+    }
 
     .note h4 {
       margin: 0 0 10px;
@@ -73,6 +88,60 @@
 
     .note ul {
       padding-left: 10px;
+    }
+    .sidebar-nav {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+ 
+    .sidebar-nav h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+ 
+    .sidebar-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+ 
+    .sidebar-nav li {
+      margin-bottom: 8px;
+    }
+ 
+    .sidebar-nav a {
+      display: block;
+      padding: 5px 10px;
+      color: #555;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+ 
+    .sidebar-nav a:hover {
+      background: #e9ecef;
+      color: #007bff;
+    }
+ 
+    .sidebar-nav a.active {
+      background: #007bff;
+      color: white;
+    }
+ 
+    /* 响应式调整 */
+    @media (max-width: 1200px) {
+      .sidebar-nav {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -93,13 +162,28 @@
     </nav>
   </header>
 
+  <aside class="sidebar-nav">
+    <h3>快速上手指南</h3>
+    <ul>
+      <li><a href="#download">下载</a></li>
+      <li><a href="#launch">安装与启动</a></li>
+      <li><a href="#prepare">运行前配置</a></li>
+      <li><a href="#mission">任务配置</a></li>
+      <li><a href="#run">执行与停止</a></li>
+      <li><a href="#multi">多账号托管</a></li>
+      <li><a href="#setting">设置</a></li>
+      <li><a href="#update">更新</a></li>
+      <li><a href="#email-notification">邮件通知</a></li>
+    </ul>
+  </aside>
+
   <section class="hero">
     <h2>快速上手</h2>
     <p>一步步了解如何安装、配置和使用 StarRailAssistant。</p>
   </section>
 
   <section class="guide-section">
-    <div class="guide-step">
+    <div class="guide-step" id="download">
       <h3>下载</h3>
       <p>前往 <a href="download.html" style="color: #007bff; text-decoration: none;">下载页面 </a>选择任意渠道进行下载。</p>
       <img src="asset/img/download.png" alt="下载示例">
@@ -115,7 +199,7 @@
       <p>启动成功后，将同时弹出公告及主界面。点击确认可关闭公告，点击不再提醒可关闭公告并在直到版本更新的一段时间内不再弹出。</p>
       <img src="asset/img/sofewaremain.png" alt="software">
     </div>
-    <div class="guide-step">
+    <div class="guide-step" id="prepare">
       <h3>运行前配置</h3>
       <p>在首次任务前，需要点击上方‘设置’标签页调整SRA设置，包括：</p>
       <p>键位设置：如果你更改了键位，比如将活动改成F5，每日实训改成F1。需要在此处同步更改。</p>
@@ -124,19 +208,19 @@
         <img src="asset/img/sf2.png" alt="缩放">
       </p>
       <p>其他设置项将在后面介绍。</p>
-
+      <section class="note">
+        <h4>注意事项</h4>
+        <ul>
+          <li>确保游戏分辨率为1920*1080。</li>
+          <li>首次运行时可能需要管理员权限。</li>
+        </ul>
+      </section>
     </div>
-    <section class="note">
-      <h4>注意事项</h4>
-      <ul>
-        <li>确保游戏分辨率为1920*1080。</li>
-        <li>首次运行时可能需要管理员权限。</li>
-      </ul>
-    </section>
+
     <div class="guide-step" id="mission">
       <h3>任务配置</h3>
       <p>在主界面的左侧进行任务配置，勾选一个任务代表你启用它</p>
-      <img src="asset/img/mission.png" alt="任务配置示例" width="300">
+      <img src="asset/img/mission.png" alt="任务配置示例" width="300" height="auto">
       <h3>启动游戏</h3>
       <p>在这个任务中，可以设置渠道（官服/b服）、是否用启动器启动、是否自动登录。
         如果使用启动器启动，在下方的文件选择框中选择你的米哈游启动器的路径;
@@ -152,7 +236,7 @@
       </p>
       <p>
         <br>
-        如果勾选在本地保存密码，账号和密码将以加密的方式存储在本地; 如果不勾选，只会存储密码。
+        如果勾选在本地保存密码，账号和密码将以加密的方式存储在本地; 如果不勾选，只会存储账号。
       </p>
       <br>
       <h3>清开拓力</h3>
@@ -160,6 +244,15 @@
       <p>补充体力：每次补充60点，即取出60后备开拓力或使用一罐燃料或消耗星琼。</p>
       <p> 对于每类副本，勾选则代表启用，可以设置指定关卡，连战次数、挑战次数等。</p>
       <p>可以勾选多类副本。当体力不足而未补充体力时，此后的战斗均不会执行。</p>
+      <hr>
+      <p class="note">仅限0.8.1+</p>
+      <p>在0.8.1+版本的更新中，清开拓力的功能变的更加自由。</p>
+      <img src="asset/img/qktl.png" alt="清体力">
+      <p>先在左侧选择要刷取的关卡、次数等信息，再点击右侧的“+”按钮，可以看到任务被添加进任务列表。可以双击任务列表中的某一项来删除它。</p>
+      <img src="asset/img/qktl2.png" alt="清体力">
+      <p>当SRA执行到清开拓力这一任务时，会按照任务列表从上往下依次执行。</p>
+      <p>任务列表的内容是可以重复的，他们的顺序取决于你添加的顺序。</p>
+      <hr>
       <h3>领取奖励</h3>
       <p>在这个任务中包含了所有的每日奖励，如每日实训，无名勋礼。部分是默认启用的。</p>
       <p>还可以领取兑换码奖励，勾选此项，并在兑换码输入框内输入兑换码，可以输入多个兑换码，兑换码之间用空格或换行分隔。</p>
@@ -173,12 +266,15 @@
       <p>此任务用于控制任务结束后的行为，如登出账号、退出SRA、退出游戏、关机或休眠</p>
     </div>
 
-    <div class="guide-step">
+    <div class="guide-step" id="run">
       <h3>执行与停止</h3>
       <p>在左侧最下方有执行按钮，完成任务配置后点击执行开始执行任务</p>
       <p>如果想要停止任务，请按停止按钮。开始执行后，在右侧日志区可以观察运行日志。</p>
       <img src="asset/img/start.png" alt="开始">
       <p>开始后，SRA会不断操作鼠标，让游戏始终处于前台。此时不建议进行人为干预，除非需要停止任务。</p>
+      <hr>
+      <p class="note">仅限0.8.1+</p>
+      <p>在0.8.1版本中，任务的开始与停止可以通过快捷键控制，默认为ctrl+shift+alt+s</p>
     </div>
 
     <div class="guide-step" id="multi">
@@ -206,7 +302,6 @@
           <li>关机或休眠</li>
         </ul>
       </div>
-      </p>
       <p>完成任务配置后，不是点击开始，而是回到‘多账号’页，点击‘保存当前配置到此方案’，此时账号A的托管方案就配置完成并保存了。</p>
       <p>对于账号B：</p>
       <p>选择‘新建方案’，输入一个方案名称，例如‘planB’；点击‘当前方案’右侧选框，可以看到我们新建的planB，选中它，接下来像配置刚才的方案那样配置planB即可。记得保存方案。</p>
@@ -234,13 +329,24 @@
       <p>开机自启动：勾选此项时，SRA会在你的电脑启动时启动。</p>
       <p>自动更新：勾选此项时，SRA会在启动时检查有无版本更新（依赖于SRA更新器），也可以通过取消勾选再勾选来手动检查一次更新。关闭此服务后，公告栏中的内容也不会再更新。</p>
       <p>线程安全：勾选此项时，在点击按钮后SRA会等待当前任务结束后再停止，而不是立即停止。通常不建议勾选此项。</p>
-      <p>清空日志：点击此项时，会清空日志文件SRAlog.log中的内容。</p>
+      <p><del>清空日志：点击此项时，会清空日志文件SRAlog.log中的内容。</del>在0.8.1+已废弃。</p>
       <p>识图置信度：此项的值代表在执行任务中图像识别的置信度，置信度越高表面对两幅图片的相似度要求越高，此数值为0.01~0.99间的任意值。建议保持为0.90。</p>
       <p>MirrorChyanCDK：
       <p class="note">仅限0.8.0+</p>
-      如果你购买了mirror酱的CDK，将它填写到此处，更新时将使用mirror酱提供的下载加速服务。
-      </p>
+      <p>如果你购买了mirror酱的CDK，将它填写到此处，更新时将使用mirror酱提供的下载加速服务。</p>
       <p>文件完整性检查：点击此按钮后将立即进行一次文件完整性检查（依赖于SRA更新器），SRA可能会被退出。</p>
+      <hr>
+      <p class="note">仅限0.8.1+</p>
+      <p>热键设置：此处修改全局热键，你可以在任何地方按下快捷键来执行这些操作。</p>
+      <img src="asset/img/hotkey.png" alt="hotkey">
+      <p>通知</p>
+      <img src="asset/img/notification.png" alt="notification">
+      <p>允许通知：这是通知的总开关</p>
+      <p>系统通知：启用此项后，当SRA发送通知时，会发送一个系统通知。</p>
+      <p>邮件通知：启用此项后，当SRA发送通知时，会发送一个邮件通知。需要先配置好SMTP服务并点击验证按钮。
+        详见<a href="#email-notification">邮件通知</a>
+      </p>
+      <p>关闭窗口时直接退出：在0.8.1中，SRA增加了一个系统托盘，与此同时，当你点击关闭按钮时仅会关闭窗口，而不会结束SRA的进程。启用此项后点击关闭按钮时会同时停止SRA的进程。</p>
     </div>
 
     <div class="guide-step" id="update">
@@ -278,12 +384,136 @@
       <p class="code">SRAUpdater -timeout<br>
         设置请求超时时间。</p>
     </div>
+
+    <div class="guide-step" id="email-notification">
+      <h3>邮件通知</h3>
+      <p class="note">仅限0.8.1+</p>
+      <p>在0.8.1版本中，更新了邮件通知功能。</p>
+      <p>在设置中，勾选‘邮件通知’，并在下方配置SMTP服务并点击验证。</p>
+      <p>SMTP 是一种可靠有效的电子邮件传输协议，SRA 使用 SMTP-SSL 推送电子邮件通知。</p>
+      <h3>SMTP 服务器地址</h3>
+      <p>请根据发信邮箱的电子邮件服务提供商选择正确的 SMTP 服务器地址。</p>
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>电子邮件服务提供商</th>
+            <th>SMTP 服务器地址</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>QQ邮箱</td>
+            <td>smtp.qq.com</td>
+          </tr>
+          <tr>
+            <td>163邮箱</td>
+            <td>smtp.163.com</td>
+          </tr>
+          <tr>
+            <td>Gmail</td>
+            <td>smtp.gmail.com</td>
+          </tr>
+          <tr>
+            <td>Outlook/Hotmail</td>
+            <td>smtp-mail.outlook.com</td>
+          </tr>
+          <tr>
+            <td>Yahoo Mail</td>
+            <td>smtp.mail.yahoo.com</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>若未找到您使用的电子邮件服务，请访问该邮件服务的帮助中心或搜索其 SMTP 服务器地址。</p>
+      <h3>获取授权码</h3>
+      <p>授权码 是用于替代您的邮箱密码进行第三方客户端登录的一种特殊密码，您需要填写发信邮箱的授权码。常见邮件服务商授权码的一般获取步骤如下：</p>
+      <ol class="email-config-list">
+        <li>
+          <p>QQ 邮箱</p>
+          <a href="https://service.mail.qq.com/detail/0/75">QQ邮箱官方教程</a>
+          <ul>
+            <li>登录到您的<a href="https://wx.mail.qq.com/account">QQ 邮箱账号与安全中心。</a></li>
+            <li>在 账号与安全 > 安全设置 > SMTP/IMAP服务 中开启服务并获取授权码。</li>
+          </ul>
+        </li>
+        <li>
+          <p>163 邮箱</p>
+          <a href="https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac2a5feb28b66796d3b">163邮箱官方教程</a>
+          <ul>
+            <li>登录到您的<a href="https://email.163.com/">163 邮箱账号。</a></li>
+            <li>进入 设置 > POP3/SMTP/IMAP，找到 IMAP/SMTP服务 并点击开启。</li>
+            <li>在弹窗中点击 继续开启，根据指示在手机中发送短信。</li>
+            <li>弹窗生成 授权密码，该密码便为您的授权码。</li>
+          </ul>
+        </li>
+        <li>
+          <p>Gmail</p>
+          <ul>
+            <li>登录到您的 <a href="https://mail.google.com/">Gmail</a>。</li>
+            <li>进入 设置 > 查看所有设置 > 转发和 POP/IMAP > IMAP 访问，选择 启用 IMAP。</li>
+            <li>进入 用户 > 管理您的 Google 账号 > 安全性 > 两步验证，按提示开启 两步验证。</li>
+            <li>进入 两步验证 > 应用专用密码，按提示创建 应用专用密码，该密码便为您的授权码。</li>
+          </ul>
+        </li>
+        <li>
+          <p>Outlook/Hotmail</p>
+          <ul>
+            <li>登录到您的 Outlook 账户。</li>
+            <li>进入 我的账户 > 安全和隐私 > 更多安全选项。</li>
+            <li>在 应用程序密码 中创建应用程序密码。</li>
+          </ul>
+        </li>
+        <li>
+          <p>Yahoo Mail</p>
+          <ul>
+            <li>登录到您的 Yahoo 账户。</li>
+            <li>进入 账户 > 安全 > 应用程序密码。</li>
+            <li>点击 生成应用程序密码 以创建应用程序密码。</li>
+          </ul>
+        </li>
+      </ol>
+      <div class="note">
+        <ul>注意
+          <li>为了您的信息安全，请勿将授权码告诉他人，并定期更换。</li>
+          <li>部分邮箱的授权码仅显示一次，请及时保存；部分邮箱的授权码存在有效期，请在到期前及时更换。</li>
+          <li>SRA 已对本地授权码数据使用 Windows DPAPI 加密，这种加密方式将当前用户的登录凭据作为加密密钥的一部分，这意味着只有同一个用户在同一台计算机上才能解密数据。如果您需要跨设备迁移配置文件，请重新输入授权码。</li>
+          <li>SMTP 邮件推送服务允许发信邮箱与收信邮箱相同，若没有多余的电子邮箱，可以填写相同的发信邮箱与收信邮箱地址。</li>
+        </ul>
+      </div> 
+    </div>
   </section>
 
   <footer>
     <p>&copy; 2025 StarRailAssistant. 保留所有权利。</p>
   </footer>
   <script src="asset/js/index.js"></script>
+  <script>
+    // 添加当前活动导航项的高亮效果
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.sidebar-nav a');
+      const sections = document.querySelectorAll('.guide-step');
+      
+      function highlightNav() {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= (sectionTop - 100)) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      window.addEventListener('scroll', highlightNav);
+      highlightNav(); // 初始化时也执行一次
+    });
+  </script>
 </body>
 
 </html>
