@@ -174,6 +174,7 @@
       <li><a href="#setting">设置</a></li>
       <li><a href="#update">更新</a></li>
       <li><a href="#email-notification">邮件通知</a></li>
+      <li><a href="#debug">调试模式</a></li>
     </ul>
   </aside>
 
@@ -479,6 +480,25 @@
           <li>SMTP 邮件推送服务允许发信邮箱与收信邮箱相同，若没有多余的电子邮箱，可以填写相同的发信邮箱与收信邮箱地址。</li>
         </ul>
       </div> 
+    </div>
+    <div class="guide-step" id="debug">
+      <h3>调试模式</h3>
+      <p class="note">仅限0.8.1+</p>
+      <p>在0.8.1版本中，更新了调试模式功能。</p>
+      <p>如果你迫切地想要知道SRA当下正在做什么，为什么看起来没反应？使用命令行启动SRA!</p>
+      <ol class="email-config-list">
+        <li>
+          <p>调试模式</p>
+          <ul>
+            <li>打开SRA的文件夹</li>
+            <li>在地址栏中输入 cmd 或 powershell 来打开一个工作目录为SRA文件夹的终端。</li>
+            <li>在终端中输入 SRA 或 .\SRA</li>
+          </ul>
+        </li>
+      </ol>
+      <p>此时SRA将以调试模式启动，你可以在终端中看到SRA包括debug等级在内的所有日志。</p>
+      <img src="asset/img/debug.png" alt="debug">
+      <p>此时如果关闭终端，SRA也会一同关闭。</p>
     </div>
   </section>
 
