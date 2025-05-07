@@ -91,6 +91,7 @@
     }
     .sidebar-nav {
       position: fixed;
+      margin-left: 10%;
       left: 20px;
       top: 50%;
       transform: translateY(-50%);
@@ -158,7 +159,7 @@
       <a href="quickstart.html">快速上手</a>
       <a href="pluginstore.html">插件市场</a>
       <a href="api.html">开发</a>
-      <a href="https://docs.qq.com/doc/DWUFOUmJDc2xLRk1B">常见问题</a>
+      <a href="faq.html">常见问题</a>
     </nav>
   </header>
 
@@ -252,7 +253,7 @@
       <p>先在左侧选择要刷取的关卡、次数等信息，再点击右侧的“+”按钮，可以看到任务被添加进任务列表。可以双击任务列表中的某一项来删除它。</p>
       <img src="asset/img/qktl2.png" alt="清体力">
       <p>当SRA执行到清开拓力这一任务时，会按照任务列表从上往下依次执行。</p>
-      <p>任务列表的内容是可以重复的，他们的顺序取决于你添加的顺序。</p>
+      <p>任务列表的内容是可以重复的，他们的顺序取决于你添加的顺序，也可以拖动列表项来修改顺序。</p>
       <hr>
       <h3>领取奖励</h3>
       <p>在这个任务中包含了所有的每日奖励，如每日实训，无名勋礼。部分是默认启用的。</p>
@@ -473,7 +474,8 @@
         </li>
       </ol>
       <div class="note">
-        <ul>注意
+        <p>注意</p>
+        <ul>
           <li>为了您的信息安全，请勿将授权码告诉他人，并定期更换。</li>
           <li>部分邮箱的授权码仅显示一次，请及时保存；部分邮箱的授权码存在有效期，请在到期前及时更换。</li>
           <li>SRA 已对本地授权码数据使用 Windows DPAPI 加密，这种加密方式将当前用户的登录凭据作为加密密钥的一部分，这意味着只有同一个用户在同一台计算机上才能解密数据。如果您需要跨设备迁移配置文件，请重新输入授权码。</li>
@@ -516,8 +518,7 @@
         let current = '';
         sections.forEach(section => {
           const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (pageYOffset >= (sectionTop - 100)) {
+          if (scrollY >= (sectionTop - 100)) {
             current = section.getAttribute('id');
           }
         });

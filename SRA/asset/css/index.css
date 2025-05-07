@@ -69,6 +69,7 @@ nav a:hover {
         /* 导航栏宽度填满容器 */
         gap: 0.5rem;
         /* 减少导航链接之间的间距 */
+        animation: fadeIn 0.5s ease;
     }
 
     nav a {
