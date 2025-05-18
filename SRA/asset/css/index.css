@@ -6,6 +6,10 @@
     font-family: 'Inter', 'Arial', sans-serif;
 }
 
+html {
+    scroll-padding-top: 70px;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -199,47 +203,47 @@ footer {
     margin: 20px 0;
     font-family: Arial, sans-serif; /* 使用简洁的无衬线字体 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加轻微阴影，增强层次感 */
-  }
+}
    
-  /* 表头样式 */
-  .modern-table th {
+/* 表头样式 */
+.modern-table th {
     background-color: #ededed; /* 浅灰色背景 */
     color: #333; /* 深色文字 */
     padding: 12px 15px; /* 增加内边距，提升可读性 */
     text-align: left; /* 左对齐 */
     border-bottom: 2px solid #dee2e6; /* 底部边框 */
     font-weight: 600; /* 字体加粗 */
-  }
-   
-  /* 表格单元格样式 */
-  .modern-table td {
+}
+
+/* 表格单元格样式 */
+.modern-table td {
     padding: 10px 15px; /* 增加内边距 */
     border-bottom: 1px solid #e9ecef; /* 浅色底部边框 */
     color: #495057; /* 深灰色文字 */
-  }
-   
-  /* 表格行悬停效果 */
-  .modern-table tr:hover td {
+}
+
+/* 表格行悬停效果 */
+.modern-table tr:hover td {
     background-color: #f1f3f5; /* 悬停时背景变浅 */
     transition: background-color 0.2s ease; /* 添加过渡效果 */
-  }
-   
-  /* 交替行颜色（斑马纹效果） */
-  .modern-table tr:nth-child(even) td {
+}
+
+/* 交替行颜色（斑马纹效果） */
+.modern-table tr:nth-child(even) td {
     background-color: #ededed; /* 偶数行背景色 */
-  }
-   
-  /* 响应式设计：在小屏幕上水平滚动 */
-  @media (max-width: 768px) {
-    .modern-table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  }
-   
-  /* 可选：为特定列添加样式 */
-  .modern-table .highlight-column {
+}
+
+/* 响应式设计：在小屏幕上水平滚动 */
+@media (max-width: 768px) {
+.modern-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+}
+
+/* 可选：为特定列添加样式 */
+.modern-table .highlight-column {
     background-color: #e7f5ff; /* 高亮列背景色 */
     font-weight: 500; /* 字体稍粗 */
-  }
+}

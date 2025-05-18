@@ -10,6 +10,10 @@
   <link rel="stylesheet" type="text/css" href="asset/css/quickstart.css">
   <style>
     /* 针对快速上手页面的额外样式 */
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
     .guide-section {
       margin: 30px auto;
       max-width: 800px;
@@ -59,8 +63,6 @@
       border-collapse: collapse;
       margin-top: 10px;
     }
-
-    
 
     .code {
       margin: 20px auto;
@@ -167,11 +169,13 @@
     <h3>快速上手指南</h3>
     <ul>
       <li><a href="#download">下载</a></li>
+      <li><a href="#trust">为软件添加信任</a></li>
       <li><a href="#launch">安装与启动</a></li>
       <li><a href="#prepare">运行前配置</a></li>
       <li><a href="#mission">任务配置</a></li>
       <li><a href="#run">执行与停止</a></li>
       <li><a href="#multi">多账号托管</a></li>
+      <li><a href="#extension">拓展功能</a></li>
       <li><a href="#setting">设置</a></li>
       <li><a href="#update">更新</a></li>
       <li><a href="#email-notification">邮件通知</a></li>
@@ -187,8 +191,32 @@
   <section class="guide-section">
     <div class="guide-step" id="download">
       <h3>下载</h3>
-      <p>前往 <a href="download.html" style="color: #007bff; text-decoration: none;">下载页面 </a>选择任意渠道进行下载。</p>
+      <p>前往 <a href="download.html">下载页面 </a>选择任意渠道进行下载。</p>
       <img src="asset/img/download.png" alt="下载示例">
+    </div>
+
+
+    <div class="guide-step" id="trust">
+      <h3>为软件添加信任</h3>
+      <p>SRA含有以下动作：获取管理员权限、读写注册表，容易被杀毒软件认为是病毒而杀掉。</p>
+      <p>运行软件前，请将 SRA 安装目录、添加入 Windows Defender 排除项以及防病毒软件的信任区或开发者目录，
+        避免被误杀。以下展示 添加 Windows Defender 排除项 方法：</p><br>
+      <p>快速链接：<a href="ms-settings:windowsdefender">Windows 安全中心</a></p>
+      <p>如果链接无效，请手动打开 Windows 安全中心。</p>
+      <p>若已安装其它杀毒软件，请先打开 <b>定期扫描</b>。</p>
+      <img src="asset/img/truststep1.png" alt="1">
+      <p>“病毒和威胁防护”设置 > 管理设置</p>
+      <img src="asset/img/truststep2.png" alt="2">
+      <p>排除项 > 添加或删除排除项</p>
+      <img src="asset/img/truststep3.png" alt="3">
+      <p>添加排除项 > 选中对应目录</p>
+      <img src="asset/img/truststep4.png" alt="4">
+      <p>若已安装其它杀毒软件，再次关闭 <b>定期扫描。</b></p>
+      <div class="note">
+        <h4>注意</h4>
+        <p>即使已经安装其它杀毒软件（如：火绒、360极速版），Windows Defender 防病毒功能仍可能会不定时开启，
+        这可能导致您的 SRA.exe 突然消失。因此，您必须确保以上目录被 Windows Defender 排除。</p>
+      </div>
     </div>
 
     <div class="guide-step" id="launch">
@@ -315,13 +343,13 @@
       <p>回到SRA，点击‘开始’，即可开始一趟多账号托管之旅。</p>
     </div>
 
-    <div class="guide-step">
+    <div class="guide-step" id="extension">
       <h3>拓展功能</h3>
       <p>点击上方‘拓展功能’进入标签页</p>
       <p>此页的功能与其他页面的任务独立，功能勾选后会立即执行，如果要取消执行请取消勾选。</p>
       <p>自动对话：开启后在进入剧情时会自动播放对话、自动选择对话选项。此功能不会控制鼠标，但是会让游戏处于前台。如果需要取消执行，尝试将游戏最小化后回到此页面取消勾选。</p>
-      <p>穷观阵：这是一个第三方插件，需要下载才能使用（大约20MB），主要功能为占卜及AI解卦。当前仅有部分基础功能。
-        <a href="https://github.com/Fuxuan-CN/FuxuanDivination">项目地址</a>
+      <p><del>穷观阵：这是一个第三方插件，需要下载才能使用（大约20MB），主要功能为占卜及AI解卦。当前仅有部分基础功能。
+        <a href="https://github.com/Fuxuan-CN/FuxuanDivination">项目地址</a></del>在0.8.1+已移除。</p>
       </p>
     </div>
 
