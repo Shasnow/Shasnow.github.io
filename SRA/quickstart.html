@@ -14,6 +14,7 @@
       color: #007bff;
       text-decoration: none;
     }
+
     .guide-section {
       margin: 30px auto;
       max-width: 800px;
@@ -73,6 +74,7 @@
       border-radius: 8px;
       color: #323232;
     }
+
     .note {
       margin: 20px auto;
       max-width: 800px;
@@ -91,6 +93,7 @@
     .note ul {
       padding-left: 10px;
     }
+
     .sidebar-nav {
       position: fixed;
       margin-left: 10%;
@@ -104,23 +107,23 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 100;
     }
- 
+
     .sidebar-nav h3 {
       margin: 0 0 10px 0;
       color: #333;
       font-size: 1.1rem;
     }
- 
+
     .sidebar-nav ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
- 
+
     .sidebar-nav li {
       margin-bottom: 8px;
     }
- 
+
     .sidebar-nav a {
       display: block;
       padding: 5px 10px;
@@ -129,17 +132,17 @@
       border-radius: 4px;
       transition: all 0.2s ease;
     }
- 
+
     .sidebar-nav a:hover {
       background: #e9ecef;
       color: #007bff;
     }
- 
+
     .sidebar-nav a.active {
       background: #007bff;
       color: white;
     }
- 
+
     /* 响应式调整 */
     @media (max-width: 1200px) {
       .sidebar-nav {
@@ -180,6 +183,7 @@
       <li><a href="#update">更新</a></li>
       <li><a href="#email-notification">邮件通知</a></li>
       <li><a href="#debug">调试模式</a></li>
+      <li><a href="#cli">SRA命令行</a></li>
     </ul>
   </aside>
 
@@ -215,7 +219,7 @@
       <div class="note">
         <h4>注意</h4>
         <p>即使已经安装其它杀毒软件（如：火绒、360极速版），Windows Defender 防病毒功能仍可能会不定时开启，
-        这可能导致您的 SRA.exe 突然消失。因此，您必须确保以上目录被 Windows Defender 排除。</p>
+          这可能导致您的 SRA.exe 突然消失。因此，您必须确保以上目录被 Windows Defender 排除。</p>
       </div>
     </div>
 
@@ -349,7 +353,7 @@
       <p>此页的功能与其他页面的任务独立，功能勾选后会立即执行，如果要取消执行请取消勾选。</p>
       <p>自动对话：开启后在进入剧情时会自动播放对话、自动选择对话选项。此功能不会控制鼠标，但是会让游戏处于前台。如果需要取消执行，尝试将游戏最小化后回到此页面取消勾选。</p>
       <p><del>穷观阵：这是一个第三方插件，需要下载才能使用（大约20MB），主要功能为占卜及AI解卦。当前仅有部分基础功能。
-        <a href="https://github.com/Fuxuan-CN/FuxuanDivination">项目地址</a></del>在0.8.1+已移除。</p>
+          <a href="https://github.com/Fuxuan-CN/FuxuanDivination">项目地址</a></del>在0.8.1+已移除。</p>
       </p>
     </div>
 
@@ -467,7 +471,8 @@
         </li>
         <li>
           <p>163 邮箱</p>
-          <a href="https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac2a5feb28b66796d3b">163邮箱官方教程</a>
+          <a
+            href="https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac2a5feb28b66796d3b">163邮箱官方教程</a>
           <ul>
             <li>登录到您的<a href="https://email.163.com/">163 邮箱账号。</a></li>
             <li>进入 设置 > POP3/SMTP/IMAP，找到 IMAP/SMTP服务 并点击开启。</li>
@@ -506,10 +511,11 @@
         <ul>
           <li>为了您的信息安全，请勿将授权码告诉他人，并定期更换。</li>
           <li>部分邮箱的授权码仅显示一次，请及时保存；部分邮箱的授权码存在有效期，请在到期前及时更换。</li>
-          <li>SRA 已对本地授权码数据使用 Windows DPAPI 加密，这种加密方式将当前用户的登录凭据作为加密密钥的一部分，这意味着只有同一个用户在同一台计算机上才能解密数据。如果您需要跨设备迁移配置文件，请重新输入授权码。</li>
+          <li>SRA 已对本地授权码数据使用 Windows DPAPI
+            加密，这种加密方式将当前用户的登录凭据作为加密密钥的一部分，这意味着只有同一个用户在同一台计算机上才能解密数据。如果您需要跨设备迁移配置文件，请重新输入授权码。</li>
           <li>SMTP 邮件推送服务允许发信邮箱与收信邮箱相同，若没有多余的电子邮箱，可以填写相同的发信邮箱与收信邮箱地址。</li>
         </ul>
-      </div> 
+      </div>
     </div>
     <div class="guide-step" id="debug">
       <h3>调试模式</h3>
@@ -530,6 +536,33 @@
       <img src="asset/img/debug.png" alt="debug">
       <p>此时如果关闭终端，SRA也会一同关闭。</p>
     </div>
+
+    <div class="guide-step" id="cli">
+      <h3>SRA命令行</h3>
+      <p class="note">仅限0.8.2+ 推荐有部分基础的用户使用此功能</p>
+      <p>在0.8.2版本中，更新了SRA命令行功能。</p>
+      <p>如果你觉得图形化用户界面太丑，或者觉得SRA内存占用过高，尝试使用SRA命令行！</p>
+      <br>
+      <p>以管理员身份运行终端，并cd进入SRA的文件夹</p>
+      <p>输入 SRA --cli 或.\SRA --cli 来启动SRA命令行</p>
+      <img src="asset/img/cli1.png" alt="cli">
+      <p>最好先输入 exit 并按下两次 Enter 来退出 Windows 的终端，不然你可能看见 SRA 和终端交替运行。</p>
+      <img src="asset/img/cli2.png" alt="cli">
+      <p>一切准备就绪，输入 help 或 ? 可以查看帮助信息</p>
+      <img src="asset/img/cli3.png" alt="cli">
+      <p>目前 SRA 命令行仅可查看配置文件而不可修改。如果要进行配置操作，还请使用GUI。</p>
+      <p>输入 run 可以以指定的配置运行，如果不指定配置，将使用 Default (config 命令同理)</p>
+      <p>例如: run Default other...</p>
+      <p>注意：这将是线程阻塞的，你无法在任务结束前执行其它命令。在任何时候，如果你想要停止任务，请按下 Ctrl+C</p>
+      <img src="asset/img/cli4.png" alt="cli">
+      <p>再次输入 exit 并按下 Enter 可以退出SRA命令行。</p>
+      <br>
+      <p>另一种方式：</p>
+      <p>如果你使用SRA命令行只是为了执行任务，或者你只想直接执行任务不使用SRA命令行。请以管理员身份运行终端，并cd进入SRA的文件夹</p>
+      <p>输入 SRA --run [config] [...] 即可直接开始执行任务。</p>
+      <p>例如: SRA --run Default other...</p>
+      <p>注意：这将是线程阻塞的，你无法在任务结束前执行其它命令。在任何时候，如果你想要停止任务，请按下 Ctrl+C</p>
+      <img src="asset/img/cli5.png" alt="cli">
   </section>
 
   <footer>
@@ -538,10 +571,10 @@
   <script src="asset/js/index.js"></script>
   <script>
     // 添加当前活动导航项的高亮效果
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const navLinks = document.querySelectorAll('.sidebar-nav a');
       const sections = document.querySelectorAll('.guide-step');
-      
+
       function highlightNav() {
         let current = '';
         sections.forEach(section => {
@@ -550,7 +583,7 @@
             current = section.getAttribute('id');
           }
         });
-        
+
         navLinks.forEach(link => {
           link.classList.remove('active');
           if (link.getAttribute('href') === `#${current}`) {
@@ -558,7 +591,7 @@
           }
         });
       }
-      
+
       window.addEventListener('scroll', highlightNav);
       highlightNav(); // 初始化时也执行一次
     });
