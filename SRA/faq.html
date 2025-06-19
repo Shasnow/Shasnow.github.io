@@ -1,523 +1,607 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>常见问题 | StarRailAssistant</title>
-    <link rel="shortcut icon" href="asset/img/SRAicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="asset/css/index.css">
-    <style>
-        
-        /* 添加FAQ页面特定样式 */
-        .faq-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .faq-item {
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #6a5acd;
-            padding-left: 1.5rem;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .faq-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        } 
-        .faq-question {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            transition: color 0.3s ease;
-        }
-        .faq-question:hover {
-            color: #6a5acd;
-        }
-        .faq-question::after {
-            content: "+";
-            margin: 0 1rem;
-            font-size: 1.5rem;
-            transition: transform 0.3s ease, color 0.3s ease;
-            color: #6a5acd;
-        }
-        .faq-question.active::after {
-            content: "+";
-            transform: rotate(45deg);
-        }
-        .faq-answer {
-            display: none;
-            margin-right: 1.5rem;
-            padding: 0 0 1rem 1rem;
-            border-left: 1px solid #eee;
-            color: #555;
-            line-height: 1.6;
-            animation: fadeIn 0.5s ease;
-        }
-        .faq-answer.active {
-            display: block;
-        }
-        .search-box {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            margin: 2rem 0;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        .search-box:focus {
-            border-color: #6a5acd;
-            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
-        }
-        .back-home {
-            display: inline-block;
-            margin: 2rem 0;
-            padding: 0.7rem 1.5rem;
-            background-color: #6a5acd;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .back-home:hover {
-            background-color: #5a4ac3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .feedback-section {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-left: 4px solid #6a5acd;
-        }
-        .feedback-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        .feedback-icon {
-            width: 32px;
-            height: 32px;
-            margin-right: 1rem;
-            background-color: #6a5acd;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        .feedback-form {
-            display: flex;
-            flex-direction: column;
-        }
-        .feedback-form input,
-        .feedback-form textarea,
-        .feedback-form select {
-            margin-bottom: 1rem;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        .feedback-form input:focus,
-        .feedback-form textarea:focus,
-        .feedback-form select:focus {
-            border-color: #6a5acd;
-            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
-        }
-        .feedback-form textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .feedback-form button {
-            padding: 0.8rem 1.5rem;
-            background-color: #6a5acd;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            align-self: flex-start;
-        }
-        .feedback-form button:hover {
-            background-color: #5a4ac3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        .feedback-note {
-            font-size: 0.9rem;
-            color: #777;
-            margin-top: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>常见问题 | StarRailAssistant</title>
+  <link rel="shortcut icon" href="asset/img/SRAicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="asset/css/index.css">
+  <style>
+    /* 添加FAQ页面特定样式 */
+    .faq-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #6a5acd;
+      padding-left: 1.5rem;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-question {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .faq-question:hover {
+      color: #6a5acd;
+    }
+
+    .faq-question::after {
+      content: "+";
+      margin: 0 1rem;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+      color: #6a5acd;
+    }
+
+    .faq-question.active::after {
+      content: "+";
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      display: none;
+      margin-right: 1.5rem;
+      padding: 0 0 1rem 1rem;
+      border-left: 1px solid #eee;
+      color: #555;
+      line-height: 1.6;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .faq-answer.active {
+      display: block;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      margin: 2rem 0;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-box:focus {
+      border-color: #6a5acd;
+      box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+    }
+
+    .back-home {
+      display: inline-block;
+      margin: 2rem 0;
+      padding: 0.7rem 1.5rem;
+      background-color: #6a5acd;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-home:hover {
+      background-color: #5a4ac3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback-section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid #6a5acd;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .feedback-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 1rem;
+      background-color: #6a5acd;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .feedback-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea,
+    .feedback-form select {
+      margin-bottom: 1rem;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .feedback-form input:focus,
+    .feedback-form textarea:focus,
+    .feedback-form select:focus {
+      border-color: #6a5acd;
+      box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+    }
+
+    .feedback-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .feedback-form button {
+      padding: 0.8rem 1.5rem;
+      background-color: #6a5acd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+    }
+
+    .feedback-form button:hover {
+      background-color: #5a4ac3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .feedback-note {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1><img src="asset/img/SRAico.png" height="26" width="26" alt="ico">StarRailAssistant</h1>
-        <button id="menu-toggle" class="menu-toggle">☰</button>
-        <nav id="nav-menu">
-            <a href="index.html">首页</a>
-            <a href="https://github.com/Shasnow/StarRailAssistant">GitHub</a>
-            <a href="sponsor.html">赞助</a>
-            <a href="download.html">下载</a>
-            <a href="quickstart.html">快速上手</a>
-            <a href="pluginstore.html">插件市场</a>
-            <a href="api.html">开发</a>
-            <a href="faq.html">常见问题</a>
-        </nav>
-    </header>
+  <header>
+    <h1><img src="asset/img/SRAico.png" height="26" width="26" alt="ico">StarRailAssistant</h1>
+    <button id="menu-toggle" class="menu-toggle">☰</button>
+    <nav id="nav-menu">
+      <a href="index.html">首页</a>
+      <a href="https://github.com/Shasnow/StarRailAssistant">GitHub</a>
+      <a href="sponsor.html">赞助</a>
+      <a href="download.html">下载</a>
+      <a href="quickstart.html">快速上手</a>
+      <a href="pluginstore.html">插件市场</a>
+      <a href="api.html">开发</a>
+      <a href="faq.html">常见问题</a>
+    </nav>
+  </header>
 
-    <section class="hero">
-        <h2>常见问题解答</h2>
-        <p>查找您在使用StarRailAssistant时可能遇到的问题及解决方案</p>
-    </section>
+  <section class="hero">
+    <h2>常见问题解答</h2>
+    <p>查找您在使用StarRailAssistant时可能遇到的问题及解决方案</p>
+  </section>
 
-    <div class="faq-container">
-        <label for="search-input"></label><input type="text" class="search-box" placeholder="搜索问题 / 错误编号..." id="search-input">
-        
-        <div class="faq-item">
-            <div class="faq-question" id="q1">SRA能支持Linux/Mac吗</div>
-            <div class="faq-answer" id="a1">
-                不能，SRA使用了较多的Windows相关的操作，不能很好的适配其他的操作系统。
-            </div>
-        </div>
+  <div class="faq-container">
+    <label for="search-input"></label><input type="text" class="search-box" placeholder="搜索问题 / 错误编号..."
+      id="search-input">
 
-        <div class="faq-item">
-            <div class="faq-question" id="q2">挂后台会抢鼠标吗？/可以挂后台吗？</div>
-            <div class="faq-answer" id="a2">
-                包抢的，SRA使用模拟操作技术，需要真实的控制你的鼠标去移动和点击。
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question" id="q3">可以做一做绝区零的/有没有绝区零版本？</div>
-            <div class="faq-answer" id="a3">
-                绝区零因抽不出角色导致退游，望周知。且市面上已有成熟的解决方案。
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question" id="q4">國際版可以用嗎？</div>
-            <div class="faq-answer" id="a4">
-                SRA的识图素材基于简体中文制作，如果能将语言切换为简体中文理论上应该可用。或者您可以以自己的语言版本自行替换SRA的识图素材。
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question" id="q5">和maa是一个作者吗/和maa是什么关系？</div>
-            <div class="faq-answer" id="a5">
-                SRA仅在命名和UI上部分借鉴MAA，除此之外与MAA并无联系。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q6">会封号吗挺担心的</div>
-            <div class="faq-answer" id="a6">
-                <ul>
-                    <li>从SRA立项到0.8.0版本的更新，作者一直使用本人的账号进行测试，目前暂未封号。</li>
-                    <li>SRA依靠计算机图像识别和模拟操作运行， 不会做出任何修改游戏文件、读写游戏内存等任何危害游戏本体的行为，
-                        理论上不会导致封号。但是使用脚本或者模拟操作仍然是米哈游的封号理由之一，
-                        既然使用SRA，就要承担可能存在的风险。</li>
-                    <li>另：请不要在崩坏：星穹铁道及米哈游在各平台（包括但不限于：米游社、B 站、微博）的官方动态下讨论任何有关 SRA 的内容。</li>
-                </ul>
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q7">能用异种分辨率吗（例如1600×900）/只能使用1920*1080吗？</div>
-            <div class="faq-answer" id="a7">
-                SRA理论支持全16:9的分辨率，但是在部分分辨率下可能会出现识别错误。<br>
-                效果较稳定的分辨率为1600*900，此时需调节设置中识图置信度为0.8。<br>
-                其他分辨率请自行尝试。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q8">Win7可以用吗？</div>
-            <div class="faq-answer" id="a8">
-                不知道，SRA的开发和测试环境为Win11，在Win10上也能够运行，缺少Win7的验证。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q9">网页云崩铁可以嘛/适配云游戏吗？</div>
-            <div class="faq-answer" id="a9">
-                目前还在尝试中。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q10">下载好慢啊/下载慢</div>
-            <div class="faq-answer" id="a10">
-                SRA已接入Mirror酱，可以尝试使用。<br>
-                或先下载SRA更新器，再使用更新器下载SRA。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q11">会出手机版吗/手机平板能用吗？</div>
-            <div class="faq-answer" id="a11">
-                不会，不同手机之间屏幕大小各不相同，实现难度较大。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q12">为什么下了点exe文件显示存在威胁，电脑自动删掉了，完全打不开?</div>
-            <div class="faq-answer" id="a12">
-                SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无法正常运行。请放心，SRA不会对您的电脑造成任何损害。<br>
-                运行软件前，请将SRA的目录添加入 Windows Defender 排除项以及防病毒软件的信任区或开发者目录，避免被误杀。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q13">为什么限制配置方案的数量/如何提升配置方案的数量？</div>
-            <div class="faq-answer" id="a13">
-                唉！蛋糕还是败给了蛋糕<br>
-                蛋糕有人在蛋糕做蛋糕阴蛋糕，可能是蛋糕动了蛋糕的蛋糕<br>
-                蛋糕，蛋糕赢了……<br>
-                总之，普通用户的配置方案将被限制为3个，如果需要提升数量或解除限制，请联系作者。<br>
-                这个过程不会很难。<br>
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" id="q14">SRA.exe不见了/SRA.exe会把自己删除？</div>
-            <div class="faq-answer" id="a14">
-                我们确信SRA中不含有把自己删除的代码。<br>
-                出现这种情况可能是杀毒软件误报，特别是 <b>Windows Defender。</b><br>
-                下面的步骤可以帮助您解决问题<br>
-                <a href="quickstart.html#trust">点击此处查看如何为软件添加信任</a>
-            </div>
-        </div>
-
-        <div class="feedback-section">
-            <div class="feedback-header">
-                <div class="feedback-icon">?</div>
-                <h2>未找到答案？提交您的问题</h2>
-            </div>
-            <p>如果您在常见问题中未找到解决方案，请通过以下方式反馈，我们会尽快回复您。</p>
-            <ul>
-                <li><a href="https://github.com/Shasnow/StarRailAssistant/issues">GitHub Issue</a></li>
-                <li>电子邮件：发送邮件到 yukikage@qq.com</li>
-                <li>加入测试群：<a href="https://qm.qq.com/q/QnRw46sFWi">点击链接加入群聊【SRA测试群】</a></li>
-                <li>补充 <a href="https://docs.qq.com/doc/DWUFOUmJDc2xLRk1B">SRA问题收集与解答互助文档</a></li>
-            </ul>
-        </div>
+    <div class="faq-item">
+      <div class="faq-question" id="resolution">游戏分辨率兼容性</div>
+      <div class="faq-answer" id="resolutionlist">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>分辨率</th>
+              <th>识图置信度</th>
+              <th>兼容性</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1920*1080</td>
+              <td>0.90</td>
+              <td>完全兼容</td>
+            </tr>
+            <tr>
+              <td>1920*1440</td>
+              <td>0.90</td>
+              <td>完全兼容</td>
+            </tr>
+            <tr>
+              <td>1600*900</td>
+              <td>0.75~0.80</td>
+              <td>兼容</td>
+            </tr>
+            <tr>
+              <td>1280*720</td>
+              <td>0.75</td>
+              <td>兼容</td>
+            </tr>
+            <tr>
+              <td>2560*1440</td>
+              <td>未确定</td>
+              <td>未知</td>
+            </tr>
+            <tr>
+              <td>其它16:9</td>
+              <td>未确定</td>
+              <td>未知</td>
+            </tr>
+            <tr>
+              <td>其它16:10</td>
+              <td>不兼容</td>
+              <td>不兼容</td>
+            </tr>
+        </table>
+      </div>
     </div>
 
-    <div class="faq-container" id="error code" style="display: none;">
-        <div class="faq-item">
-            <div class="faq-question">错误编号1</div>
-            <div class="faq-answer">
-                在点击`生存索引`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                `星际和平指南`页面未正常打开——可能由于加载时间过长，或者您修改了打开它的按键`F4`。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号2</div>
-            <div class="faq-answer">
-                在点击`饰品提取`或其他子任务时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                `生存索引`页面未正常打开——可能由于加载时间过长，或者此前触发了错误编号1。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号3</div>
-            <div class="faq-answer">
-                在点击`挑战`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                未正确传送到对应副本——可能由于加载时间过长，或者此前触发了错误编号2。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号4</div>
-            <div class="faq-answer">
-                在点击`开始战斗`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                未正确传送到对应副本——可能由于加载时间过长，或者此前触发了错误编号3
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号5</div>
-            <div class="faq-answer">
-                在点击`再来一次`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。<br>
-                此问题应极少发生，如果您遇到此问题，欢迎向我们反馈。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号6</div>
-            <div class="faq-answer">
-                在点击`再次派遣`时遇到问题。此问题发生在执行`派遣`任务中。<br>
-                此问题应极少发生，如果您遇到此问题，欢迎向我们反馈。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号7</div>
-            <div class="faq-answer">
-                在点击无名勋礼的`一键领取`时遇到问题。此问题发生在执行`无名勋礼`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                无名勋礼有红点提示但是没有可领取的奖励。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号9</div>
-            <div class="faq-answer">
-                在点击`进入游戏`时遇到问题。此问题发生在执行`自动登录`任务中。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号10</div>
-            <div class="faq-answer">
-                在点击`账号密码`时遇到问题。此问题发生在执行`自动登录`任务中。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号11</div>
-            <div class="faq-answer">
-                <del>未检测到登录界面。此问题发生在执行`自动登录`任务中。</del>在0.8.1+被移除。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号12</div>
-            <div class="faq-answer">
-                在点击`退出关卡`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号13</div>
-            <div class="faq-answer">
-                通过后备开拓力补充体力时遇到问题。此问题发生在执行`补充开拓力`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                没有后备开拓力
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号14</div>
-            <div class="faq-answer">
-                通过燃料补充体力时遇到问题。此问题发生在执行`补充开拓力`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                没有后备开拓力或没有燃料。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号15</div>
-            <div class="faq-answer">
-                通过星琼补充体力时遇到问题。此问题发生在执行`补充开拓力`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
-                没有后备开拓力且没有燃料或没有星琼。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号16</div>
-            <div class="faq-answer">
-                点击`兑换码`时遇到问题。此问题发生在执行`兑换码`任务中。如遇到此问题，可能是由于以下原因造成的：<br>
-                菜单`ESC`界面未能正常打开。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号17</div>
-            <div class="faq-answer">
-                点击菜单右上角三个点时遇到问题，此问题发生在执行`兑换码`任务中。如遇到此问题，可能是由于以下原因造成的：<br>
-                菜单`ESC`界面未能正常打开。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号18</div>
-            <div class="faq-answer">
-                点击开始游戏按钮（差分宇宙界面）时遇到问题。可能未处于正确的页面。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号19</div>
-            <div class="faq-answer">
-                点击周期演算时遇到问题。可能未处于正确的页面。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">错误编号20</div>
-            <div class="faq-answer">
-                点击`启动差分宇宙`时遇到问题。可能未处于正确的页面。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">超时编号1</div>
-            <div class="faq-answer">
-                在20次检测时间（约50秒）内未能检测到`星际和平指南`（`F4`）界面。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">超时编号2</div>
-            <div class="faq-answer">
-                在20次检测时间（约50秒）内未能检测到聊天框（Enter）。（也作为处于大世界场景的标志）
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">超时编号3</div>
-            <div class="faq-answer">
-                在20次检测时间（约54秒）内未能检测到bilibili服的登录按钮。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">超时编号4</div>
-            <div class="faq-answer">
-                在40次检测时间（约100秒）内未能检测到挑战按钮。
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">超时编号5</div>
-            <div class="faq-answer">
-                在20次检测时间（约50秒）内未能检测到委托界面。
-            </div>
-        </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q1">SRA能支持Linux/Mac吗</div>
+      <div class="faq-answer" id="a1">
+        不能，SRA使用了较多的Windows相关的操作，不能很好的适配其他的操作系统。
+      </div>
     </div>
-    <a href="index.html" class="back-home">← 返回首页</a>
 
-    <footer>
-        <p>&copy; 2025 StarRailAssistant. 保留所有权利。</p>
-    </footer> 
-    <script>
-        // FAQ展开/收起功能
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const answer = this.nextElementSibling;
-                answer.classList.toggle('active');
-                
-                // 滚动到答案区域
-                answer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
-        });
+    <div class="faq-item">
+      <div class="faq-question" id="q2">挂后台会抢鼠标吗？/可以挂后台吗？</div>
+      <div class="faq-answer" id="a2">
+        包抢的，SRA使用模拟操作技术，需要真实的控制你的鼠标去移动和点击。
+      </div>
+    </div>
 
-        // 搜索功能
-        document.getElementById('search-input').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const errorCode = document.getElementById('error code');
-            if (searchTerm === "") {
-                errorCode.style.display = "none";
-            }
-            else {
-                errorCode.style.display = "block";
-            }
-            document.querySelectorAll('.faq-item').forEach(item => {
-                const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
-                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                    item.style.display = 'block';
-                    item.style.animation = 'fadeIn 0.5s ease';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-    </script>
-    <script src="asset/js/index.js"></script>
+    <div class="faq-item">
+      <div class="faq-question" id="q3">可以做一做绝区零的/有没有绝区零版本？</div>
+      <div class="faq-answer" id="a3">
+        绝区零因抽不出角色导致退游，望周知。且市面上已有成熟的解决方案。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" id="q4">國際版可以用嗎？</div>
+      <div class="faq-answer" id="a4">
+        SRA的识图素材基于简体中文制作，如果能将语言切换为简体中文理论上应该可用。或者您可以以自己的语言版本自行替换SRA的识图素材。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" id="q5">和maa是一个作者吗/和maa是什么关系？</div>
+      <div class="faq-answer" id="a5">
+        SRA仅在命名和UI上部分借鉴MAA，除此之外与MAA并无联系。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q6">会封号吗挺担心的</div>
+      <div class="faq-answer" id="a6">
+        <ul>
+          <li>从SRA立项到0.8.0版本的更新，作者一直使用本人的账号进行测试，目前暂未封号。</li>
+          <li>SRA依靠计算机图像识别和模拟操作运行， 不会做出任何修改游戏文件、读写游戏内存等任何危害游戏本体的行为，
+            理论上不会导致封号。但是使用脚本或者模拟操作仍然是米哈游的封号理由之一，
+            既然使用SRA，就要承担可能存在的风险。</li>
+          <li>另：请不要在崩坏：星穹铁道及米哈游在各平台（包括但不限于：米游社、B 站、微博）的官方动态下讨论任何有关 SRA 的内容。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q7">能用异种分辨率吗（例如1600×900）/只能使用1920*1080吗？</div>
+      <div class="faq-answer" id="a7">
+        SRA理论支持全16:9的分辨率，但是在部分分辨率下可能会出现识别错误。<br>
+        效果较稳定的分辨率为1600*900，此时需调节设置中识图置信度为0.8。<br>
+        其他分辨率请自行尝试。<br>
+        参见<a href="faq.html#resolution">分辨率兼容性列表</a>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q8">Win7可以用吗？</div>
+      <div class="faq-answer" id="a8">
+        不知道，SRA的开发和测试环境为Win11，在Win10上也能够运行，缺少Win7的验证。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q9">网页云崩铁可以嘛/适配云游戏吗？</div>
+      <div class="faq-answer" id="a9">
+        目前还在尝试中。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q10">下载好慢啊/下载慢</div>
+      <div class="faq-answer" id="a10">
+        SRA已接入Mirror酱，可以尝试使用。<br>
+        或先下载SRA更新器，再使用更新器下载SRA。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q11">会出手机版吗/手机平板能用吗？</div>
+      <div class="faq-answer" id="a11">
+        不会，不同手机之间屏幕大小各不相同，实现难度较大。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q12">为什么下了点exe文件显示存在威胁，电脑自动删掉了，完全打不开?</div>
+      <div class="faq-answer" id="a12">
+        SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无法正常运行。请放心，SRA不会对您的电脑造成任何损害。<br>
+        运行软件前，请将SRA的目录添加入 Windows Defender 排除项以及防病毒软件的信任区或开发者目录，避免被误杀。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q13">为什么限制配置方案的数量/如何提升配置方案的数量？</div>
+      <div class="faq-answer" id="a13">
+        唉！蛋糕还是败给了蛋糕<br>
+        蛋糕有人在蛋糕做蛋糕阴蛋糕，可能是蛋糕动了蛋糕的蛋糕<br>
+        蛋糕，蛋糕赢了……<br>
+        总之，普通用户的配置方案将被限制为3个，如果需要提升数量或解除限制，请联系作者。<br>
+        这个过程不会很难。<br>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="q14">SRA.exe不见了/SRA.exe会把自己删除？</div>
+      <div class="faq-answer" id="a14">
+        我们确信SRA中不含有把自己删除的代码。<br>
+        出现这种情况可能是杀毒软件误报，特别是 <b>Windows Defender。</b><br>
+        下面的步骤可以帮助您解决问题<br>
+        <a href="quickstart.html#trust">点击此处查看如何为软件添加信任</a>
+      </div>
+    </div>
+
+    <div class="feedback-section">
+      <div class="feedback-header">
+        <div class="feedback-icon">?</div>
+        <h2>未找到答案？提交您的问题</h2>
+      </div>
+      <p>如果您在常见问题中未找到解决方案，请通过以下方式反馈，我们会尽快回复您。</p>
+      <ul>
+        <li><a href="https://github.com/Shasnow/StarRailAssistant/issues">GitHub Issue</a></li>
+        <li>电子邮件：发送邮件到 yukikage@qq.com</li>
+        <li>加入测试群：<a href="https://qm.qq.com/q/QnRw46sFWi">点击链接加入群聊【SRA测试群】</a></li>
+        <li>补充 <a href="https://docs.qq.com/doc/DWUFOUmJDc2xLRk1B">SRA问题收集与解答互助文档</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq-container" id="error code" style="display: none;">
+    <div class="faq-item">
+      <div class="faq-question">错误编号1</div>
+      <div class="faq-answer">
+        在点击`生存索引`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        `星际和平指南`页面未正常打开——可能由于加载时间过长，或者您修改了打开它的按键`F4`。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号2</div>
+      <div class="faq-answer">
+        在点击`饰品提取`或其他子任务时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        `生存索引`页面未正常打开——可能由于加载时间过长，或者此前触发了错误编号1。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号3</div>
+      <div class="faq-answer">
+        在点击`挑战`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        未正确传送到对应副本——可能由于加载时间过长，或者此前触发了错误编号2。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号4</div>
+      <div class="faq-answer">
+        在点击`开始战斗`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        未正确传送到对应副本——可能由于加载时间过长，或者此前触发了错误编号3
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号5</div>
+      <div class="faq-answer">
+        在点击`再来一次`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。<br>
+        此问题应极少发生，如果您遇到此问题，欢迎向我们反馈。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号6</div>
+      <div class="faq-answer">
+        在点击`再次派遣`时遇到问题。此问题发生在执行`派遣`任务中。<br>
+        此问题应极少发生，如果您遇到此问题，欢迎向我们反馈。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号7</div>
+      <div class="faq-answer">
+        在点击无名勋礼的`一键领取`时遇到问题。此问题发生在执行`无名勋礼`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        无名勋礼有红点提示但是没有可领取的奖励。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号9</div>
+      <div class="faq-answer">
+        在点击`进入游戏`时遇到问题。此问题发生在执行`自动登录`任务中。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号10</div>
+      <div class="faq-answer">
+        在点击`账号密码`时遇到问题。此问题发生在执行`自动登录`任务中。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号11</div>
+      <div class="faq-answer">
+        <del>未检测到登录界面。此问题发生在执行`自动登录`任务中。</del>在0.8.1+被移除。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号12</div>
+      <div class="faq-answer">
+        在点击`退出关卡`时遇到问题。此问题发生在执行`清开拓力`的任意一项子任务中。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号13</div>
+      <div class="faq-answer">
+        通过后备开拓力补充体力时遇到问题。此问题发生在执行`补充开拓力`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        没有后备开拓力
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号14</div>
+      <div class="faq-answer">
+        通过燃料补充体力时遇到问题。此问题发生在执行`补充开拓力`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        没有后备开拓力或没有燃料。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号15</div>
+      <div class="faq-answer">
+        通过星琼补充体力时遇到问题。此问题发生在执行`补充开拓力`任务中。如果您遇到此问题，可能是由于以下原因造成的：<br>
+        没有后备开拓力且没有燃料或没有星琼。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号16</div>
+      <div class="faq-answer">
+        点击`兑换码`时遇到问题。此问题发生在执行`兑换码`任务中。如遇到此问题，可能是由于以下原因造成的：<br>
+        菜单`ESC`界面未能正常打开。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号17</div>
+      <div class="faq-answer">
+        点击菜单右上角三个点时遇到问题，此问题发生在执行`兑换码`任务中。如遇到此问题，可能是由于以下原因造成的：<br>
+        菜单`ESC`界面未能正常打开。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号18</div>
+      <div class="faq-answer">
+        点击开始游戏按钮（差分宇宙界面）时遇到问题。可能未处于正确的页面。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号19</div>
+      <div class="faq-answer">
+        点击周期演算时遇到问题。可能未处于正确的页面。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">错误编号20</div>
+      <div class="faq-answer">
+        点击`启动差分宇宙`时遇到问题。可能未处于正确的页面。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">超时编号1</div>
+      <div class="faq-answer">
+        在20次检测时间（约50秒）内未能检测到`星际和平指南`（`F4`）界面。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">超时编号2</div>
+      <div class="faq-answer">
+        在20次检测时间（约50秒）内未能检测到聊天框（Enter）。（也作为处于大世界场景的标志）
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">超时编号3</div>
+      <div class="faq-answer">
+        在20次检测时间（约54秒）内未能检测到bilibili服的登录按钮。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">超时编号4</div>
+      <div class="faq-answer">
+        在40次检测时间（约100秒）内未能检测到挑战按钮。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">超时编号5</div>
+      <div class="faq-answer">
+        在20次检测时间（约50秒）内未能检测到委托界面。
+      </div>
+    </div>
+  </div>
+  <a href="index.html" class="back-home">← 返回首页</a>
+
+  <footer>
+    <p>&copy; 2025 StarRailAssistant. 保留所有权利。</p>
+  </footer>
+  <script>
+    // FAQ展开/收起功能
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const answer = this.nextElementSibling;
+        answer.classList.toggle('active');
+
+        // 滚动到答案区域
+        answer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+
+    // 搜索功能
+    document.getElementById('search-input').addEventListener('input', function () {
+      const searchTerm = this.value.toLowerCase();
+      const errorCode = document.getElementById('error code');
+      if (searchTerm === "") {
+        errorCode.style.display = "none";
+      }
+      else {
+        errorCode.style.display = "block";
+      }
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const question = item.querySelector('.faq-question').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = 'block';
+          item.style.animation = 'fadeIn 0.5s ease';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  </script>
+  <script src="asset/js/index.js"></script>
 </body>
+
 </html>
