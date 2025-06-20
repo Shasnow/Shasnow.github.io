@@ -40,6 +40,7 @@ jobs:
         run: |-
           npm run docs:build
           > src/.vuepress/dist/.nojekyll
+          cp CNAME src/.vuepress/dist/
 
       - name: 部署文档
         uses: JamesIves/github-pages-deploy-action@v4
