@@ -1,6 +1,6 @@
 import { hopeTheme } from "vuepress-theme-hope";
 import { componentPlugin } from "vuepress/markdown";
-
+import { docsearchPlugin } from "@vuepress/plugin-docsearch";
 import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
@@ -46,6 +46,8 @@ export default hopeTheme({
 
   // 如果想要实时查看任何改变，启用它。注: 这对更新性能有很大负面影响
   // hotReload: true,
+
+  
 
   // 此处开启了很多功能用于演示，你应仅保留用到的功能。
   markdown: {
@@ -121,6 +123,13 @@ export default hopeTheme({
 
   // 在这里配置主题提供的插件
   plugins: {
+
+    // docsearch: {
+    //   apiKey: "ed2aed1c5c3675fb742a041c1f631e3c",
+    //   indexName: "starrailassistant_top_pvwrq4sqj9_pages",
+    //   appId: "PVWRQ4SQJ9",
+    // },
+
     comment: {
       provider: "Giscus",
       repo: "EveGlowLuna/Shasnow.github.io",
@@ -128,6 +137,7 @@ export default hopeTheme({
       category: "Announcements",
       categoryId: "DIC_kwDOO-vJF84Crvke",
     },
+
 
     components: {
       components: ["Badge", "VPCard", "VPBanner" ],

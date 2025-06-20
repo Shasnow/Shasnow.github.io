@@ -187,9 +187,13 @@ SRA 已对本地授权码数据使用 `Windows DPAPI` 加密，这种加密方�
 具体步骤如下：
 
 1. 打开SRA所在文件夹
-2. 在文件夹右键 -> 在终端中打开（仅限Windows 11或安装了Windows Terminal应用程序的Windows 10）或点击 `文件资源管理器` 上方的地址栏，在可编辑状态下写 `cmd` 或 `powershell` 打开命令行。
+2. 在**文件夹内空白处**右键 -> 在终端中打开（仅限Windows 11或安装了Windows Terminal应用程序的Windows 10）或点击 `文件资源管理器` 上方的地址栏，在可编辑状态下写 `cmd` 或 `powershell` 打开命令行。
 3. 输入`SRA.exe`（cmd）或`.\SRA.exe`（powershell），此时SRA将以调试模式启动，你可以在命令行程序看到包括 `DEBUG` 级别和 `TRACE` 级别的所有信息。
 4. 如果此时关闭命令行窗口，SRA也将一同被关闭。
+
+::: tip 在终端窗口中直接输入`cmd`或`powershell`可以在`命令提示符`和`Windows PowerShell` 之间互相切换
+:::
+
 
 ## 命令行模式
 
@@ -218,13 +222,13 @@ Start-Process powershell -Verb runAs -ArgumentList "-NoExit", "-Command", "cd '$
 
 :::warning
 
-在某些情况下，这两个命令也用不了。此时只能使用 `cd` 命令像双击打开文件那样打开文件目录。
+在某些情况下，这个命令可能无法使用。此时只能使用 `cd` 命令像双击打开文件那样打开文件目录。
     
 不过，你可以复制地址栏，然后粘贴在 `cd` 的后面。
 
 :::
 
-2. 在新窗口中输入 ``SRA.exe --cli`` （cmd）或 ``.\SRA.exe --cli`` （powershell）。此时，你已经成功启用命令行了！
+2. 在新窗口中输入 `SRA.exe --cli` （cmd）或 `.\SRA.exe --cli` （powershell）。此时，你已经成功启用命令行了！
 
 :::warning
 
@@ -233,14 +237,14 @@ Start-Process powershell -Verb runAs -ArgumentList "-NoExit", "-Command", "cd '$
 这是打包后的显示错误，截止到目前（文档编辑最后时间）尚未解决。
 
 :::
-SRA的命令行应该是这样的：
+进入命令行后，你将看到如下信息：
 
 ```bash
 SRA v0.8.2 for Windows
 欢迎使用 SRA 命令行模式！输入 help 或 ? 查看帮助信息。
 SRA>
 ```
-一切准备就绪，可以输入help或者?来获取帮助。
+现在，你可以享用命令行模式了。输入 `?` 或 `help` 来获取帮助。
 
 ```bash
 SRA>?
@@ -253,20 +257,19 @@ SRA>?
   run - 运行指定配置的任务
   version - 显示当前SRA版本
 ```
-目前 SRA 命令行仅可查看配置文件而不可修改。如果要进行配置操作，还请使用GUI。
+目前 SRA 命令行仅可查看配置文件而不可修改。如果要进行配置操作，请使用GUI。
 
-输入 run 可以以指定的配置运行，如果不指定配置，将使用 Default (config 命令同理)
+输入 `run` 可以以指定的配置运行，如果不指定配置，将默认使用 Default (`config` 命令同理)。
 
 例如: `run Default other...`
 
-:::warning
-该命令会线程阻塞，你无法在任务结束前执行其它命令。如果你想要停止任务，请在命令行使用 `Ctrl` + `C` 来终止。
+:::warning 该命令会线程阻塞，你无法在任务结束前执行其它命令。如果你想要停止任务，请在命令行使用 `Ctrl` + `C` 来终止。
 :::
 
 :::tip
 另一种方式：
 
-如果你使用SRA命令行只是为了执行任务，或者你只想直接执行任务不使用SRA命令行，在窗口中输入`SRA --run [config] [...]`即可直接开始执行任务。
+如果你使用SRA命令行只是为了执行任务，或者你只想直接执行任务不使用SRA命令行，可以在窗口中输入`SRA --run [config] [...]`直接开始执行任务。
 
 例如: `SRA --run Default other...`
 :::
