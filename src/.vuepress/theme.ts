@@ -5,7 +5,7 @@ import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://eveglowluna.github.io/",
+  hostname: "https://starrailassistant.top",
 
   author: {
     name: "EveGlowLuna",
@@ -14,7 +14,7 @@ export default hopeTheme({
 
   logo: "/img/SRAico.png",
 
-  repo: "EveGlowLuna/EveGlowLuna.github.io",
+  repo: "Shasnow/Shasnow.github.io",
 
   docsDir: "src",
 
@@ -121,13 +121,12 @@ export default hopeTheme({
 
   // 在这里配置主题提供的插件
   plugins: {
-    // 注意: 仅用于测试! 你必须自行生成并在生产环境中使用自己的评论服务
     comment: {
       provider: "Giscus",
-      repo: "vuepress-theme-hope/giscus-discussions",
-      repoId: "R_kgDOG_Pt2A",
+      repo: "EveGlowLuna/Shasnow.github.io",
+      repoId: "R_kgDOO-vJFw",
       category: "Announcements",
-      categoryId: "DIC_kwDOG_Pt2M4COD69",
+      categoryId: "DIC_kwDOO-vJF84Crvke",
     },
 
     components: {
