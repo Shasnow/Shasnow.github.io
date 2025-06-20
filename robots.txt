@@ -2,5 +2,3 @@ User-agent:*
 Disallow:
 
 Sitemap: https://starrailassistant.top/sitemap.xml
-
-# Algolia-Crawler-Verif: 5B13044E26157D83
