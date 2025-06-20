@@ -8,7 +8,7 @@ heroFullScreen: false
 bgImage: https://theme-hope-assets.vuejs.press/bg/9-light.svg
 bgImageDark: https://theme-hope-assets.vuejs.press/bg/9-dark.svg
 bgImageStyle:
-    background-attachment: fixed
+  background-attachment: fixed
 heroText: 常见问题及解答
 tagline: 提供您在使用StarRailAssistant时可能遇到的问题及解决方案
 ---
@@ -38,7 +38,8 @@ SRA仅在命名和UI上部分借鉴MAA，除此之外与MAA并无联系。
 :::
 
 ::: details 能用异种分辨率吗（例如1600×900）/只能使用1920 * 1080吗？
-SRA理论支持全16:9的分辨率，但是在部分分辨率下可能会出现识别错误。效果较稳定的分辨率为1600 * 900，此时需调节设置中识图置信度为0.8。其他分辨率请自行尝试。
+SRA理论支持全16:9的分辨率，但是在部分分辨率下可能会出现识别错误。效果较稳定的分辨率为1600 *
+900，此时需调节设置中识图置信度为0.8。其他分辨率请自行尝试。
 :::
 
 ::: details Win7可以用吗？
@@ -58,15 +59,18 @@ SRA已接入Mirror酱，可以尝试使用。或先下载SRA更新器，再使�
 :::
 
 ::: details 为什么下了点exe文件显示存在威胁，电脑自动删掉了，完全打不开?
-SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无法正常运行。请放心，SRA不会对您的电脑造成任何损害。运行软件前，请将SRA的目录添加入 Windows Defender 排除项以及防病毒软件的信任区或开发者目录，避免被误杀。
+SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无法正常运行。请放心，SRA不会对您的电脑造成任何损害。运行软件前，请将SRA的目录添加入
+Windows Defender 排除项以及防病毒软件的信任区或开发者目录，避免被误杀。
 :::
 
 ::: details 为什么限制配置方案的数量/如何提升配置方案的数量？
-唉！蛋糕还是败给了蛋糕<br />蛋糕有人在蛋糕做蛋糕阴蛋糕，可能是蛋糕动了蛋糕的蛋糕<br />蛋糕，蛋糕赢了……<br />总之，普通用户的配置方案将被限制为3个，如果需要提升数量或解除限制，请联系作者。<br />这个过程不会很难。
+唉！蛋糕还是败给了蛋糕<br />蛋糕有人在蛋糕做蛋糕阴蛋糕，可能是蛋糕动了蛋糕的蛋糕<br />蛋糕，蛋糕赢了……<br />
+总之，普通用户的配置方案将被限制为3个，如果需要提升数量或解除限制，请联系作者。<br />这个过程不会很难。
 :::
 
 ::: details SRA.exe不见了/SRA.exe会把自己删除？
-我们确信SRA中不含有把自己删除的代码。<br />出现这种情况可能是杀毒软件误报，特别是 **Windows Defender。**<br />下面的步骤可以帮助您解决问题<br />[点击此处查看如何为软件添加信任](quickstart.html#trust)
+我们确信SRA中不含有把自己删除的代码。<br />出现这种情况可能是杀毒软件误报，特别是 **Windows Defender。**<br />
+下面的步骤可以帮助您解决问题<br />[点击此处查看如何为软件添加信任](quickstart.html#trust)
 :::
 
 ::: details 错误编号(1-20)
