@@ -188,7 +188,7 @@ SRA 已对本地授权码数据使用 `Windows DPAPI` 加密，这种加密方�
 
 1. 打开SRA所在文件夹
 2. 在文件夹右键 -> 在终端中打开（仅限Windows 11或安装了Windows Terminal应用程序的Windows 10）或点击 `文件资源管理器` 上方的地址栏，在可编辑状态下写 `cmd` 或 `powershell` 打开命令行。
-3. 输入SRA.exe（cmd）或.\SRA.exe（powershell），此时SRA将以调试模式启动，你可以在命令行程序看到包括 `DEBUG` 级别和 `TRACE` 级别的所有信息。
+3. 输入`SRA.exe`（cmd）或`.\SRA.exe`（powershell），此时SRA将以调试模式启动，你可以在命令行程序看到包括 `DEBUG` 级别和 `TRACE` 级别的所有信息。
 4. 如果此时关闭命令行窗口，SRA也将一同被关闭。
 
 ## 命令行模式
