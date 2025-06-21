@@ -17,7 +17,7 @@ tagline: 下载StarRailAssistant，开始你的托管之旅。
 ## 节点
 
 - [**GitHub Releases**](https://github.com/Shasnow/StarRailAssistant/releases/latest)
-- [**Mirror酱**](https://mirrorchyan.com/zh/projects?rid=StarRailAssistant&source=webside)
+- [**Mirror酱**](https://mirrorchyan.com/zh/projects?rid=StarRailAssistant&source=sra-webside)
 :::tip
 
 SRA已集成Mirror酱，可直接从Mirror酱下载
