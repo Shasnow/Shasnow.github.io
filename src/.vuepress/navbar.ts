@@ -50,5 +50,9 @@ export default navbar([
     {
       text: "项目仓库",
       link: "https://github.com/Shasnow/StarRailAssistant"
+    },
+    {
+      text: "插件管理平台（测试环节）",
+      link: "https://sra-pm-platform.netlify.app/"
     }
 ]);

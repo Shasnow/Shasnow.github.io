@@ -5,8 +5,8 @@ icon: download
 
 heroFullScreen: false
 
-bgImage: https://theme-hope-assets.vuejs.press/bg/8-light.svg
-bgImageDark: https://theme-hope-assets.vuejs.press/bg/8-dark.svg
+bgImage: https://theme-hope-assets.vuejs.press/bg/7-light.svg
+bgImageDark: https://theme-hope-assets.vuejs.press/bg/7-dark.svg
 bgImageStyle:
     background-attachment: fixed
 heroText: 下载
@@ -27,4 +27,4 @@ Mirror酱作为第三方分发平台，仅对下载加速服务收取费用，�
 Mirror酱也可以负责接下来的更新工作。
 
 :::
-- 在寻找其他版本？ [**从GitHub下载**](https://github.com/Shasnow/SRAUpdater/releases/latest)
+- 在寻找其他版本？ [**从GitHub下载**](https://github.com/Shasnow/SRAUpdater/releases)

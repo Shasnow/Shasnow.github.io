@@ -11,12 +11,12 @@ bgImageDark: https://theme-hope-assets.vuejs.press/bg/2-dark.svg
 bgImageStyle:
     background-attachment: fixed
 heroText: 插件商店
-tagline: 安装由官方/第三方开发的扩展来提高SRA的可用性与美观性<br>插件商店目前仅效果预览
+tagline: 安装由官方/第三方开发的扩展来提高SRA的可用性与美观性<br>仅效果预览。
 
 highlights:
     - header: 插件列表
-      bgImage: https://theme-hope-assets.vuejs.press/bg/4-light.svg
-      bgImageDark: https://theme-hope-assets.vuejs.press/bg/4-dark.svg
+      # bgImage: https://theme-hope-assets.vuejs.press/bg/4-light.svg
+      # bgImageDark: https://theme-hope-assets.vuejs.press/bg/4-dark.svg
       bgImageStyle:
         background-attachment: fixed
       features:

@@ -21,7 +21,10 @@ jobs:
           # 如果你文档需要 Git 子模块，取消注释下一行
           # submodules: true
 
-
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v5
+        with: 
+          python-version: '3.13.4'
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
@@ -33,6 +36,12 @@ jobs:
         run: |
           corepack enable
           npm ci --legacy-peer-deps
+          pip install supabase
+
+      - name: 生成插件商店页面
+        env:
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 generate_pluginstore.py
 
       - name: 构建文档
         env:

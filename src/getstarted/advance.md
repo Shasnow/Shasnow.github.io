@@ -20,9 +20,7 @@ order: 2
 
 可以点击上方 `多账号` (0.8.0)或 `配置文件` 进入。
 
-![多账号配置](/img/use/ma.png)
-
-`0.8.0` 版本中的"配置文件"
+![0.8.0 版本中的"配置文件"](/img/use/ma.png)
 
 :::tip
 每个'配置方案'对应着一个账号的托管方案。
@@ -267,11 +265,37 @@ SRA>?
 :::
 
 :::tip
-另一种方式：
+**另一种方式：**
 
 如果你使用SRA命令行只是为了执行任务，或者你只想直接执行任务不使用SRA命令行，可以在窗口中输入`SRA --run [config] [...]`直接开始执行任务。
 
 例如: `SRA --run Default other...`
+
+你也可以创建一个批处理脚本(假设为run.bat)，然后将以下内容复制(**注意将参数部分换成实际需要的参数**)到文件中:
+
+```bash
+@echo off
+setlocal
+
+:: 设置程序名称和参数（请替换为你的实际参数）
+set "PROGRAM=SRA.exe"
+set "ARGS=--run Default"
+
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo 请求管理员权限...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
+
+cd /d "%~dp0"
+
+"%PROGRAM%" %ARGS%
+
+endlocal
+
+```
+
 :::
 
 可以输入exit来退出程序。
