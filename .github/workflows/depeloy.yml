@@ -6,6 +6,9 @@ on:
     branches:
       - main
       - gh-pages
+  schedule:
+    # 每天北京时间凌晨三点 (UTC 19:00)
+    - cron: '0 19 * * *'
 
 permissions:
   contents: write

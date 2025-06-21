@@ -1,4 +1,5 @@
 import os
+import urllib3
 from supabase import create_client, Client
 
 SUPABASE_URL = "https://hddyaljmbzepamxegwee.supabase.co"
@@ -35,12 +36,30 @@ highlights:
 """
 
     features_lines = []
+    http = urllib3.PoolManager()
     for p in plugins:
+        link = p.get("repo", "#")
+        # 检查链接是否能正常访问
+        if link != "#":
+            try:
+                resp = http.request('GET', link, timeout=5)
+                if resp.status >= 400:
+                    print(f'警告: 插件 \'{p.get("name", "未知插件")}\' 的链接 \'{link}\' 访问失败，状态码: {resp.status}。将从 Supabase 中删除此插件。')
+                    supabase.table("plugins").delete().eq("id", p.get("id")).execute()
+                    continue
+            except urllib3.exceptions.MaxRetryError:
+                print(f'警告: 插件 \'{p.get("name", "未知插件")}\' 的链接 \'{link}\' 访问超时。将从 Supabase 中删除此插件。')
+                supabase.table("plugins").delete().eq("id", p.get("id")).execute()
+                continue
+            except Exception as e:
+                print(f'警告: 插件 \'{p.get("name", "未知插件")}\' 的链接 \'{link}\' 访问发生未知错误: {e}。将从 Supabase 中删除此插件。')
+                supabase.table("plugins").delete().eq("id", p.get("id")).execute()
+                continue
+
         title = p.get("name") or "未命名插件"
         details = p.get("description", "").replace("\n", "<br>")
         author = p.get("author", "未知作者")
         version = p.get("version", "未知版本")
-        link = p.get("repo", "#")
 
         feature_md = f"""        - title: {title}
           details: {details}<br>作者：{author}<br>版本：{version}

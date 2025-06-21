@@ -42,7 +42,8 @@ export default navbar([
           children: [
             { text: "编写规范", icon: "file", link: "/develop/coding-style-guidelines" },
             { text: "SRA API", icon: "box", link: "/develop/API" },
-            { text: "插件开发指南", icon: "laptop-code", link: "/develop/plugin-development-guide" }
+            { text: "插件开发指南", icon: "laptop-code", link: "/develop/plugin-development-guide" },
+            { text: "插件提交管理指南", icon: "upload", link: "/develop/plugin-submit-manage-guide" }
           ]
         }
       ]
