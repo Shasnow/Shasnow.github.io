@@ -65,4 +65,7 @@ highlights:
 
 if __name__ == "__main__":
     plugins = fetch_plugins()
-    generate_md(plugins)
+    if not plugins:
+        print("未获取到插件数据，跳过生成插件商店页面。")
+    else:
+        generate_md(plugins)
