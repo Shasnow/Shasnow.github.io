@@ -39,7 +39,7 @@ jobs:
         run: |
           corepack enable
           npm ci --legacy-peer-deps
-          pip install supabase
+          pip install supabase urllib3
 
       - name: 生成插件商店页面
         env:
