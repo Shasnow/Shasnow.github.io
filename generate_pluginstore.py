@@ -55,8 +55,8 @@ highlights:
                 print(f'警告: 插件 \'{p.get("name", "未知插件")}\' 的链接 \'{link}\' 访问发生未知错误: {e}。将从 Supabase 中删除此插件。')
                 supabase.table("plugins").delete().eq("id", p.get("id")).execute()
                 continue
-
         title = p.get("name") or "未命名插件"
+        print(f"插件 {title} 提供的链接可正常访问，继续...")
         details = p.get("description", "").replace("\n", "<br>")
         author = p.get("author", "未知作者")
         version = p.get("version", "未知版本")
