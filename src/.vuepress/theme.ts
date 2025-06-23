@@ -124,11 +124,11 @@ export default hopeTheme({
   // 在这里配置主题提供的插件
   plugins: {
 
-    // docsearch: {
-    //   apiKey: "ed2aed1c5c3675fb742a041c1f631e3c",
-    //   indexName: "starrailassistant_top_pvwrq4sqj9_pages",
-    //   appId: "PVWRQ4SQJ9",
-    // },
+    docsearch: {
+      appId: "S8GXZVU0M4",
+      apiKey: "29f87aa85e555e6bcd3df6e748615101",
+      indexName: "starrailassistant",
+    },
 
     comment: {
       provider: "Giscus",
