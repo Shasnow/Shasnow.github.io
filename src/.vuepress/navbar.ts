@@ -6,11 +6,10 @@ export default navbar([
   "/download",
   "/sponsor",
   "/faq",
-  {
-      text: "开始使用",
-      icon: "signs-post",
-      prefix: "/getstarted/",
-      children: [
+    {
+      text: "教程文档",
+      icon: "book",
+      children:[
         {
           text: "快速上手",
           prefix: "/getstarted/",
@@ -19,26 +18,19 @@ export default navbar([
             { text: "基础操作", icon: "flag", link: "/getstarted/getstarted" },
             { text: "进阶操作", icon: "rocket", link: "/getstarted/advance" }
           ]
-        }
-      ]
-    },
-    {
-      text: "开发文档",
-      icon: "laptop-code",
-      prefix: "/develop/",
-      children: [
+        },
         {
-          text: "前置条件",
-          prefix: "/getstarted/",
+          text: "参与开发-前置条件",
+          prefix: "/develop/",
           children: [
             { text: "介绍", icon: "play", link: "/develop/" },
-            { text: "前言", icon: "info", link: "/develop/before" },
+            { text: "参与开发-前言", icon: "info", link: "/develop/before" },
             { text: "学习 Python", icon: "laptop", link: "/develop/study" }
           ]
         },
         {
-          text: "开始开发",
-          prefix: "/getstarted/",
+          text: "参与开发-开始开发",
+          prefix: "/develop/",
           children: [
             { text: "编写规范", icon: "file", link: "/develop/coding-style-guidelines" },
             { text: "SRA API", icon: "box", link: "/develop/API" },
@@ -49,11 +41,17 @@ export default navbar([
       ]
     },
     {
-      text: "项目仓库",
-      link: "https://github.com/Shasnow/StarRailAssistant"
-    },
-    {
-      text: "插件管理平台（测试环节）",
-      link: "https://sra-pm-platform.netlify.app/"
+      text: "外部链接",
+      icon: "link",
+      children: [
+        {
+          text: "项目仓库",
+          link: "https://github.com/Shasnow/StarRailAssistant"
+        },
+        {
+          text: "插件管理平台（测试环节）",
+          link: "https://sra-pm-platform.netlify.app/"
+        }
+      ]
     }
 ]);
