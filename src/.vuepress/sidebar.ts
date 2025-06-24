@@ -2,11 +2,6 @@ import { sidebar } from "vuepress-theme-hope";
 
 export default sidebar({
   "/": [
-    "",
-    "pluginstore",
-    "download",
-    "sponsor",
-    "faq",
     {
       text: "开始使用",
       icon: "signs-post",
