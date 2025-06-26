@@ -1,7 +1,7 @@
 ---
 title: 插件开发指南
 icon: laptop-code
-order: 5
+order: 6
 ---
 
 # 插件开发指南
