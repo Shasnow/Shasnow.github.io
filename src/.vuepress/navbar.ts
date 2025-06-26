@@ -25,7 +25,8 @@ export default navbar([
           children: [
             { text: "介绍", icon: "play", link: "/develop/" },
             { text: "参与开发-前言", icon: "info", link: "/develop/before" },
-            { text: "学习 Python", icon: "laptop", link: "/develop/study" }
+            { text: "学习 Python", icon: "laptop", link: "/develop/study" },
+            { text: "PySide基础", icon: "code", link:"/develop/study-pyside"}
           ]
         },
         {

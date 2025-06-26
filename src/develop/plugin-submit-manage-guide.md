@@ -1,7 +1,7 @@
 ---
 title: 上传插件以及更新插件信息
 icon: upload
-order: 6
+order: 7
 ---
 
 # 上传插件及更新插件信息

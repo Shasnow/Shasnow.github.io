@@ -1,6 +1,6 @@
 ---
 title: API
-order: 4
+order: 5
 icon: box
 ---
 
@@ -11,7 +11,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 一、鼠标事件  
-鼠标事件用于模拟真实鼠标操作，支持图像定位点击、坐标点击、光标移动及滚轮控制，核心实现位于 `SRACore.util.SRAOperator.SRAOperator` 类。
+鼠标事件用于模拟真实鼠标操作，支持图像定位点击、坐标点击、光标移动及滚轮控制，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
 
 
 ### 1.1 click_img(img_path: str, title: str = "崩坏：星穹铁道", offset: tuple[int, int] = (0, 0))  
@@ -64,7 +64,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 二、键盘事件  
-键盘事件用于模拟键盘输入及组合键操作，核心实现位于 `SRACore.util.SRAOperator.SRAOperator` 类。
+键盘事件用于模拟键盘输入及组合键操作，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
 
 
 ### 2.1 press_key(key: str, presses: int = 1, interval: float = 0.1)  
@@ -111,7 +111,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 三、画面检测  
-画面检测是SRA的核心能力，通过图像识别定位游戏内元素，核心实现位于 `SRACore.util.SRAOperator.SRAOperator` 类。
+画面检测是SRA的核心能力，通过图像识别定位游戏内元素，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
 
 
 ### 3.0 reset()  
@@ -217,7 +217,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 四、电源操作  
-电源操作用于控制计算机的关机、休眠等行为，实现位于 `SRACore.util.WindowsPower` 模块。  
+电源操作用于控制计算机的关机、休眠等行为，实现位于 `SRACore.utils.WindowsPower` 模块。  
 
 
 ### 4.1 schedule_shutdown(delay_in_seconds: int)  
@@ -243,7 +243,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 五、进程操作  
-进程操作用于管理游戏及相关进程，实现位于 `SRACore.util.WindowsProcess` 模块。  
+进程操作用于管理游戏及相关进程，实现位于 `SRACore.utils.WindowsProcess` 模块。  
 
 
 ### 5.1 find_window(title: str) -> int | None  
@@ -282,7 +282,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 六、配置操作  
-配置操作用于管理工具的自定义配置（如任务开关、路径设置），实现位于 `SRACore.util.Configure` 模块。  
+配置操作用于管理工具的自定义配置（如任务开关、路径设置），实现位于 `SRACore.utils.Configure` 模块。  
 
 
 ### 6.1 init()  
@@ -305,7 +305,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 七、日志操作  
-日志操作用于记录工具运行状态，便于调试与问题排查，核心对象为 `SRACore.util.Logger.logger`（基于Python `logging` 模块封装）。  
+日志操作用于记录工具运行状态，便于调试与问题排查，核心对象为 `SRACore.utils.Logger.logger`（基于Python `logging` 模块封装）。  
 
 
 ### 7.1 info(text: str)  
@@ -329,7 +329,7 @@ SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功
 
 
 ## 八、对话框  
-对话框用于与用户交互（如输入、提示），实现位于 `SRACore.util.Dialog` 模块，基于PySide6的 `QDialog` 封装。  
+对话框用于与用户交互（如输入、提示），实现位于 `SRACore.utils.Dialog` 模块，基于PySide6的 `QDialog` 封装。  
 
 
 ### 8.1 MessageBox(parent: QWidget, title: str, message: str)  
