@@ -68,7 +68,7 @@ highlights:
 
       - title: 开箱即用
         icon: box
-        details: 使用nutika打包，以绿色软件形式发布，下载解压即可使用。
+        details: 使用nuitka打包，以绿色软件形式发布，下载解压即可使用。
         # link: https://theme-hope.vuejs.press/zh/guide/layout/sidebar.html
 
       - title: 安全
