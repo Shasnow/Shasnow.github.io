@@ -9,7 +9,9 @@ bgImageStyle:
   background-attachment: fixed
 heroText: StarRailAssistant
 heroFullScreen: true
-tagline: 一个基于图像识别的崩铁自动化程序，帮您完成从启动到退出的崩铁日常。
+tagline: |
+  崩坏：星穹铁道助手
+  一个基于图像识别的崩铁自动化程序，帮您完成从启动到退出的崩铁日常。
 
 actions:
   - text: 下载
