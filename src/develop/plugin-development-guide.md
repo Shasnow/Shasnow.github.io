@@ -66,7 +66,7 @@ loadPeriod = "normal"
 ```python
 NAME="StarRailAssistant Error Analyzer"                     # 插件的名称
 VERSION="0.2 Alpha"                                         # 插件的版本
-DESCRIPTION="分析SRA运行时错误，以中文提示显示并提供可能的解决方案"  # 插件的描述
+DESCRIPTION="分析SRA运行时错误"                               # 插件的描述
 AUTHOR="EveGlowLuna"                                        # 插件的作者
 UI=PluginManager.public_ui                                  # 请求的 UI
 ```
@@ -141,7 +141,7 @@ from . import somepluginfile1
 ```python
 class Plugin(PluginBase):
     def __init__(self):
-        super().__init__("Plugin Name") # 此处需要填写名称（您的插件名称），否则会引发报错。
+        super().__init__("Plugin Name") # 此处需要填写名称（插件标识线程），否则会引发报错。
         # 可以在这里初始化类内容。
         # 你可以定义变量，也可以调用函数。
         # 例如：
@@ -154,13 +154,14 @@ class Plugin(PluginBase):
     def add_function(self):
         # 此处作为一个示例被调用。
         self.plugin_count += 1
+        logger.info(f"plugin_count目前值：{str(self.plugin_count)}")
 ```
 
 记得添加一个`run()`函数，即便它什么用也没有。
 
 ```python
 def run():
-    pass # 可以执行你想干的事，他会在设置页面中点击插件按钮后执行。
+    pass # 虽然啥也没干，但 SRA 确实能加载你的插件了！
 ```
 
 创建一个入口函数。
@@ -174,6 +175,6 @@ if __name__ != "__main__":
 
 恭喜！此时您可以打开 SRA 查看您刚写的内容了！
 
-!!2025-06-22 16:27:38 | WARNING | Plugins.load_plugins:49 | Failed to load plugin 'MyPlugin': PluginBase.__init__() missing 1 required positional argument: 'name'（这什么玩意？）!!
+!!2025-06-22 16:27:38 | WARNING | Plugins.load_plugins:49 | Failed to load plugin 'MyPlugin': PluginBase.__init__() missing 1 required positional argument: 'name'（这什么玩意？！）!!
 
 至此，您可以创建一个完整的插件了。编写完成后，您可以提交插件，~~或等待插件被官方收录~~。
