@@ -11,6 +11,8 @@ SRA使用PySide6作为GUI界面。
 
 此教程将以初学者角度讲解PySide6的基础使用，并重点介绍Qt Designer的应用。
 
+_标有 * 的为选学内容，SRA中暂未涉及这些知识_
+
 ## 基础
 PySide6 是 Qt 框架的 Python 绑定，用于创建跨平台的 GUI 应用程序。
 
@@ -502,7 +504,7 @@ if __name__ == "__main__":
    - 非模态对话框允许同时操作父窗口
    - 使用`setModal(True)`设置模态
 
-### 文件操作
+## 文件操作
 在 PySide6 应用程序中进行文件操作，通常会结合 `QFileDialog` 来选择文件路径。
 
 ```python
@@ -583,7 +585,7 @@ if __name__ == "__main__":
     app.exec()
 ```
 
-## 文件操作详解
+### 文件操作详解
 
 PySide6 提供了 `QFileDialog` 类来处理文件选择操作，这是 GUI 应用中常见的功能。下面详细介绍文件操作的关键点：
 
@@ -601,7 +603,7 @@ PySide6 提供了 `QFileDialog` 类来处理文件选择操作，这是 GUI 应�
 3. **安全文件操作**
    使用Python的`with`语句可以确保文件正确关闭，即使在发生异常的情况下。
 
-### 多线程
+## 多线程
 在 GUI 应用程序中，长时间运行的任务应该在单独的线程中执行，以避免阻塞主线程，保持界面响应。
 
 ```python
@@ -737,7 +739,7 @@ if __name__ == "__main__":
     app.exec()
 ```
 
-## 多线程编程指南
+### 多线程编程指南
 
 在GUI应用中，长时间运行的任务必须放在单独的线程中执行，以避免界面冻结。PySide6使用`QThread`和`Signal`机制实现线程间通信。
 
@@ -758,7 +760,7 @@ if __name__ == "__main__":
    - 通过信号将错误信息传递到主线程
    - 在主线程中显示错误信息
 
-### 数据库集成
+## 数据库集成 *
 PySide6 可以与各种数据库进行集成，例如 SQLite，通过 Qt 的数据库模块 `QtSql`。
 
 ```python
@@ -838,11 +840,11 @@ window.show()
 app.exec()
 ```
 
-## 数据库集成详解
+### 数据库集成详解 *
 
 PySide6 通过 `QtSql` 模块提供了强大的数据库支持，可以轻松集成 SQLite、MySQL、PostgreSQL 等数据库。
 
-### 数据库连接管理
+### 数据库连接管理 *
 
 1. **连接数据库**
    - 使用 `QSqlDatabase.addDatabase()` 创建数据库连接
@@ -859,7 +861,7 @@ PySide6 通过 `QtSql` 模块提供了强大的数据库支持，可以轻松集
    - 使用 `setRowCount()` 和 `setColumnCount()` 设置表格大小
    - 通过 `setItem()` 填充表格内容
 
-### 网络编程
+## 网络编程 *
 PySide6 提供了 `QtNetwork` 模块，用于处理网络通信，例如 HTTP 请求。
 
 ```python
@@ -946,7 +948,7 @@ if __name__ == "__main__":
     app.exec()
 ```
 
-## 网络编程详解
+### 网络编程详解
 
 PySide6 通过 `QtNetwork` 模块提供了强大的网络功能，支持 HTTP、HTTPS、FTP 等协议。
 
@@ -980,7 +982,7 @@ PySide6 通过 `QtNetwork` 模块提供了强大的网络功能，支持 HTTP、
 - 处理SSL/TLS安全连接
 - 考虑使用线程处理大量请求
 
-### 绘图与图形视图
+## 绘图与图形视图
 PySide6 提供了强大的绘图功能，通过 `QPainter` 可以在任何 `QWidget` 上进行绘制。`QGraphicsView` 和 `QGraphicsScene` 则提供了一个用于管理大量 2D 图形项的框架。
 
 ```python
@@ -1055,7 +1057,7 @@ app.exec()
 *   **QGraphicsView**: 显示 `QGraphicsScene` 内容的视图
 *   **QGraphicsItem**: 场景中的基本图形项（如 `QGraphicsRectItem`, `QGraphicsEllipseItem`）
 
-### 部署
+## 部署
 将 PySide6 应用程序打包成可执行文件，方便在没有 Python 环境的机器上运行。常用的工具是 `PyInstaller`。
 
 #### 使用 PyInstaller 打包
