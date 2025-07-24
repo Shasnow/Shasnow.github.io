@@ -15,8 +15,6 @@ tagline: 安装由官方/第三方开发的扩展来提高SRA的可用性与美�
 
 highlights:
     - header: 插件列表
-      # bgImage: https://theme-hope-assets.vuejs.press/bg/4-light.svg
-      # bgImageDark: https://theme-hope-assets.vuejs.press/bg/4-dark.svg
       bgImageStyle:
         background-attachment: fixed
       features:
