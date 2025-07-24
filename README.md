@@ -22,7 +22,21 @@ npm install  # 或者使用 pnpm install / yarn install
 ```sh
 npm run docs:dev  # 或 pnpm run docs:dev / yarn docs:dev
 ```
-访问 **`http://localhost:5173/`** 预览文档。
+你会在控制台看到如下内容：
+```bash
+> sra-docs@1.0.0 docs:dev
+> vuepress-vite dev src
+
+✔ Initializing and preparing data - done in 1.09s
+
+  vite v6.3.5 dev server running at:
+
+  ➜  Local:   http://localhost:8080/
+  ➜  Network: http://172.23.224.1:8080/
+  ➜  Network: http://192.168.2.6:8080/
+```
+你可以Ctrl+鼠标左键点击提示中的地址来预览文档。
+你也可以直接访问 **`http://localhost:8080/`** 来预览文档。
 
 ### 3️⃣ 生成静态文件
 ```sh
