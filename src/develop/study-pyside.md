@@ -130,7 +130,7 @@ pyside6-designer
 
 PySide6提供了两种方式加载.ui文件，各有优缺点：
 
-#### 方法1：动态加载（推荐）
+#### 方法1：动态加载（StarRailAssistant 正在使用的方式）
 ```python
 import sys
 from PySide6.QtWidgets import QApplication

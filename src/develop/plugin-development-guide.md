@@ -52,21 +52,23 @@ plugin_name/
 - loadPeriod: 加载时机，如果为`normal`则会在 SRA 运行时直接加载
 
 示例如下：
-```python
-NAME="StarRailAssistant Error Analyzer"                     # 插件的名称
-VERSION="0.2 Alpha"                                         # 插件的版本
-DESCRIPTION="分析SRA运行时错误，以中文提示显示并提供可能的解决方案"  # 插件的描述
-AUTHOR="EveGlowLuna"                                        # 插件的作者
-UI=PluginManager.public_ui                                  # 请求的 UI
-```
 
+- 对于0.8.3及后续版本
 ```toml
 displayName = "StarRailAssistant Error Analyzer"
 version = "0.2 Alpha"
 author = "EveGlowLuna"
 description = "分析SRA运行时错误，以中文提示显示并提供可能的解决方案"
-SRAVersion: "0.8.2"
-loadPeriod: "normal"
+SRAVersion = "0.8.2"
+loadPeriod = "normal"
+```
+- 对于0.8.3前的版本
+```python
+NAME="StarRailAssistant Error Analyzer"                     # 插件的名称
+VERSION="0.2 Alpha"                                         # 插件的版本
+DESCRIPTION="分析SRA运行时错误"                               # 插件的描述
+AUTHOR="EveGlowLuna"                                        # 插件的作者
+UI=PluginManager.public_ui                                  # 请求的 UI
 ```
 
 ## 插件 API
@@ -88,16 +90,18 @@ loadPeriod: "normal"
 ### 前置条件
 
 1. 下载源代码
-- 前往 https://github.com/Shasnow/StarRailAssistant ，点击`Code` -> `Download ZIP`，下载后解压到一个文件夹中
-- 使用 `git clone https://github.com/Shasnow/StarRailAssistant.git` (要求电脑中有 `Git`)
+- 前往 https://github.com/Shasnow/StarRailAssistant ，点击`Code` -> `Download ZIP`，下载后解压到一个文件夹中 或 使用 `git clone https://github.com/Shasnow/StarRailAssistant.git` (要求电脑中有 `Git`)
+- 前往 https://github.com/Shasnow/StarRailAssistant/releases ，直接下载**编译好的SRA本体**
 
 2. 创建插件结构
 
-在 *IDE* 或 *文件资源管理器* 中，打开项目的文件夹，找到\plugins，创建一个文件夹，文件夹的名称可随意填写，最好体现出你插件的名称/行为。
+在 *IDE* 或 *文件资源管理器* 中，打开项目的文件夹，找到\plugins（或创建plugins文件夹），在\plugins中创建一个文件夹，文件夹的名称可随意填写，最好体现出你插件的名称/行为。
 
 ::: tip 
 
 文件夹中自带了一个插件： `BeautifulLog`，您的插件可以仿照此插件来写。
+
+~~这个插件在新版本中疑似被删除。如果你想下载一个插件作为示例，可以前往[插件商店](https://starrailassistant.top/pluginstore.html)下载~~
 
 :::
 
@@ -107,13 +111,12 @@ loadPeriod: "normal"
 
 3. 填写插件基本信息
 
-在您的`plugin.toml`和`__init__.py`中填写插件基本信息。上方已经介绍过，此处不过多赘述。
+- 在0.8.3后
+在文件根目录创建一个`plugin.toml`文件，在文件中填写插件基本信息。
 
-::: info 新版本中的元数据
+- 在0.8.3前
+在`__init__.py`文件中填写插件基本信息。
 
-新版本不再强制要求`__init__.py`中填写插件基本信息。所以如果你的代码文件中没有使用到的地方，你可以不去填写。
-
-:::
 
 4. 导入需要的插件
 ::: warning 导入插件时请注意尽量使用Python标准库中的内容。
@@ -138,7 +141,7 @@ from . import somepluginfile1
 ```python
 class Plugin(PluginBase):
     def __init__(self):
-        super().__init__("Plugin Name") # 此处需要填写名称（您的插件名称），否则会引发报错。
+        super().__init__("Plugin Name") # 此处需要填写名称（插件标识线程），否则会引发报错。
         # 可以在这里初始化类内容。
         # 你可以定义变量，也可以调用函数。
         # 例如：
@@ -151,13 +154,14 @@ class Plugin(PluginBase):
     def add_function(self):
         # 此处作为一个示例被调用。
         self.plugin_count += 1
+        logger.info(f"plugin_count目前值：{str(self.plugin_count)}")
 ```
 
 记得添加一个`run()`函数，即便它什么用也没有。
 
 ```python
 def run():
-    pass # 可以执行你想干的事，他会在设置页面中点击插件按钮后执行。
+    pass # 虽然啥也没干，但 SRA 确实能加载你的插件了！
 ```
 
 创建一个入口函数。
@@ -171,6 +175,6 @@ if __name__ != "__main__":
 
 恭喜！此时您可以打开 SRA 查看您刚写的内容了！
 
-!!2025-06-22 16:27:38 | WARNING | Plugins.load_plugins:49 | Failed to load plugin 'MyPlugin': PluginBase.__init__() missing 1 required positional argument: 'name'!!
+!!2025-06-22 16:27:38 | WARNING | Plugins.load_plugins:49 | Failed to load plugin 'MyPlugin': PluginBase.__init__() missing 1 required positional argument: 'name'（这什么玩意？！）!!
 
-至此，您可以创建一个完整的插件了。编写完成后，就可以提交插件了。
+至此，您可以创建一个完整的插件了。编写完成后，您可以提交插件，~~或等待插件被官方收录~~。
