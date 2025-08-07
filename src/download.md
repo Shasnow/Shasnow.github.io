@@ -30,4 +30,6 @@ Mirror酱也可以负责接下来的更新工作。
 :::
 - 在寻找其他版本？ 
 - [**SRA更新器**](https://github.com/Shasnow/SRAUpdater/releases)
-- [**OK-SRA**](https://github.com/Shasnow/ok-starrailassistant) SRA的后台运行版 [下载](https://resource.starrailassistant.top/ok-sra-win32-Release-setup.exe)
+- [**OK-SRA**](https://github.com/Shasnow/ok-starrailassistant) SRA的后台运行版
+  - [官网下载](https://resource.starrailassistant.top/ok-sra-win32-Release-setup.exe)
+  - [夸克网盘下载](https://pan.quark.cn/s/2f02fb017912)
