@@ -28,7 +28,6 @@ export default sidebar({
           prefix: "/getstarted/",
           children: [
             { text: "介绍", icon: "play", link: "/develop/" },
-            { text: "前言", icon: "info", link: "/develop/before" },
             { text: "学习 Python", icon: "laptop", link: "/develop/study" },
             { text: "PySide基础", icon: "code", link:"/develop/study-pyside"}
           ]
@@ -40,7 +39,8 @@ export default sidebar({
             { text: "编写规范", icon: "file", link: "/develop/coding-style-guidelines" },
             { text: "SRA API", icon: "box", link: "/develop/API" },
             { text: "插件开发指南", icon: "laptop-code", link: "/develop/plugin-development-guide" },
-            { text: "插件提交管理指南", icon: "upload", link: "/develop/plugin-submit-manage-guide" }
+            { text: "插件提交管理指南", icon: "upload", link: "/develop/plugin-submit-manage-guide" },
+            { text: "内部参考",icon: "code", link: "/develop/internal" },
           ]
         }
       ]

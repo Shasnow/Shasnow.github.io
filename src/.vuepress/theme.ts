@@ -64,6 +64,9 @@ export default hopeTheme({
     mark: true,
     plantuml: true,
     spoiler: true,
+    highlighter: {
+        type: "shiki",
+    },
     stylize: [
       {
         matcher: "Recommended",

@@ -2,327 +2,660 @@
 title: API
 order: 5
 icon: box
+author: Shasnow
 ---
 
 
 # API
+此文档介绍StarRailAssistant（SRA）的API接口，涵盖鼠标事件、键盘事件、图像识别、窗口管理等模块的功能和用法。
+[查看旧版](API-old.md)
 
-SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功能通过API接口实现。本文档详细介绍各模块API的功能、参数及返回值。
+## operator 模块
+operator 模块提供了与游戏窗口交互的功能，包括截图、图像识别、鼠标点击、键盘按键等操作。
+# 类：
+## Operator
+```python :no-line-numbers
+class SRACore.util.operator.Operator
+```
+Operator 是操作游戏窗口的核心类，封装了与游戏窗口交互的各种方法。
+要创建`Operator`，可调用其构造函数。不接收任何参数。
+```python :no-line-numbers
+operator = Operator()
+```
+### 属性
+- `window_title` (str): 游戏窗口标题。默认值为`"崩坏：星穹铁道"`。
+- `gcm` (GlobalConfigManager): 全局配置管理器实例。
+- `confidence` (float): 图像识别置信度。从 `gcm` 获取，范围为0.0~1.0。默认值为0.9。
+- `zoom` (float): 屏幕缩放比例。从 `gcm` 获取。默认值为1.25。
+- `active_window` (bool): 是否在获取窗口区域时激活窗口。默认值为True。
 
+一个`Operator`实例可调用以下方法：
+### Operator.is_window_active
+```python :no-line-numbers
+@property
+Operator.is_window_active() -> bool
+```
+检查游戏窗口是否为当前活动窗口。
+`返回值`:
+- `True`: 窗口为当前活动窗口。
+- `False`: 窗口不为当前活动窗口。
 
-## 一、鼠标事件  
-鼠标事件用于模拟真实鼠标操作，支持图像定位点击、坐标点击、光标移动及滚轮控制，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
-
-### 1.1 click_img(img_path: str, title: str = "崩坏：星穹铁道", offset: tuple[int, int] = (0, 0))  
-- **功能**：在指定窗口中定位目标图像并点击（支持偏移量调整）。  
-- **原理**：通过 `locate()` 定位图像位置，计算实际屏幕坐标后调用 `pyautogui.click()` 点击。  
-- **参数**：  
-  - `img_path`：待点击图像的本地路径（如 `res/img/start_game.png`）。  
-  - `title`：目标窗口标题（默认："崩坏：星穹铁道"）。  
-  - `offset`：点击位置相对于图像中心的偏移量（格式：(x偏移, y偏移)）。  
-- **返回值**：`bool`，成功点击返回 `True`，未找到图像或窗口异常返回 `False`。  
-- **异常**：可能抛出 `MatchFailureException`（图像未匹配）、`WindowNoFoundException`（窗口未找到）。  
-- **示例**：  
-  ```python
-  # 点击启动游戏按钮（米哈游启动器窗口）
-  success = SRAOperator.click_img("res/img/start_game.png", title="米哈游启动器")
-  ```
-
-### 1.2 click_point(x: int, y: int, clicks: int = 1, interval: float = 0.1)  
-- **功能**：在指定屏幕坐标处点击鼠标。  
-- **参数**：  
-  - `x`、`y`：目标坐标（基于屏幕绝对位置）。  
-  - `clicks`：点击次数（默认1次）。  
-  - `interval`：多次点击的间隔时间（秒，默认0.1秒）。  
-- **返回值**：无。  
-- **注意**：坐标需基于当前屏幕分辨率（推荐1920×1080），窗口遮挡或坐标超出屏幕可能导致点击失败。
-
-### 1.3 moveTo(x: int, y: int, duration: float = 0.2)  
-- **功能**：平滑移动光标到指定坐标。  
-- **参数**：  
-  - `x`、`y`：目标坐标。  
-  - `duration`：移动耗时（秒，默认0.2秒）。  
-- **返回值**：无。  
-
-### 1.4 moveRel(x_offset: int, y_offset: int, duration: float = 0.2)  
-- **功能**：相对于当前光标位置移动。  
-- **参数**：  
-  - `x_offset`、`y_offset`：横向/纵向偏移量（正数向右/下，负数向左/上）。  
-  - `duration`：移动耗时（秒，默认0.2秒）。  
-- **返回值**：无。  
-
-### 1.5 scroll(delta: int)  
-- **功能**：模拟鼠标滚轮滚动。  
-- **参数**：  
-  - `delta`：滚动量（正数向上滚，负数向下滚）。  
-- **返回值**：无。  
-
-
-## 二、键盘事件  
-键盘事件用于模拟键盘输入及组合键操作，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
-
-### 2.1 press_key(key: str, presses: int = 1, interval: float = 0.1)  
-- **功能**：模拟按键按下并释放（支持单个按键或组合键，如 `ctrl+c`）。  
-- **参数**：  
-  - `key`：按键名称（如 `'enter'`、`'ctrl+a'`）。  
-  - `presses`：按键次数（默认1次）。  
-  - `interval`：多次按键的间隔时间（秒，默认0.1秒）。  
-- **返回值**：无。  
-- **示例**：  
-  ```python
-  # 按下Enter键
-  SRAOperator.press_key("enter")
-  ```
-
-### 2.2 press_key_for_a_while(key: str, duration: float = 1.0)  
-- **功能**：按住按键持续一段时间后释放。  
-- **参数**：  
-  - `key`：按键名称（如 `'shift'`）。  
-  - `duration`：按住时间（秒，默认1秒）。  
-- **返回值**：无。  
-
-### 2.3 copy(text: str)  
-- **功能**：将指定文本复制到系统剪贴板。  
-- **参数**：  
-  - `text`：待复制的文本内容。  
-- **返回值**：无。  
-- **依赖**：基于 `pyperclip` 实现，需确保系统剪贴板服务正常。
-
-### 2.4 paste()  
-- **功能**：将剪贴板内容粘贴到当前焦点位置。  
-- **返回值**：无。  
-
-### 2.5 write(text: str, interval: float = 0.05)  
-- **功能**：模拟逐字符输入文本（支持中文需输入法配合）。  
-- **参数**：  
-  - `text`：待输入的文本。  
-  - `interval`：字符输入间隔（秒，默认0.05秒）。  
-- **返回值**：无。  
-
-
-## 三、画面检测  
-画面检测是SRA的核心能力，通过图像识别定位游戏内元素，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
-
-### 3.0 reset()  
-- **功能**：重置截图区域的偏移量和缩放比例为默认值。  
-- **参数**：无。  
-- **返回值**：无。  
-
-### 3.1 get_screenshot_region(title: str) -> tuple[int, int, int, int]  
-- **功能**：根据窗口标题获取截图区域并计算实际坐标。  
-- **参数**：  
-  - `title`：目标窗口标题。  
-- **返回值**：截图区域元组 `(area_left, area_top, area_width, area_height)`。  
-- **异常**：`WindowNoFoundException`（窗口未找到）。
-
-### 3.2 get_screenshot(title: str = "崩坏：星穹铁道", region: tuple[int, int, int, int] | None = None) -> Image.Image  
-- **功能**：获取指定窗口的截图并调整尺寸（适配1920×1080分辨率）。  
-- **参数**：  
-  - `title`：窗口标题（默认："崩坏：星穹铁道"）。  
-  - `region`：截图区域（格式：`(left, top, width, height)`，默认自动计算窗口区域）。  
-- **返回值**：`PIL.Image.Image` 对象（调整后的截图）。  
-- **注意**：若窗口未激活或分辨率非1920×1080，可能导致截图比例异常。
-
-### 3.3 locate(img_path: str, title: str = "崩坏：星穹铁道") -> tuple[int, int, int, int] | None  
-- **功能**：在目标窗口截图中定位指定图像的位置。  
-- **原理**：使用 `pyscreeze.locate` 进行模板匹配，匹配置信度由 `SRAOperator.confidence` 控制（默认0.9）。  
-- **参数**：  
-  - `img_path`：待定位图像的本地路径。  
-  - `title`：目标窗口标题（默认："崩坏：星穹铁道"）。  
-- **返回值**：匹配区域的坐标及尺寸（格式：`(left, top, width, height)`），未找到返回 `None`。  
-- **异常**：  
-  - `FileNotFoundError`：图像文件无法读取。  
-  - `MatchFailureException`：图像未匹配。  
-  - `WindowInactiveException`：窗口未激活。
-
-### 3.4 locateCenter(img_path: str, offset: tuple[int, int] = (0, 0), title: str = "崩坏：星穹铁道") -> tuple[int, int]  
-- **功能**：定位图像中心坐标（支持偏移调整）。  
-- **参数**：  
-  - `img_path`：待定位图像的本地路径。  
-  - `offset`：中心坐标的偏移量（格式：`(x偏移, y偏移)`，默认无偏移）。  
-  - `title`：目标窗口标题（默认："崩坏：星穹铁道"）。  
-- **返回值**：实际屏幕坐标（格式：`(x, y)`）。  
-- **示例**：  
-  ```python
-  # 定位"开始游戏"按钮中心（偏移10像素向下）
-  x, y = SRAOperator.locateCenter("res/img/start_game.png", offset=(0, 10))
-  ```
-
-### 3.5 locateAny(img_list: list[str], title: str = "崩坏：星穹铁道", trace: bool = True) -> tuple[int, tuple[int, int, int, int]]  
-- **功能**：依次检测图像列表，返回第一个匹配的图像索引及位置。  
-- **参数**：  
-  - `img_list`：待检测的图像路径列表（如 `["res/a.png", "res/b.png"]`）。  
-  - `title`：目标窗口标题（默认："崩坏：星穹铁道"）。  
-  - `trace`：是否记录追踪日志（默认 `True`）。  
-- **返回值**：`(匹配索引, 位置元组)`，无匹配抛出 `MatchFailureException`。  
-
-### 3.6 exist(img_path: str | PathLike, wait_time: float = 2.0) -> bool  
-- **功能**：检查指定图像是否存在于当前窗口。  
-- **参数**：  
-  - `img_path`：待检测图像的本地路径。  
-  - `wait_time`：等待检测的时间（秒，默认2.0秒）。  
-- **返回值**：存在返回 `True`，否则 `False`。
-
-### 3.7 check(img_path: str, interval: float = 0.5, max_time: float = 20.0) -> bool  
-- **功能**：按间隔持续检测图像，直到出现或超时。  
-- **参数**：  
-  - `img_path`：待检测图像的本地路径。  
-  - `interval`：检测间隔（秒，默认0.5秒）。  
-  - `max_time`：最大检测时间（秒，默认20秒）。  
-- **返回值**：检测到图像返回 `True`，超时返回 `False`。  
-- **示例**：  
-  ```python
-  # 最多等待10秒检测登录成功界面
-  is_login = SRAOperator.check("res/img/welcome.png", max_time=10)
-  ```
-
-### 3.8 _screenshot_region_calculate(region: tuple[int, int, int, int]) -> tuple[int, int, int, int]  
-- **功能**：内部方法，计算截图区域的实际坐标和尺寸。  
-- **参数**：  
-  - `region`：窗口区域元组 `(left, top, width, height)`。  
-- **返回值**：计算后的截图区域元组。  
-
-### 3.9 _image_resize(pillow_image: Image.Image) -> Image.Image  
-- **功能**：调整图像尺寸到1920宽度并保持宽高比。  
-- **参数**：  
-  - `pillow_image`：待调整的Pillow图像对象。  
-- **返回值**：调整后的图像对象。
-
-### 3.10 _location_calculator(x: int, y: int) -> tuple[int, int]  
-- **功能**：根据缩放比例和偏移量计算实际屏幕坐标。  
-- **参数**：  
-  - `x`、`y`：截图上的坐标。  
-- **返回值**：实际屏幕坐标元组。  
-
-
-## 四、电源操作  
-电源操作用于控制计算机的关机、休眠等行为，实现位于 `SRACore.utils.WindowsPower` 模块。
-
-### 4.1 schedule_shutdown(delay_in_seconds: int)  
-- **功能**：设置Windows延时关机。  
-- **参数**：  
-  - `delay_in_seconds`：延时秒数（需大于0）。  
-- **异常**：`subprocess.CalledProcessError`（命令执行失败）。  
-- **示例**：  
-  ```python
-  # 30分钟后关机（1800秒）
-  WindowsPower.schedule_shutdown(1800)
-  ```
-
-### 4.2 shutdown_cancel()  
-- **功能**：取消已设置的关机任务。  
-- **返回值**：无。  
-
-### 4.3 hibernate()  
-- **功能**：使计算机进入休眠状态（需系统支持）。  
-- **返回值**：无。  
-
-
-## 五、进程操作  
-进程操作用于管理游戏及相关进程，实现位于 `SRACore.utils.WindowsProcess` 模块。  
-
-### 5.1 find_window(title: str) -> int | None  
-- **功能**：基于窗口标题查找窗口句柄。  
-- **参数**：  
-  - `title`：窗口标题（如 "崩坏：星穹铁道"）。  
-- **返回值**：窗口句柄（整数），未找到返回 `None`。  
-
-### 5.2 check_window(title: str) -> bool  
-- **功能**：检查窗口是否存在并激活。  
-- **参数**：同 `find_window()`。  
-- **返回值**：窗口存在且激活返回 `True`，否则 `False`。  
-
-### 5.3 is_process_running(process_name: str) -> bool  
-- **功能**：检查指定进程是否运行。  
-- **参数**：  
-  - `process_name`：进程名（如 "StarRail.exe"）。  
-- **返回值**：运行中返回 `True`，否则 `False`。
-
-### 5.4 task_kill(process_name: str)  
-- **功能**：强制关闭指定进程。  
-- **参数**：  
-  - `process_name`：进程名（如 "HYP.exe"）。  
-- **异常**：`subprocess.CalledProcessError`（命令执行失败）。  
-
-### 5.5 Popen(path: str, shell: bool = False) -> bool  
-- **功能**：非阻塞方式启动程序。  
-- **参数**：  
-  - `path`：程序路径（如 "D:/StarRail/StarRail.exe"）。  
-  - `shell`：是否通过Shell执行（默认 `False`）。  
-- **返回值**：启动成功返回 `True`，否则 `False`。
-
-### 5.6 is_window_active(window_title) -> bool:
-- **功能**：检查指定窗口是否处于活动状态。
-- **参数**：
-  - `window_title`：窗口标题。
-- **返回值**：窗口处于活动状态返回 `True`，否则 `False`。
-
-
-## 六、配置操作  
-配置操作用于管理工具的自定义配置（如任务开关、路径设置），实现位于 `SRACore.utils.Configure` 模块。
-
-### 6.1 init()  
-- **功能**：初始化配置系统（创建默认配置文件）。  
-- **说明**：首次运行时调用，生成 `data/globals.json` 全局配置。
-
-### 6.2 load(path: str) -> dict  
-- **功能**：从JSON文件加载配置。  
-- **参数**：  
-  - `path`：配置文件路径（如 "data/globals.json"）。  
-- **返回值**：配置字典。
-
-### 6.3 save(config: dict, path: str)  
-- **功能**：将配置字典保存到JSON文件。  
-- **参数**：  
-  - `config`：配置字典。  
-  - `path`：目标文件路径。  
-
-
-## 七、日志操作  
-日志操作用于记录工具运行状态，便于调试与问题排查，核心对象为 `SRACore.utils.Logger.logger` 。  
-
-### 7.1 info(text: str)  
-- **功能**：记录普通信息（如任务启动、成功提示）。  
-- **示例**：  
-  ```python
-  logger.info("登录成功，开始执行日常任务")
-  ```
+### Operator.get_win_region
+```python :no-line-numbers
+Operator.get_win_region(active_window: bool|None = None, raise_exception: bool = True) -> Region | None
+```
+获取游戏窗口区域。
+`参数`:
+- `active_window`: 是否在获取时激活窗口。
+    - `True`: 获取前激活窗口。
+    - `False`: 获取前不激活窗口。
+    - `None`: 使用当前实例默认值。（默认值为`True`）
+- `raise_exception`: 是否在获取失败时抛出异常。
+    - `True`: 获取失败时抛出异常。
+    - `False`: 获取失败时返回`None`。
   
-### 7.2 warning(text: str)  
-- **功能**：记录警告信息（如配置缺失、操作超时）。  
+`返回值`:
+- `Region`: 获取成功，返回窗口区域。
+- `None`: 获取失败，返回`None`。
 
-### 7.3 error(text: str)  
-- **功能**：记录错误信息（如关键任务失败、异常捕获）。  
+`异常`:
+- `Exception`: 未找到游戏窗口 | 窗口未激活 | 获取失败
 
-### 7.4 debug(text: str)  
-- **功能**：记录调试信息（仅在开发模式下输出）。  
+### Operator.screenshot
+```python :no-line-numbers
+@overload
+Operator.screenshot(region: Region | None = None) -> PIL.Image.Image
+```
+截取游戏窗口区域的截图。
+`参数`:
+- `region`: 截图区域。
+    - `Region`: 截图指定区域。
+    - `None`: 截图整个窗口区域。
 
+`返回值`:
+- `PIL.Image.Image`: 截图成功，返回截图图像。
 
-## 八、对话框  
-对话框用于与用户交互（如输入、提示），实现位于 `SRACore.utils.Dialog` 模块，基于PySide6的 `QDialog` 封装。  
+```python :no-line-numbers
+@overload
+Operator.screenshot(from_x: float, from_y: float, to_x: float, to_y: float) -> PIL.Image.Image
+```
+截取游戏窗口区域的截图。
+`参数`:
+- `from_x`: 截图区域左上角的相对X坐标，范围为0.0~1.0。
+- `from_y`: 截图区域左上角的相对Y坐标，范围为0.0~1.0。
+- `to_x`: 截图区域右下角的相对X坐标，范围为0.0~1.0。
+- `to_y`: 截图区域右下角的相对Y坐标，范围为0.0~1.0。
 
-### 8.1 MessageBox
-- **功能**：显示消息提示框（含确定按钮）。  
-- **参数**：  
-  - `parent`：父窗口对象。  
-  - `title`：对话框标题。  
-  - `message`：提示内容。  
-- **静态方法**：  
-  - `MessageBox.info(parent: QWidget | None, title: str, text: str)`：显示信息提示框。
+`返回值`:
+- `PIL.Image.Image`: 截图成功，返回截图图像。
 
-### 8.2 InputDialog
-- **功能**：显示输入框（获取用户输入）。  
-- **静态方法**：  
-  - `InputDialog.getText(parent: QWidget, title: str, text: str) -> tuple[str, bool]`：显示输入对话框。
-    - **参数**： 
-      - `parent`：父窗口对象。
-      - `title`：对话框标题。
-      - `text`：提示文本。
-    - **返回值**：元组 `(输入文本, 是否确认)`，用户点击确定返回输入文本，否则返回空字符串和 `False`。
+`异常`:
+- `ValueError`: 参数错误
 
-### 8.3 ExceptionMessageBox
-- **功能**：显示异常信息对话框。
-- **参数**：
-  - `exception`：异常类型（如ZeroDivisionError）。
-  - `value`：异常值（如 ‘1/0’）。
-  - `traceback`：异常追踪信息。
+### Operator.locate
+```python :no-line-numbers
+@overload
+Operator.locate(template: str | Path, region: Region | None = None, trace: bool = True) -> Box | None
+```
+在游戏窗口区域内查找指定模板图像。
+`参数`:
+- `template`: 模板图像路径。
+- `region`: 查找区域。
+    - `Region`: 在指定区域内查找。
+    - `None`: 在整个窗口区域内查找。
+- `trace`: 是否显示查找过程。
+    - `True`: 显示查找过程。
+    - `False`: 不显示查找过程。
+
+`返回值`:
+- `Box`: 查找成功，返回模板图像在窗口区域内的位置。
+- `None`: 查找失败，返回`None`。
+
+```python :no-line-numbers
+@overload
+Operator.locate(template: str | Path, 
+                from_x: float, 
+                from_y: float, 
+                to_x: float, 
+                to_y: float, 
+                trace: bool = True) -> Box | None
+```
+在游戏窗口区域内查找指定模板图像。
+`参数`:
+- `template`: 模板图像路径。
+- `from_x`: 查找区域左上角的相对X坐标，范围为0.0~1.0。
+- `from_y`: 查找区域左上角的相对Y坐标，范围为0.0~1.0。
+- `to_x`: 查找区域右下角的相对X坐标，范围为0.0~1.0。
+- `to_y`: 查找区域右下角的相对Y坐标，范围为0.0~1.0。
+- `trace`: 是否显示查找过程。
+    - `True`: 显示查找过程。
+    - `False`: 不显示查找过程。
+
+`返回值`:
+- `Box`: 查找成功，返回模板图像在窗口区域内的位置。
+- `None`: 查找失败，返回`None`。
+
+### Operator.locate_any
+```python :no-line-numbers
+@overload
+Operator.locate_any(templates: list[str | Path],
+                    region: Region | None = None,
+                    trace: bool = True) -> tuple[int, Box | None]
+```
+在游戏窗口区域内查找指定模板图像列表中的任意一个。
+`参数`:
+- `templates`: 模板图像路径列表。
+- `region`: 查找区域。
+    - `Region`: 在指定区域内查找。
+    - `None`: 在整个窗口区域内查找。
+- `trace`: 是否显示查找过程。
+
+`返回值`:
+- `tuple[int, Box | None]`: 查找成功，返回找到的模板图像在列表中的索引及其在窗口区域内的位置；查找失败，返回-1及`None`。
+
+```python :no-line-numbers
+@overload
+Operator.locate_any(templates: list[str | Path],
+                    from_x: float,
+                    from_y: float,
+                    to_x: float,
+                    to_y: float,
+                    trace: bool = True) -> tuple[int, Box | None]
+```
+在游戏窗口区域内查找指定模板图像列表中的任意一个。
+`参数`:
+- `templates`: 模板图像路径列表。
+- `from_x`: 查找区域左上角的相对X坐标，范围为0.0~1.0。
+- `from_y`: 查找区域左上角的相对Y坐标，范围为0.0~1.0。
+- `to_x`: 查找区域右下角的相对X坐标，范围为0.0~1.0。
+- `to_y`: 查找区域右下角的相对Y坐标，范围为0.0~1.0。
+- `trace`: 是否显示查找过程。
+
+`返回值`:
+- `tuple[int, Box | None]`: 查找成功，返回找到的模板图像在列表中的索引及其在窗口区域内的位置；查找失败，返回-1及`None`。
+
+### Operator.click_point
+```python :no-line-numbers
+Operator.click_point(x: int | float, y: int | float, 
+                     x_offset: int = 0, y_offset: int = 0
+                     after_sleep: float = 0) -> bool
+```
+在游戏窗口区域内点击指定位置。
+`参数`:
+- `x`: 点击位置的X坐标。
+    - `int`: 绝对坐标，单位为像素。
+    - `float`: 相对坐标，范围为0.0~1.0。
+- `y`: 点击位置的Y坐标。
+    - `int`: 绝对坐标，单位为像素。
+    - `float`: 相对坐标，范围为0.0~1.0。
+- `x_offset`: 点击位置的X偏移量，单位为像素。默认值为0。
+- `y_offset`: 点击位置的Y偏移量，单位为像素。默认值为0。
+- `after_sleep`: 点击后等待的时间，单位为秒。默认值为0。
+
+`返回值`:
+- `bool`: 点击成功，返回`True`；点击失败，返回`False`
+
+`异常`:
+- `ValueError`: 参数错误
+
+### Operator.click_box
+```python :no-line-numbers
+Operator.click_box(box: Box,
+                  x_offset: int = 0, y_offset: int = 0,
+                  after_sleep: float = 0) -> bool
+```
+在游戏窗口区域内点击指定位置。
+`参数`:
+- `box`: 点击位置的区域。
+- `x_offset`: 点击位置的X偏移量，单位为像素。默认值为0。
+- `y_offset`: 点击位置的Y偏移量，单位为像素。默认值为0。
+- `after_sleep`: 点击后等待的时间，单位为秒。默认值为0。
+
+`返回值`:
+- `bool`: 点击成功，返回`True`；点击失败，返回`False`
+
+### Operator.click_img
+```python :no-line-numbers
+Operator.click_img(img_path: str | Path,
+                   x_offset: int = 0, y_offset: int = 0,
+                   after_sleep: float = 0) -> bool
+```
+在游戏窗口区域内查找指定模板图像并点击其中心位置。
+`参数`:
+- `img_path`: 模板图像路径。
+- `x_offset`: 点击位置的X偏移量，单位为像素。默认值为0。
+- `y_offset`: 点击位置的Y偏移量，单位为像素。默认值为0。
+- `after_sleep`: 点击后等待的时间，单位为秒。默认值为0。
+
+`返回值`:
+- `bool`: 点击成功，返回`True`；点击失败，返回`False`
+
+### Operator.wait_img
+```python :no-line-numbers
+Operator.wait_img(img_path: str | Path,
+                  timeout: float = 10,
+                  interval: float = 0.5) -> bool
+```
+在游戏窗口区域内等待指定模板图像出现。
+`参数`:
+- `img_path`: 模板图像路径。
+- `timeout`: 等待超时时间，单位为秒。默认值为10秒。
+- `interval`: 每次查找间隔时间，单位为秒。默认值为0.5秒。
+
+`返回值`:
+- `bool`: 图像出现，返回`True`；超时未出现，返回`False`
+
+### Operator.wait_any_img
+```python :no-line-numbers
+Operator.wait_any_img(img_paths: list[str | Path],
+                      timeout: float = 10,
+                      interval: float = 0.5) -> int
+```
+在游戏窗口区域内等待指定模板图像列表中的任意一个出现。
+`参数`:
+- `img_paths`: 模板图像路径列表。
+- `timeout`: 等待超时时间，单位为秒。默认值为10秒。
+- `interval`: 每次查找间隔时间，单位为秒。默认值为0.5秒。
+
+`返回值`:
+- `int`: 图像出现，返回找到的模板图像在列表中的索引；超时未出现，返回-1
+
+### Operator.press_key
+```python :no-line-numbers
+@staticmethod
+Operator.press_key(key: str, 
+                   presses: int = 1,
+                   interval: float = 0,
+                   wait: float = 0) -> bool
+```
+模拟按下指定键。
+`参数`:
+- `key`: 要按下的键名称
+- `presses`: 按下次数。默认值为1。
+- `interval`: 每次按下间隔时间，单位为秒。默认值为0秒。
+- `wait`: 首次按下前等待的时间，单位为秒。默认值为0秒。
+
+`返回值`:
+- `bool`: 按键成功，返回`True`；按键失败，返回`False`
+
+### Operator.hold_key
+```python :no-line-numbers
+@staticmethod
+Operator.hold_key(key: str, duration: float = 0) -> bool
+```
+模拟按住指定键一段时间。
+`参数`:
+- `key`: 要按住的键名称
+- `duration`: 按住时间，单位为秒。默认值为0秒。
+
+`返回值`:
+- `bool`: 按键成功，返回`True`；按键失败，返回`False`
+
+### Operator.sleep
+```python :no-line-numbers
+@staticmethod
+Operator.sleep(seconds: float) -> None
+```
+暂停程序执行一段时间。
+`参数`:
+- `seconds`: 暂停时间，单位为秒。
+
+`返回值`:
+- `None`
+
+### Operator.copy
+```python :no-line-numbers
+@staticmethod
+Operator.copy(text: str) -> Any
+```
+将指定文本复制到系统剪贴板。
+`参数`:
+- `text`: 要复制的文本。
+
+### Operator.paste
+```python :no-line-numbers
+@staticmethod
+Operator.paste() -> None
+```
+模拟粘贴操作，将系统剪贴板中的文本粘贴到当前光标位置。
+`参数`:
+- 无
+
+`返回值`:
+- `None`
+
+### Operator.move_rel
+```python :no-line-numbers
+@staticmethod
+Operator.move_rel(x_offset: int, y_offset: int) -> bool
+```
+模拟鼠标相对移动。
+`参数`:
+- `x_offset`: 鼠标在X轴上的移动偏移量，单位为像素。
+- `y_offset`: 鼠标在Y轴上的移动偏移量，单位为像素。
+
+`返回值`:
+- `bool`: 移动成功，返回`True`；移动失败，返回`False`
+
+### Operator.move_to
+```python :no-line-numbers
+@staticmethod
+Operator.move_to(x: int | float, y: int | float, duration: float = 0.0) -> bool
+```
+模拟鼠标移动到指定位置。
+`参数`:
+- `x`: 目标位置的X坐标。
+    - `int`: 绝对坐标，单位为像素。
+    - `float`: 相对坐标，范围为0.0~1.0。
+- `y`: 目标位置的Y坐标。
+    - `int`: 绝对坐标，单位为像素。
+    - `float`: 相对坐标，范围为0.0~1.0。
+- `duration`: 移动时间，单位为秒。默认值为0秒。
+
+`返回值`:
+- `bool`: 移动成功，返回`True`；移动失败，返回`False`
+
+### Operator.scroll
+```python :no-line-numbers
+@staticmethod
+Operator.scroll(distance: int) -> bool
+```
+模拟鼠标滚轮滚动。
+`参数`:
+- `distance`: 滚动距离。正值表示向上滚动，负值表示向下滚动。
+
+`返回值`:
+- `bool`: 滚动成功，返回`True`；滚动失败，返回`False`
+
+## Executable
+```python :no-line-numbers
+class SRACore.util.operator.Executable(Operator)
+```
+`Executable` 仅继承自 `Operator`，无新增属性和方法。可直接创建实例使用。
+```python :no-line-numbers
+executable = Executable()
+```
+
+## Box
+```python :no-line-numbers
+@dataclasses.dataclass
+class SRACore.util.operator.Box
+```
+表示一个矩形区域，包含位置和尺寸信息。
+属性
+- `left` (int): 矩形左上角的X坐标。
+- `top` (int): 矩形左上角的Y坐标。
+- `width` (int): 矩形的宽度。
+- `height` (int): 矩形的高度。
+
+方法
+### Box.center
+```python :no-line-numbers
+@property
+Box.center() -> tuple[int, int]
+```
+计算并返回矩形的中心点坐标。
+
+## Region
+```python :no-line-numbers
+@dataclasses.dataclass
+class SRACore.util.operator.Region
+```
+表示一个矩形区域，包含位置和尺寸信息。
+属性
+- `left` (int): 矩形左上角的X坐标。
+- `top` (int): 矩形左上角的Y坐标。
+- `width` (int): 矩形的宽度。
+- `height` (int): 矩形的高度。
+
+方法
+### Region.tuple
+```python :no-line-numbers
+@property
+Region.tuple() -> tuple[int, int, int, int]
+```
+将区域信息转换为元组形式，返回 (left, top, width, height)。
+
+## system 模块
+system 模块提供了与系统交互的功能，包括执行命令、检查进程、终止进程等操作。
+# 方法: 
+### Popen
+```python :no-line-numbers
+SRACore.util.system.Popen(arg: str | list[str], 
+                           shell: bool = False, 
+                           **kwargs) -> bool
+```
+使用子进程执行指定命令。是对`psutil.Popen`的封装。
+
+然而`psutil.Popen`是对`subprocess.Popen`的封装。
+`参数`:
+- `arg`: 要执行的命令字符串或字符串列表。
+- `shell`: 是否通过shell执行命令。默认值为`False`。
+- `**kwargs`: 传递给`subprocess.Popen`的其他参数。
+
+`返回值`:
+- `bool`: 命令执行成功，返回`True`；命令执行失败，返回`False`
+
+### is_process_running
+```python :no-line-numbers
+SRACore.util.system.is_process_running(process_name: str) -> bool
+```
+检查指定名称的进程是否正在运行。
+`参数`:
+- `process_name`: 要检查的进程名称。
+
+`返回值`:
+- `bool`: 进程正在运行，返回`True`；进程未运行，返回`False`
+
+### task_kill
+```python :no-line-numbers
+SRACore.util.system.task_kill(process_name: str) -> bool
+```
+终止指定名称的进程。
+`参数`:
+- `process_name`: 要终止的进程名称。
+
+`返回值`:
+- `bool`: 进程终止成功，返回`True`；进程终止失败，返回`False`
+
+## config 模块
+config 模块提供了配置文件管理的功能，包括加载、获取、设置和保存配置项等操作。
+# 类:
+## GlobalConfigManager
+```python :no-line-numbers
+class SRACore.util.config.GlobalConfigManager
+```
+用于管理全局配置文件`globals.json`。
+
+要使用`GlobalConfigManager`，除了SRA自身，其他位置不应通过构造函数创建实例。
+```python :no-line-numbers
+gcm = GlobalConfigManager.get_instance() # 获取单例实例
+```
+
+一个`GlobalConfigManager`实例可调用以下方法：
+### load
+```python :no-line-numbers
+GlobalConfigManager.load() -> None
+```
+加载全局配置文件`globals.json`。
+如果文件不存在或无法解析，将使用默认值。
+如果发生错误（如文件不存在、JSON解析错误或类型错误），将打印错误信息并使用默认值。
+例如，如果文件不存在，将打印"Global config file not found, using default values."。
+如果JSON解析错误，将打印"Error decoding JSON from globals.json, using default values."。
+如果发生类型错误，将打印"Error initializing GlobalConfig, using default values."。
+这些错误处理确保程序在配置文件有问题时仍能正常运行。
+该方法不会抛出异常，而是通过打印错误信息来通知用户。
+`返回值`:
+- `None`
+
+:::warning
+不应手动调用此方法，它在初始化时自动调用。
+:::
+
+### get
+```python :no-line-numbers
+GlobalConfigManager.get(key: str, default: Any = None) -> Any
+```
+获取指定键的配置值。如果配置项不存在，则添加该项并返回默认值。
+`参数`:
+- `key`: 要获取的配置键。
+- `default`: 如果键不存在，返回的默认值。默认值为`None`
+
+`返回值`:
+- `Any`: 配置值或默认值。
+
+### set
+```python :no-line-numbers
+GlobalConfigManager.set(key: str, value: Any) -> None
+```
+设置指定键的配置值。如果配置项不存在，则添加该项。
+`参数`:
+- `key`: 要设置的配置键。
+- `value`: 要设置的配置值。
+
+### sync
+```python :no-line-numbers
+GlobalConfigManager.sync() -> None
+```
+将当前配置保存到全局配置文件`globals.json`。
+
+### get_instance
+```python :no-line-numbers
+@classmethod
+GlobalConfigManager.get_instance() -> GlobalConfigManager
+```
+获取`GlobalConfigManager`的单例实例。如果实例不存在, 抛出异常。
+`返回值`:
+- `GlobalConfigManager`: 单例实例。
+
+`异常`:
+- `RuntimeError`: 实例未初始化
+
+## ConfigManager
+```python :no-line-numbers
+class SRACore.util.config.ConfigManager
+```
+用于管理指定路径的JSON配置文件。
+要创建`ConfigManager`，可调用其构造函数，传入配置文件路径。
+```python :no-line-numbers
+config_manager = ConfigManager(config_path: str | Path)
+```
+或使用`get_instance`获取单例实例。
+```python :no-line-numbers
+config_manager = ConfigManager.get_instance()
+```
+除了SRA自身，其他位置不应通过构造函数创建实例。
+一个`ConfigManager`实例可调用以下方法：
+### load
+```python :no-line-numbers
+ConfigManager.load(name: str) -> None
+```
+加载指定名称的配置文件。如果文件不存在或无法解析，将使用默认值。
+
+`参数`:
+- `name`: 要加载的配置文件名称（不含扩展名）。
+
+### get
+```python :no-line-numbers
+ConfigManager.get(key: str, default: Any = None) -> Any
+```
+获取指定键的配置值。如果配置项不存在，则添加该项并返回默认值。
+`参数`:
+- `key`: 要获取的配置键。
+- `default`: 如果键不存在，返回的默认值。默认值为`None`
+
+`返回值`:
+- `Any`: 配置值或默认值。
+
+### set
+```python :no-line-numbers
+ConfigManager.set(key: str, value: Any) -> None
+```
+设置指定键的配置值。如果配置项不存在，则添加该项。
+`参数`:
+- `key`: 要设置的配置键。
+- `value`: 要设置的配置值。
+
+### sync
+```python :no-line-numbers
+ConfigManager.sync() -> None
+```
+将当前配置保存到配置文件。
+
+### switch
+```python :no-line-numbers
+ConfigManager.switch(name: str) -> None
+```
+保存当前配置，切换到另一个配置文件。
+`参数`:
+- `name`: 要切换到的配置文件名称（不含扩展名）。
+
+### get_instance
+```python :no-line-numbers
+@classmethod
+ConfigManager.get_instance() -> ConfigManager
+```
+获取`ConfigManager`的单例实例。如果实例不存在, 抛出异常。
+`返回值`:
+- `ConfigManager`: 单例实例。
+
+`异常`:
+- `RuntimeError`: 实例未初始化
+
+### delete
+```python :no-line-numbers
+@staticmethod
+ConfigManager.delete(name: str) -> bool
+```
+删除指定名称的配置文件。
+`参数`:
+- `name`: 要删除的配置文件名称（不含扩展名）。
+
+## const 模块
+const 模块定义了一些常量
+### 常量
+- `RANDOM_TITLE` (str): 用于创建随机窗口标题的字符串列表。
+
+## encryption 模块
+encryption 模块提供了数据加密和解密的功能，使用Windows的DPAPI进行加密和解密操作。
+方法:
+### win_encryptor
+```python :no-line-numbers
+SRACore.util.encryption.win_encryptor(note: str, description: str = None, entropy: bytes = None) -> str
+```
+使用Windows DPAPI加密数据
+`参数`:
+- `note`: 要加密的字符串。
+- `description`: 可选的描述字符串，默认为`None`。
+- `entropy`: 可选的附加熵，默认为`None`。
+
+`返回值`:
+- `str`: 加密后的字符串，使用Base64编码。
+
+### win_decryptor
+```python :no-line-numbers
+SRACore.util.encryption.win_decryptor(encrypted_note: str, entropy: bytes = None) -> str
+```
+使用Windows DPAPI解密数据
+`参数`:
+- `encrypted_note`: 要解密的Base64编码字符串。
+- `entropy`: 可选的附加熵，默认为`None`。
+
+`返回值`:
+- `str`: 解密后的字符串。
+
+## logger 模块
+logger 模块提供了日志记录的功能
+### logger
+```python :no-line-numbers
+from SRACore.util.logger import logger
+```
+`logger` 是一个预配置的日志记录器实例，使用Python的`loguru`库进行日志记录。
+
+### log_emitter
+```python :no-line-numbers
+from SRACore.util.logger import log_emitter
+```
+`log_emitter` 是一个QObject子类，用于在Qt应用程序中转发日志消息到UI线程。
+`信号`:
+- `log_signal`: 当有新日志消息时发射，携带日志消息的格式化字符串

@@ -72,12 +72,3 @@ order: 4
    result = calculate_average([1, 2, 3, 4, 5])
    print("The average is:", result)
    ```
-
-### 引号
-   引号应当首选双引号。
-
-   例如：
-
-   ```python
-   print("Hello, 'world'!")
-   ```

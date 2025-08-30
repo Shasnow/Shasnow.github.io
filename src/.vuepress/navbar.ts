@@ -24,7 +24,6 @@ export default navbar([
           prefix: "/develop/",
           children: [
             { text: "介绍", icon: "play", link: "/develop/" },
-            { text: "参与开发-前言", icon: "info", link: "/develop/before" },
             { text: "学习 Python", icon: "laptop", link: "/develop/study" },
             { text: "PySide基础", icon: "code", link:"/develop/study-pyside"}
           ]
@@ -33,7 +32,7 @@ export default navbar([
           text: "参与开发-开始开发",
           prefix: "/develop/",
           children: [
-            { text: "编写规范", icon: "file", link: "/develop/coding-style-guidelines" },
+            { text: "代码格式规范", icon: "file", link: "/develop/coding-style-guidelines" },
             { text: "SRA API", icon: "box", link: "/develop/API" },
             { text: "插件开发指南", icon: "laptop-code", link: "/develop/plugin-development-guide" },
             { text: "插件提交管理指南", icon: "upload", link: "/develop/plugin-submit-manage-guide" }

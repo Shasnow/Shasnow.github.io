@@ -37,23 +37,17 @@ plugin_name/
 插件元数据用来描述插件信息，或请求与SRA交互。
 
 元数据有如下参数：
-- NAME: 插件的名称，必须是字符串类型。
-- VERSION: 插件的版本号，必须是字符串类型。
-- DESCRIPTION: 插件的描述，必须是字符串类型。
-- AUTHOR: 插件的作者，必须是字符串类型。
-- UI: 请求SRA的主ui。仅做声明即可。
-
-在 Beta 版本中，参数添加：
 - displayName: 插件的名称
 - version: 插件的版本号
 - author: 作者/制作团队
 - description: 有关插件的描述
 - SRAVersion: 请求的SRA最低版本
 - loadPeriod: 加载时机，如果为`normal`则会在 SRA 运行时直接加载
+- enable: 是否启用该插件，默认为`true`
 
 示例如下：
 
-- 对于0.8.3及后续版本
+- 对于0.8.3及后续版本，元数据存储在`plugin.toml`文件中
 ```toml
 displayName = "StarRailAssistant Error Analyzer"
 version = "0.2 Alpha"
@@ -61,6 +55,7 @@ author = "EveGlowLuna"
 description = "分析SRA运行时错误，以中文提示显示并提供可能的解决方案"
 SRAVersion = "0.8.2"
 loadPeriod = "normal"
+enable=true
 ```
 - 对于0.8.3前的版本
 ```python
@@ -74,14 +69,13 @@ UI=PluginManager.public_ui                                  # 请求的 UI
 ## 插件 API
 
 插件API是用于与SRA交互的接口。使用API方法如下：
-- `run()`:插件启动时调用的方法。
+- `run()`:插件按钮被点击启动时调用的方法。
 - `PluginBase`:插件的基类，插件必须继承此类。
 - `PluginManager.register()`:注册插件线程。
 
 :::warning
-- 插件中至少要有一个子类继承PluginBase类。
-- 插件必须有一个`__init__.py`文件，并在其中实现run()方法。
-- 插件必须使用`PluginManager.register()`方法注册到多线程运行。
+- 插件必须有一个`__init__.py`文件。
+- 插件必须有一个`run()`函数，即便它什么用也没有。除非`loadPeriod`被设置为`late`。
 - 使用源码的插件尽量仅使用`SRA API`或`Python`标准库中的内容。
 :::
 
@@ -90,52 +84,62 @@ UI=PluginManager.public_ui                                  # 请求的 UI
 ### 前置条件
 
 1. 下载源代码
-- 前往 https://github.com/Shasnow/StarRailAssistant ，点击`Code` -> `Download ZIP`，下载后解压到一个文件夹中 或 使用 `git clone https://github.com/Shasnow/StarRailAssistant.git` (要求电脑中有 `Git`)
-- 前往 https://github.com/Shasnow/StarRailAssistant/releases ，直接下载**编译好的SRA本体**
+   - 前往 https://github.com/Shasnow/StarRailAssistant ，点击`Code` -> `Download ZIP`，下载后解压到一个文件夹中 或 使用 `git clone https://github.com/Shasnow/StarRailAssistant.git` (要求电脑中有 `Git`)
+   - 前往 https://github.com/Shasnow/StarRailAssistant/releases ，直接下载**编译好的SRA本体**
 
 2. 创建插件结构
 
-在 *IDE* 或 *文件资源管理器* 中，打开项目的文件夹，找到\plugins（或创建plugins文件夹），在\plugins中创建一个文件夹，文件夹的名称可随意填写，最好体现出你插件的名称/行为。
-
-::: tip 
-
-文件夹中自带了一个插件： `BeautifulLog`，您的插件可以仿照此插件来写。
-
-~~这个插件在新版本中疑似被删除。如果你想下载一个插件作为示例，可以前往[插件商店](https://starrailassistant.top/pluginstore.html)下载~~
-
-:::
-
-请注意，文件夹名称最好使用**英文**且**尽量不要使用空格**。
-
-现在，创建`plugin.toml`和`__init__.py`文件，这就是一个基础插件了。
+    在 *IDE* 或 *文件资源管理器* 中，打开项目的文件夹，找到\plugins（或创建plugins文件夹），在\plugins中创建一个文件夹，文件夹的名称可随意填写，最好体现出你插件的名称/行为。
+    
+    ::: tip 
+    
+    文件夹中自带了一个插件： `BeautifulLog`，您的插件可以仿照此插件来写。
+    
+    ~~这个插件在新版本中疑似被删除。如果你想下载一个插件作为示例，可以前往[插件商店](https://starrailassistant.top/pluginstore.html)下载~~
+    
+    :::
+    
+    请注意，文件夹名称最好使用**英文**且**尽量不要使用空格**。
+    
+    现在，创建`plugin.toml`和`__init__.py`文件，这就是一个基础插件了。
 
 3. 填写插件基本信息
 
-- 在0.8.3后
-在文件根目录创建一个`plugin.toml`文件，在文件中填写插件基本信息。
+   - 在0.8.3后
+   在文件根目录创建一个`plugin.toml`文件，在文件中填写插件基本信息。
 
-- 在0.8.3前
-在`__init__.py`文件中填写插件基本信息。
-
+   - 在0.8.3前
+   在`__init__.py`文件中填写插件基本信息。
 
 4. 导入需要的插件
-::: warning 导入插件时请注意尽量使用Python标准库中的内容。
-:::
 
-此处进行导入示例：
+    ::: warning
+    导入插件时请注意尽量使用Python标准库中的内容。
+    :::
+
+    此处进行导入示例：
+    ```python
+    # 从 SRA 中导入插件
+    from SRACore.utils.Plugins import *
+    from SRACore.utils.Logger import logger
+    # 从标准库中导入插件
+    import os
+    import json
+    # 从该插件中导入
+    from . import somepluginfile1
+    ```
+
+### 开始编写自己的插件内容
+- 最简单的插件:
+在 `__init__.py` 中添加以下内容：
 ```python
-# 从 SRA 中导入插件
-from SRACore.utils.Plugins import *
-from SRACore.utils.Logger import logger
-# 从标准库中导入插件
-import os
-import json
-# 从该插件中导入
-from . import somepluginfile1
+def run():
+    print("Hello, SRA Plugin!")
 ```
-
-5. 开始编写自己的插件内容
-
+此时运行SRA, 你就能在SRA的 `拓展/插件` 中看到你的插件了。
+点击插件按钮, 你会在控制台看到 `Hello, SRA Plugin!`。
+    
+- 复杂一点的插件:
 创建一个类，继承`PluginBase`。
 
 ```python
@@ -163,7 +167,7 @@ class Plugin(PluginBase):
 def run():
     pass # 虽然啥也没干，但 SRA 确实能加载你的插件了！
 ```
-
+- 自动运行:
 创建一个入口函数。
 
 ```python
