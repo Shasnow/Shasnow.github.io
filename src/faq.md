@@ -19,6 +19,7 @@ tagline: 提供您在使用StarRailAssistant时可能遇到的问题及解决方
 
 ::: details 挂后台会抢鼠标吗？/可以挂后台吗？
 包抢的，SRA使用模拟操作技术，需要真实的控制你的鼠标去移动和点击。
+不过你可以查看我们的新项目(https://github.com/Shasnow/ok-starrailassistant)，这个项目或许能解决您的要求
 :::
 
 ::: details 可以做一做绝区零的/有没有绝区零版本？
