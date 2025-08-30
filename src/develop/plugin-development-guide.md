@@ -111,26 +111,8 @@ UI=PluginManager.public_ui                                  # 请求的 UI
    - 在0.8.3前
    在`__init__.py`文件中填写插件基本信息。
 
-4. 导入需要的插件
-
-    ::: warning
-    导入插件时请注意尽量使用Python标准库中的内容。
-    :::
-
-    此处进行导入示例：
-    ```python
-    # 从 SRA 中导入插件
-    from SRACore.utils.Plugins import *
-    from SRACore.utils.Logger import logger
-    # 从标准库中导入插件
-    import os
-    import json
-    # 从该插件中导入
-    from . import somepluginfile1
-    ```
-
 ### 开始编写自己的插件内容
-- 最简单的插件:
+#### 最简单的插件
 在 `__init__.py` 中添加以下内容：
 ```python
 def run():
@@ -139,46 +121,43 @@ def run():
 此时运行SRA, 你就能在SRA的 `拓展/插件` 中看到你的插件了。
 点击插件按钮, 你会在控制台看到 `Hello, SRA Plugin!`。
     
-- 复杂一点的插件:
-创建一个类，继承`PluginBase`。
-
+#### 带独立UI窗口的插件
+在 `__init__.py` 中定义一个类，继承 `QWidget`，并在类中实现UI逻辑。
+例如
 ```python
-class Plugin(PluginBase):
+from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
+
+from SRACore.util.operator import Operator
+class DevTootKit(QWidget):
     def __init__(self):
-        super().__init__("Plugin Name") # 此处需要填写名称（插件标识线程），否则会引发报错。
-        # 可以在这里初始化类内容。
-        # 你可以定义变量，也可以调用函数。
-        # 例如：
-        self.plugin_count = 0
-        self.add_function()
-    def function(self):
-        # 可以在这里实现你的功能。
-        # 你可以做任何你想要做的事情。如果调用SRA API, 你需要提前导入模块。
-        logger.info(f"插件成功运行，plugin_count目前值：{str(self.plugin_count)}")
-    def add_function(self):
-        # 此处作为一个示例被调用。
-        self.plugin_count += 1
-        logger.info(f"plugin_count目前值：{str(self.plugin_count)}")
+        super().__init__()
+        self.operator=Operator()
+        self.setWindowTitle("DevTootKit")
+        self.setLayout(QVBoxLayout())
+        self.screenshot_button=QPushButton("截图测试")
+        self.setFixedSize(300, 300)
+        self.screenshot_button.clicked.connect(lambda :self.operator.screenshot().show())
+        self.layout().addWidget(self.screenshot_button)
+
+toot_kit=DevTootKit() # 全局实例，否则你会看到窗口一闪而过
+
+def run():
+    toot_kit.show() # 显示窗口
 ```
+很简单，我们创建了一个窗口，窗口中有一个按钮，点击按钮会调用SRA的截图功能。
+现在运行SRA, 你就能在SRA的 `拓展/插件` 中看到你的插件了。
+点击插件按钮, 你会看到一个窗口，窗口中有一个按钮，点击按钮会调用SRA的截图功能，并显示截图。
 
-记得添加一个`run()`函数，即便它什么用也没有。
-
+#### 自动运行的插件
+如果你想让插件在SRA启动时自动运行，在 `__init__.py` 中添加以下内容：
 ```python
 def run():
-    pass # 虽然啥也没干，但 SRA 确实能加载你的插件了！
-```
-- 自动运行:
-创建一个入口函数。
-
-```python
+    pass # 这里可以不写任何内容
+# 这里是自动运行的内容    
 if __name__ != "__main__":
-    plugin = Plugin()
-    PluginManager.register(plugin)
-    plugin.function()
+    print("插件已自动运行！")
+    took_kit.show()
 ```
-
-恭喜！此时您可以打开 SRA 查看您刚写的内容了！
-
-!!2025-06-22 16:27:38 | WARNING | Plugins.load_plugins:49 | Failed to load plugin 'MyPlugin': PluginBase.__init__() missing 1 required positional argument: 'name'（这什么玩意？！）!!
+此时运行SRA, 你会在控制台看到 `插件已自动运行！`，并且窗口也会自动显示。
 
 至此，您可以创建一个完整的插件了。编写完成后，您可以提交插件，~~或等待插件被官方收录~~。
