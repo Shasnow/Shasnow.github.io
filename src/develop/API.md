@@ -234,7 +234,7 @@ Operator.click_img(img_path: str | Path,
 ```python :no-line-numbers
 Operator.wait_img(img_path: str | Path,
                   timeout: float = 10,
-                  interval: float = 0.5) -> bool
+                  interval: float = 0.5) -> Box | None
 ```
 在游戏窗口区域内等待指定模板图像出现。
 `参数`:
@@ -243,7 +243,7 @@ Operator.wait_img(img_path: str | Path,
 - `interval`: 每次查找间隔时间，单位为秒。默认值为0.5秒。
 
 `返回值`:
-- `bool`: 图像出现，返回`True`；超时未出现，返回`False`
+- `Box`: 图像出现，返回模板图像在窗口区域内的位置；超时未出现，返回`None`
 
 ### Operator.wait_any_img
 ```python :no-line-numbers
