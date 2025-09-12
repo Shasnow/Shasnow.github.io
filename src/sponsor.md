@@ -36,4 +36,3 @@ background: rgba(253, 230, 138, 0.15)
 <img src="/img/sponsor/sponsor.png" width="400" height="400">
 <img src="/img/sponsor/sponsor02.jpg" width="267" height="400">
 :::
-

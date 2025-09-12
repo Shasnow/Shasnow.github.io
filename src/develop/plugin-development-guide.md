@@ -31,19 +31,19 @@ plugin_name/
 
 其中，`__init__.py`是插件的入口文件，用于初始化插件。`somepluginfile1.py`、`somepluginfile2.py`等是插件的具体实现文件。`src/`文件夹中存放插件所需的资源文件，如配置文件和图片等。
 
-你也可以自己决定插件结构。
+您也可以自己决定插件结构。
 
 ## 插件元数据
 插件元数据用来描述插件信息，或请求与SRA交互。
 
 元数据有如下参数：
-- displayName: 插件的名称
-- version: 插件的版本号
-- author: 作者/制作团队
-- description: 有关插件的描述
-- SRAVersion: 请求的SRA最低版本
-- loadPeriod: 加载时机，如果为`normal`则会在 SRA 运行时直接加载
-- enable: 是否启用该插件，默认为`true`
+- displayName：插件的名称
+- version：插件的版本号
+- author：作者/制作团队
+- description：有关插件的描述
+- SRAVersion：请求的SRA最低版本
+- loadPeriod：加载时机，如果为`normal`则会在 SRA 运行时直接加载
+- enable：是否启用该插件，默认为`true`
 
 示例如下：
 
@@ -69,9 +69,9 @@ UI=PluginManager.public_ui                                  # 请求的 UI
 ## 插件 API
 
 插件API是用于与SRA交互的接口。使用API方法如下：
-- `run()`:插件按钮被点击启动时调用的方法。
-- `PluginBase`:插件的基类，插件必须继承此类。
-- `PluginManager.register()`:注册插件线程。
+- `run()`：插件按钮被点击启动时调用的方法。
+- `PluginBase`：插件的基类，插件必须继承此类。
+- `PluginManager.register()`：注册插件线程。
 
 :::warning
 - 插件必须有一个`__init__.py`文件。
@@ -89,13 +89,13 @@ UI=PluginManager.public_ui                                  # 请求的 UI
 
 2. 创建插件结构
 
-    在 *IDE* 或 *文件资源管理器* 中，打开项目的文件夹，找到\plugins（或创建plugins文件夹），在\plugins中创建一个文件夹，文件夹的名称可随意填写，最好体现出你插件的名称/行为。
+    在 *IDE* 或 *文件资源管理器* 中，打开项目的文件夹，找到\plugins（或创建plugins文件夹），在\plugins中创建一个文件夹，文件夹的名称可随意填写，最好体现出您插件的名称/行为。
     
     ::: tip 
     
     文件夹中自带了一个插件： `BeautifulLog`，您的插件可以仿照此插件来写。
     
-    ~~这个插件在新版本中疑似被删除。如果你想下载一个插件作为示例，可以前往[插件商店](https://starrailassistant.top/pluginstore.html)下载~~
+    ~~这个插件在新版本中疑似被删除。如果您想下载一个插件作为示例，可以前往[插件商店](https://starrailassistant.top/pluginstore.html)下载~~
     
     :::
     
