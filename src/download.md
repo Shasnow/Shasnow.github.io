@@ -10,8 +10,9 @@ bgImageDark: https://theme-hope-assets.vuejs.press/bg/7-dark.svg
 bgImageStyle:
     background-attachment: fixed
 heroText: 下载
-tagline: 下载StarRailAssistant，开始你的托管之旅。
+tagline: 下载StarRailAssistant，开始您的托管之旅。
 ---
+
 #### 选择节点来下载SRA
 
 ## 节点
@@ -28,6 +29,7 @@ Mirror酱作为第三方分发平台，仅对下载加速服务收取费用，�
 Mirror酱也可以负责接下来的更新工作。
 
 :::
+
 - 在寻找其他版本？ 
 - [**SRA更新器**](https://github.com/Shasnow/SRAUpdater/releases)
 - [**OK-SRA**](https://github.com/Shasnow/ok-starrailassistant) SRA的后台运行版

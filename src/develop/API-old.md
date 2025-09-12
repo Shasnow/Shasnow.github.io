@@ -9,6 +9,9 @@ icon: box
 
 SRA（StarRailAssistant）是基于图像识别的自动化工具，其核心功能通过API接口实现。本文档详细介绍各模块API的功能、参数及返回值。
 
+:::warning
+这些内容是过时的。
+:::
 
 ## 一、鼠标事件  
 鼠标事件用于模拟真实鼠标操作，支持图像定位点击、坐标点击、光标移动及滚轮控制，核心实现位于 `SRACore.utils.SRAOperator.SRAOperator` 类。
