@@ -195,6 +195,84 @@ Operator.locate_any(templates: list[str | Path],
 `返回值`：
 - `tuple[int, Box | None]`：查找成功，返回找到的模板图像在列表中的索引及其在窗口区域内的位置；查找失败，返回-1及`None`。
 
+### Operator.ocr
+```python :no-line-numbers
+@overload
+Operator.ocr(region: Region | None = None, trace: bool = True) -> list[Any] | None
+```
+在窗口的指定区域内执行 OCR 文字识别，返回原始 OCR 结果（包含文本、坐标、置信度等）。
+`参数`：
+- `region`：OCR 识别区域。
+    - `Region`：在指定区域内识别。
+    - `None`：在整个窗口区域内识别。
+- `trace`：是否显示错误信息。
+
+`返回值`：
+- `list[Any]`：识别成功，返回 OCR 结果列表。
+- `None`：识别失败，返回`None`。
+
+```python :no-line-numbers
+@overload
+Operator.ocr(from_x: float, from_y: float, to_x: float, to_y: float, trace: bool = True) -> list[Any] | None
+```
+在窗口的指定区域内执行 OCR 文字识别，返回原始 OCR 结果（包含文本、坐标、置信度等）。
+`参数`：
+- `from_x`：识别区域左上角的相对X坐标，范围为0.0~1.0。
+- `from_y`：识别区域左上角的相对Y坐标，范围为0.0~1.0。
+- `to_x`：识别区域右下角的相对X坐标，范围为0.0~1.0。
+- `to_y`：识别区域右下角的相对Y坐标，范围为0.0~1.0。
+- `trace`：是否显示错误信息。
+
+`返回值`：
+- `list[Any]`：识别成功，返回 OCR 结果列表。
+- `None`：识别失败，返回`None`。
+
+`示例`：
+```python :no-line-numbers
+# 在整个窗口区域内识别
+ocr_result = operator.ocr()
+# 在指定区域内识别
+region = Region(left=100, top=100, width=400, height=300)
+ocr_result = operator.ocr(region=region)
+# 在指定相对坐标区域内识别
+ocr_result = operator.ocr(from_x=0.1, from_y=0.1, to_x=0.5, to_y=0.5)
+```
+
+### Operator.ocr_match
+```python :no-line-numbers
+Operator.ocr_match(text: str,
+                   confidence: float = 0.9,
+                   *args, **kwargs) -> Box | None
+```
+在窗口的指定区域内执行 OCR 文字识别，并查找指定文本。
+
+`参数`：
+- `text`：要查找的文本。
+- `confidence`：文本匹配置信度，范围为0.0~1.0。默认值为0.9。
+- `*args`：传递给`Operator.ocr`的其他参数。
+- `**kwargs`：传递给`Operator.ocr`的其他参数。
+
+`返回值`：
+- `Box`：查找成功，返回文本在窗口区域内的位置。
+- `None`：查找失败，返回`None`
+
+### Operator.wait_ocr
+```python :no-line-numbers
+Operator.wait_ocr(text: str,
+                   timeout: float = 10,
+                   interval: float = 0.2,
+                   confidence: float = 0.9,
+                   *args, **kwargs) -> Box | None
+```
+在窗口的指定区域内等待指定文本出现。
+`参数`：
+- `text`：要查找的文本。
+- `timeout`：等待超时时间，单位为秒。默认值为10秒。
+- `interval`：每次识别间隔时间，单位为秒。默认值为0.2秒。
+- `confidence`：文本匹配置信度，范围为0.0~1.0。默认值为0.9。
+- `*args`：传递给`Operator.ocr`的其他参数。
+- `**kwargs`：传递给`Operator.ocr`的其他参数。
+                     
 ### Operator.click_point
 ```python :no-line-numbers
 Operator.click_point(x: int | float, y: int | float, 
