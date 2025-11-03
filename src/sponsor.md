@@ -14,22 +14,13 @@ tagline: StarRailAssistant是一个开源且免费的项目。<br>您的赞助�
 ---
 
 ```component VPCard
-title: 月度赞助
-desc: 选择月度赞助，支持我们的持续开发。<br>平台：爱发电
-<!-- logo: /img/et.png -->
-link: https://afdian.com/a/shasnow
-background: rgba(253, 230, 138, 0.15)
-```
-```component VPCard
-title: 年度赞助
-desc: 选择年度赞助，支持我们的长期发展。<br>平台：爱发电
-<!-- logo: /img/p1.png -->
-link: https://afdian.com/a/shasnow
+title: Mirror 酱
+desc: 购买Mirror酱CDK并下载SRA，我们也会得到一半的收入。<br>
+link: https://mirrorchyan.com/zh/projects?rid=StarRailAssistant&source=sra-sponsor
 background: rgba(253, 230, 138, 0.15)
 ```
 
-
-::: details 一次性赞助
+::: details 微信、支付宝
 
 一次性赞助 目前只支持微信、支付宝这两个国内主流支付平台。
 

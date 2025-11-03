@@ -13,6 +13,10 @@ SRA使用PySide6作为GUI界面。
 
 _标有 * 的为选学内容，SRA中暂未涉及这些知识_
 
+:::warning 需要更新
+SRA 现在使用 C# 的 `Avalonia` 作为GUI框架，PySide6 相关内容仅供学习参考。
+:::
+
 ## 基础
 PySide6 是 Qt 框架的 Python 绑定，用于创建跨平台的 GUI 应用程序。
 
