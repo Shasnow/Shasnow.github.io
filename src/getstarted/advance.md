@@ -288,12 +288,11 @@ usage: main.py run [-h] [-c [CONFIG ...]] [--once]
 
 options:
   -h, --help            show this help message and exit
-  -c [CONFIG ...], --config [CONFIG ...]
-                        要运行的配置名称，不指定则运行缓存中的全部配置
+  --config [CONFIG ...] 要运行的配置名称, 不指定则运行缓存中的全部配置
   --once                执行完任务后退出
 ```
 
-使用 `SRA-cli run -c [配置名称...]` 命令运行任务。
+使用 `SRA-cli run --config [配置名称...]` 命令运行任务。
 如果不指定配置名称，则默认运行全部配置。
 可以指定多个配置名称，SRA-cli 会依次运行这些配置。
 使用此命令运行任务后，当前命令行会被阻塞，直到任务完成。可通过按下 `Ctrl+C` 停止任务。
@@ -301,7 +300,7 @@ options:
 示例：
 
 ```bash
-SRA-cli run -c Default PlanB --once
+SRA-cli run --config Default PlanB --once
 ```
 
 上述命令会依次运行名为 `Default` 和 `PlanB` 的配置，任务完成后退出 SRA-cli。
@@ -334,7 +333,7 @@ SRA的运行日志存放在 `SRA根目录/log/` 下，按日期分割，第三�
 与先前的命令结合，可以轻松启动SRA并运行一次性任务：
 
 ```bash
-SRA-cli --inline run -c Default PlanB --once
+SRA-cli --inline run --config Default PlanB --once
 ```
 
 ## 更新
