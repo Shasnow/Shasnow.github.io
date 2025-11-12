@@ -572,178 +572,40 @@ SRACore.util.system.task_kill(process_name: str) -> bool
 
 ## config 模块
 config 模块提供了配置文件管理的功能，包括加载、获取、设置和保存配置项等操作。
-# 类:
-## GlobalConfigManager
-```python :no-line-numbers
-class SRACore.util.config.GlobalConfigManager
-```
-用于管理全局配置文件`globals.json`。
 
-要使用`GlobalConfigManager`，除了SRA自身，其他位置不应通过构造函数创建实例。
+方法：
+### load_config
 ```python :no-line-numbers
-gcm = GlobalConfigManager.get_instance() # 获取单例实例
+SRACore.util.config.load_config(name: str ) -> dict[str, Any]
 ```
-
-一个`GlobalConfigManager`实例可调用以下方法：
-### load
-```python :no-line-numbers
-GlobalConfigManager.load() -> None
-```
-加载全局配置文件`globals.json`。
-如果文件不存在或无法解析，将使用默认值。
-如果发生错误（如文件不存在、JSON解析错误或类型错误），将打印错误信息并使用默认值。
-例如，如果文件不存在，将打印"Global config file not found, using default values."。
-如果JSON解析错误，将打印"Error decoding JSON from globals.json, using default values."。
-如果发生类型错误，将打印"Error initializing GlobalConfig, using default values."。
-这些错误处理确保程序在配置文件有问题时仍能正常运行。
-该方法不会抛出异常，而是通过打印错误信息来通知用户。
+加载指定名称的配置文件。
+`参数`:
+- `name`: 配置名称。
 `返回值`:
-- `None`
+- `dict[str, Any]`: 加载成功，返回配置字典。
+- `{}`: 加载失败，返回空字典。
 
-:::warning
-不应手动调用此方法，它在初始化时自动调用。
-:::
-
-### get
+### load_settings
 ```python :no-line-numbers
-GlobalConfigManager.get(key: str, default: Any = None) -> Any
+SRACore.util.config.load_settings() -> dict[str, Any]
 ```
-获取指定键的配置值。如果配置项不存在，则添加该项并返回默认值。
-`参数`:
-- `key`: 要获取的配置键。
-- `default`: 如果键不存在，返回的默认值。默认值为`None`
-
+加载全局设置配置文件。
 `返回值`:
-- `Any`: 配置值或默认值。
+- `dict[str, Any]`: 加载成功，返回配置字典。
+- `{}`: 加载失败，返回空字典。
 
-### set
+### load_cache
 ```python :no-line-numbers
-GlobalConfigManager.set(key: str, value: Any) -> None
+SRACore.util.config.load_cache() -> dict[str, Any]
 ```
-设置指定键的配置值。如果配置项不存在，则添加该项。
-`参数`:
-- `key`: 要设置的配置键。
-- `value`: 要设置的配置值。
-
-### sync
-```python :no-line-numbers
-GlobalConfigManager.sync() -> None
-```
-将当前配置保存到全局配置文件`globals.json`。
-
-### get_instance
-```python :no-line-numbers
-@classmethod
-GlobalConfigManager.get_instance() -> GlobalConfigManager
-```
-获取`GlobalConfigManager`的单例实例。如果实例不存在, 抛出异常。
+加载缓存配置文件。
 `返回值`:
-- `GlobalConfigManager`: 单例实例。
-
-`异常`:
-- `RuntimeError`: 实例未初始化
-
-## ConfigManager
-```python :no-line-numbers
-class SRACore.util.config.ConfigManager
-```
-用于管理指定路径的JSON配置文件。
-要创建`ConfigManager`，可调用其构造函数，传入配置文件路径。
-```python :no-line-numbers
-config_manager = ConfigManager(config_path: str | Path)
-```
-或使用`get_instance`获取单例实例。
-```python :no-line-numbers
-config_manager = ConfigManager.get_instance()
-```
-除了SRA自身，其他位置不应通过构造函数创建实例。
-一个`ConfigManager`实例可调用以下方法：
-### load
-```python :no-line-numbers
-ConfigManager.load(name: str) -> None
-```
-加载指定名称的配置文件。如果文件不存在或无法解析，将使用默认值。
-
-`参数`:
-- `name`: 要加载的配置文件名称（不含扩展名）。
-
-### get
-```python :no-line-numbers
-ConfigManager.get(key: str, default: Any = None) -> Any
-```
-获取指定键的配置值。如果配置项不存在，则添加该项并返回默认值。
-`参数`:
-- `key`: 要获取的配置键。
-- `default`: 如果键不存在，返回的默认值。默认值为`None`
-
-`返回值`:
-- `Any`: 配置值或默认值。
-
-### set
-```python :no-line-numbers
-ConfigManager.set(key: str, value: Any) -> None
-```
-设置指定键的配置值。如果配置项不存在，则添加该项。
-`参数`:
-- `key`: 要设置的配置键。
-- `value`: 要设置的配置值。
-
-### sync
-```python :no-line-numbers
-ConfigManager.sync() -> None
-```
-将当前配置保存到配置文件。
-
-### switch
-```python :no-line-numbers
-ConfigManager.switch(name: str) -> None
-```
-保存当前配置，切换到另一个配置文件。
-`参数`:
-- `name`: 要切换到的配置文件名称（不含扩展名）。
-
-### get_instance
-```python :no-line-numbers
-@classmethod
-ConfigManager.get_instance() -> ConfigManager
-```
-获取`ConfigManager`的单例实例。如果实例不存在, 抛出异常。
-`返回值`:
-- `ConfigManager`: 单例实例。
-
-`异常`:
-- `RuntimeError`: 实例未初始化
-
-### delete
-```python :no-line-numbers
-@staticmethod
-ConfigManager.delete(name: str) -> bool
-```
-删除指定名称的配置文件。
-`参数`:
-- `name`: 要删除的配置文件名称（不含扩展名）。
-
-## const 模块
-const 模块定义了一些常量
-### 常量
-- `RANDOM_TITLE` (str): 用于创建随机窗口标题的字符串列表。
+- `dict[str, Any]`: 加载成功，返回配置字典。
+- `{}`: 加载失败，返回空字典。
 
 ## encryption 模块
 encryption 模块提供了数据加密和解密的功能，使用Windows的DPAPI进行加密和解密操作。
 方法:
-### win_encryptor
-```python :no-line-numbers
-SRACore.util.encryption.win_encryptor(note: str, description: str = None, entropy: bytes = None) -> str
-```
-使用Windows DPAPI加密数据
-`参数`:
-- `note`: 要加密的字符串。
-- `description`: 可选的描述字符串，默认为`None`。
-- `entropy`: 可选的附加熵，默认为`None`。
-
-`返回值`:
-- `str`: 加密后的字符串，使用Base64编码。
-
 ### win_decryptor
 ```python :no-line-numbers
 SRACore.util.encryption.win_decryptor(encrypted_note: str, entropy: bytes = None) -> str
@@ -763,11 +625,3 @@ logger 模块提供了日志记录的功能
 from SRACore.util.logger import logger
 ```
 `logger` 是一个预配置的日志记录器实例，使用Python的`loguru`库进行日志记录。
-
-### log_emitter
-```python :no-line-numbers
-from SRACore.util.logger import log_emitter
-```
-`log_emitter` 是一个QObject子类，用于在Qt应用程序中转发日志消息到UI线程。
-`信号`:
-- `log_signal`: 当有新日志消息时发射，携带日志消息的格式化字符串
