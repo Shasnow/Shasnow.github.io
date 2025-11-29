@@ -1,10 +1,12 @@
 import os
-import urllib3
-from supabase import create_client, Client
 import time
+
+import urllib3
+from supabase import Client, create_client
 
 SUPABASE_URL = "https://hddyaljmbzepamxegwee.supabase.co"
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
 
 def create_supabase_client():
     """创建Supabase客户端，处理连接失败的情况"""
@@ -13,6 +15,7 @@ def create_supabase_client():
     except Exception as e:
         print(f"无法连接到Supabase: {e}")
         return None
+
 
 def fetch_plugins(max_retries=3):
     """获取插件数据，支持重试机制"""
@@ -28,10 +31,11 @@ def fetch_plugins(max_retries=3):
         except Exception as e:
             print(f"获取插件数据失败 (尝试 {attempt + 1}/{max_retries}): {e}")
             if attempt < max_retries - 1:
-                time.sleep(2 ** attempt)  # 指数退避
+                time.sleep(2**attempt)  # 指数退避
             else:
                 print("所有重试均失败，返回空列表")
                 return []
+
 
 def safe_delete_plugin(plugin_id, plugin_name):
     """安全删除插件，处理删除失败的情况"""
@@ -48,6 +52,7 @@ def safe_delete_plugin(plugin_id, plugin_name):
         print(f"删除插件 '{plugin_name}' (ID: {plugin_id}) 失败: {e}")
         return False
 
+
 def generate_md(plugins, output_path="src/pluginstore.md"):
     """生成插件商店页面"""
     header = """---
@@ -63,7 +68,7 @@ bgImageDark: https://theme-hope-assets.vuejs.press/bg/2-dark.svg
 bgImageStyle:
     background-attachment: fixed
 heroText: 插件商店
-tagline: 安装由官方/第三方开发的扩展来提高SRA的可用性与美观性<br>插件内容将在每次构建后更新
+tagline: 安装由官方/第三方开发的扩展来提高SRA的可用性与美观性<br>插件内容将在每次构建后更新<br>新版本的插件功能目前暂未实现
 
 highlights:
     - header: 插件列表
@@ -84,21 +89,25 @@ highlights:
         # 检查链接是否能正常访问
         if link != "#":
             try:
-                resp = http.request('GET', link, timeout=5)
+                resp = http.request("GET", link, timeout=5)
                 if resp.status >= 400:
-                    print(f'警告: 插件 \'{plugin_name}\' 的链接 \'{link}\' 访问失败，状态码: {resp.status}')
+                    print(
+                        f"警告: 插件 '{plugin_name}' 的链接 '{link}' 访问失败，状态码: {resp.status}"
+                    )
                     if plugin_id:
                         if not safe_delete_plugin(plugin_id, plugin_name):
                             print(f"插件 '{plugin_name}' 删除失败，已跳过")
                     continue
             except urllib3.exceptions.MaxRetryError:
-                print(f'警告: 插件 \'{plugin_name}\' 的链接 \'{link}\' 访问超时')
+                print(f"警告: 插件 '{plugin_name}' 的链接 '{link}' 访问超时")
                 if plugin_id:
                     if not safe_delete_plugin(plugin_id, plugin_name):
                         print(f"插件 '{plugin_name}' 删除失败，已跳过")
                 continue
             except Exception as e:
-                print(f'警告: 插件 \'{plugin_name}\' 的链接 \'{link}\' 访问发生未知错误: {e}')
+                print(
+                    f"警告: 插件 '{plugin_name}' 的链接 '{link}' 访问发生未知错误: {e}"
+                )
                 if plugin_id:
                     if not safe_delete_plugin(plugin_id, plugin_name):
                         print(f"插件 '{plugin_name}' 删除失败，已跳过")
@@ -146,6 +155,7 @@ highlights:
         print(f"成功处理 {len(valid_plugins)} 个有效插件")
     except Exception as e:
         print(f"写入文件 {output_path} 失败: {e}")
+
 
 if __name__ == "__main__":
     plugins = fetch_plugins()
