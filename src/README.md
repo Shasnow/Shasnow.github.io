@@ -65,19 +65,19 @@ highlights:
     highlights:
       - title: 基于PC本体游戏
         icon: computer
-        details: 基于PC游戏本体运行，无需安装模拟器等。
+        details: 基于PC游戏本体运行，无需安装模拟器。
 
       - title: 开箱即用
         icon: box
-        details: 使用nuitka打包，以绿色软件形式发布，下载解压即可使用。
+        details: 程序提供安装程序和绿色压缩文件，确保用户开箱即用
 
       - title: 安全
         icon: lock
-        details: SRA注重您的账号安全，如果你选择保存，程序会自动帮您加密密码。
+        details: SRA注重您的隐私安全，程序会自动帮您加密需要保存的密码。
 
-      - title: 可拓展性
-        icon: plug
-        details: SRA支持安装插件来拓展功能。
+      # - title: 可拓展性
+      #   icon: plug
+      #   details: SRA支持安装插件来拓展功能。
 
       - title: 更多
         icon: ellipsis
