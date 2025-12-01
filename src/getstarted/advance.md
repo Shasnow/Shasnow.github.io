@@ -324,19 +324,19 @@ SRA-cli --inline run --config Default PlanB --once
 您可以结合Windows的计划任务程序，实现开机自启动SRA-cli并运行任务、定时运行任务等功能。
 
 按下您键盘上的Windows徽标键，搜索“任务计划程序”，并打开它。
-![任务计划程序](/img/use/任务计划程序.png)
+![任务计划程序](/img/use/taskschd1.png)
 
 点击创建任务，填写任务名称，例如“SRA自动运行”。
-![创建任务](/img/use/任务计划程序2.png)
+![创建任务](/img/use/taskschd2.png)
 
 注意勾选“使用最高权限运行”，以确保SRA-cli能够正常运行。
-![使用最高权限运行](/img/use/任务计划程序3.png)
+![使用最高权限运行](/img/use/taskschd3.png)
 
 点击触发器，设置任务的触发条件，例如“在登录时”或“按计划”。
-![触发器](/img/use/任务计划程序4.png)
+![触发器](/img/use/taskschd4.png)
 
 点击操作，添加一个新操作，选择“启动程序”。
-![操作](/img/use/任务计划程序5.png)
+![操作](/img/use/taskschd5.png)
 在“程序或脚本”栏中，填写SRA-cli的完整路径，例如 `C:\Program Files\SRA\SRA-cli.exe`。
 在“添加参数”栏中，填写运行命令，例如 `run --config Default --once`。
 在“起始于”栏中，填写SRA-cli的安装目录，例如 `C:\Program Files\SRA`。
