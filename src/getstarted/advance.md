@@ -570,40 +570,6 @@ SRA-cli single --task-name TrailblazePowerTask --config my_config.json
 在“添加参数”栏中，填写运行命令，例如 `run --config Default --once`。
 在“起始于”栏中，填写SRA-cli的安装目录，例如 `C:\Program Files\SRA`。
 
-## 简单 SRA 源代码操作
-
-:::danger
-以下内容涉及修改 SRA 的源代码文件，可能会导致应用无法正常运行。
-SRA 团队不会对因修改源代码文件而导致的问题提供支持。
-:::
-
-### 删除任务
-
-如果你不需要某个任务，可以在 `SRACore/config.toml` 文件中删除对应的任务配置。
-例如，删除 `清开拓力` 任务，可以删除以下内容：
-
-```toml
-[[tasks]]
-name = "清开拓力"
-main = "TrailblazePowerTask"
-module = "tasks.TrailblazePowerTask"
-```
-
-如果要彻底删除任务，可以在 `tasks/` 目录下删除对应的任务文件。
-例如，删除 `TrailblazePowerTask.py` 文件。
-
-### 调整任务
-
-如果你想调整某个任务的行为，比如调整任务的逻辑，或调整操作间隔，可以修改对应的任务文件。
-例如，调整 `清开拓力` 任务的逻辑，可以修改 `tasks/TrailblazePowerTask.py` 文件。
-想了解如何编写或修改任务，请参考 [开发文档](/develop/)。
-
-对任务文件的修改会在下次运行 SRA 时生效，无需打包或编译。
-
-:::warning
-您的修改会在 SRA 更新时被覆盖，如果您觉得某些修改对其他用户也有帮助，欢迎提交 PR 到我们的 GitHub 仓库
-:::
-
 ## 邮件通知
 
 在 `0.8.1` 版本中引入了邮件通知功能。
