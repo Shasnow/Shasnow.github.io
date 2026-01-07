@@ -21,7 +21,7 @@ actions:
 
   - text: 使用指南
     icon: lightbulb
-    link: ./getstarted/
+    link: ./getstarted/getstarted
 
 highlights:
   - header: 核心功能

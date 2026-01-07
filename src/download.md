@@ -13,7 +13,7 @@ heroText: 下载
 tagline: 下载StarRailAssistant，开始您的托管之旅。
 ---
 
-#### 选择节点来下载SRA
+#### 选择节点来下载 SRA
 
 ## 节点
 
