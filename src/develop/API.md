@@ -21,12 +21,13 @@ actions:
 
 ## operator 模块
 operator 模块提供了与游戏窗口交互的功能，包括截图、图像识别、鼠标点击、键盘按键等操作。
+* 部分内容可能过时，以源码内注释为准。
 
 # 类：
 
 ## Operator
 ```python :no-line-numbers
-class SRACore.util.operator.Operator
+class SRACore.operator.Operator
 ```
 Operator 是操作游戏窗口的核心类，封装了与游戏窗口交互的各种方法。
 要创建`Operator`，可调用其构造函数。不接收任何参数。
