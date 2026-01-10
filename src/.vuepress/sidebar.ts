@@ -39,7 +39,7 @@ export default sidebar({
             { text: "SRA API", icon: "box", link: "/develop/API" },
             // { text: "插件开发指南", icon: "laptop-code", link: "/develop/plugin-development-guide" },
             // { text: "插件提交管理指南", icon: "upload", link: "/develop/plugin-submit-manage-guide" },
-            { text: "内部参考",icon: "code", link: "/develop/internal" },
+            { text: "教程",icon: "code", link: "/develop/tutorial" },
           ]
         }
       ]

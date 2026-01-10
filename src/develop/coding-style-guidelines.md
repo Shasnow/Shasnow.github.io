@@ -5,70 +5,40 @@ order: 4
 ---
 
 # 代码格式规范
-在开发SRA过程中，应该遵守如下代码格式规范。
+在开发SRA过程中，建议遵守如下代码格式规范。
 
-## 命名规范
+## Python 代码规范
+- 遵循 [PEP 8](https://peps.python.org/pep-0008/) 代码风格指南。
+- 使用4个空格进行缩进，不使用制表符（Tab，智能的IDE会自动将制表符转换为4个空格）。
+- 每行代码长度不超过79个字符。
+- 使用空行分隔函数和类定义，以及较长的代码块。
+- 使用有意义的变量和函数名称，遵循小写字母和下划线的命名约定（snake_case）。
+- 类名称使用大写字母开头的驼峰命名法（CamelCase）。
+- 在函数和类定义中添加适当的文档字符串（docstring）以说明其用途和参数。文档字符串采用 Google 风格或 NumPy 风格。
+- 使用类型注解（type hints）来提高代码的可读性和可维护性。
+- 避免使用全局变量，尽量使用函数参数和返回值来传递数据。
+- 使用异常处理来捕获和处理错误，而不是使用返回码。
+- 定期运行代码格式化工具（如 `black` 或 `autopep8`）来自动修正代码格式问题。
+- 使用静态代码分析工具（如 `pylint` 或 `flake8`）来检查代码质量和风格问题。
 
-### 变量
-   变量应当使用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。
-   
-   例如：`user_name`，`is_logged_in`。
+## C# 代码规范
+- 遵循 [Microsoft C# 编码规范](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)。
+- 使用4个空格进行缩进，不使用制表符（Tab，智能的IDE会自动将制表符转换为4个空格）。
+- 每行代码长度不超过120个字符。
+- 使用大括号 `{}` 明确代码块的开始和结束，即使代码块只有一行。
+- 使用有意义的变量和方法名称，遵循帕斯卡命名法（PascalCase）用于类和方法名称，驼峰命名法（camelCase）用于变量和参数名称。
+- 在方法和类定义中添加适当的XML文档注释以说明其用途和参数。
+- 使用属性（properties）而不是公共字段（public fields）。
+- 避免使用魔法数字（magic numbers），使用常量或枚举来代替。
+- 使用异常处理来捕获和处理错误，而不是使用返回码。
+- 定期运行代码格式化工具（如 `dotnet format`）来自动修正代码格式问题。
+- 使用静态代码分析工具（如 `SonarLint` 或 `StyleCop`）来检查代码质量和风格问题。
 
-### 常量名
-   常量应当使用英文命名，使用大写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。
-
-   例如：`MAX_USER_COUNT`，`DEFAULT_TIMEOUT`。
-
-### 函数名
-   函数名应当使用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。
-
-   例如：`calculate_average`，`get_user_info`。
-
-### 类名
-   类名应当使用英文命名，使用单词首字母大写，且有实际意义。
-
-   例如：`User`，`DatabaseConnection`。
-
-### 模块名
-   模块名应当使用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。
-
-   例如：`math_utils`，`database`。
-
-### 包名
-   包名应当使用英文命名，使用小写字母，且有实际意义。每个单词之间用下划线分隔开，避免出现拼写错误。
-
-   例如：`utils`，`database`。
-
-## 格式规则
-
-### 缩进
-   缩进应当使用四个空格。
-
-   例如：
-
-   ```python
-   def calculate_average(numbers):
-       total = 0
-       for number in numbers:
-           total += number
-       return total / len(numbers)
-   ```
-### 换行
-   换行应当使用换行符，避免使用空格。行长不建议超过120。
-
-   例如：
-
-   ```python
-   result = calculate_average([1, 2, 3, 4, 5])
-   print("The average is:", result)
-   ```
-
-### 空格
-   空格应当使用空格，避免使用制表符。
-
-   例如：
-
-   ```python
-   result = calculate_average([1, 2, 3, 4, 5])
-   print("The average is:", result)
-   ```
+## Commit 规范
+- 使用清晰且描述性的提交信息，遵循 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) 规范。
+- 每次提交应只包含一个逻辑更改。
+- 在提交前运行代码格式化和静态代码分析工具，确保代码符合规范。
+- 避免提交无关的更改动，如格式化更改或自动生成的文件。
+- 使用分支进行功能开发和修复，避免直接在主分支（main/master）上进行开发。
+- 在合并分支前，确保通过所有测试并解决所有冲突。
+- 定期清理分支，删除不再需要的分支以保持仓库整洁。
