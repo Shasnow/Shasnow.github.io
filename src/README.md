@@ -30,7 +30,7 @@ highlights:
     features:
       - title: 启动游戏
         icon: play
-        details: 在这里选择好游戏路径，输入账号与密码，坐和放宽 程序会帮你解决好一切。已经适配b服。
+        details: 自动检测游戏路径，输入账号与密码，坐和放宽 程序会帮你解决好一切。已经适配b服和国际服。
         link: https://starrailassistant.top/getstarted/getstarted.html#%E5%90%AF%E5%8A%A8%E6%B8%B8%E6%88%8F
 
       - title: 领取奖励
@@ -43,20 +43,25 @@ highlights:
         details: 您可以自由选择关卡，是否补充体力、连战次数、执行次数、作战顺序，一切都交由您来决定，也可以混合搭配。
         link: https://starrailassistant.top/getstarted/getstarted.html#%E6%B8%85%E5%BC%80%E6%8B%93%E5%8A%9B
 
-      - title: 退出游戏
-        icon: power-off
-        details: 可以进行登出账号、关闭游戏、关机和休眠等操作。
-        link: https://starrailassistant.top/getstarted/getstarted.html#%E7%BB%93%E6%9D%9F%E5%90%8E
-
-      - title: 自动剧情
+      - title: 自动对话
         icon: play
-        details: 帮你点击繁琐的对话，也能自动选择选项。
+        details: 帮你点击繁琐的对话，也能自动选择选项，或是跳过对话。
         link: https://starrailassistant.top/getstarted/advance.html#%E6%89%A9%E5%B1%95%E5%8A%9F%E8%83%BD-%E6%8F%92%E4%BB%B6
 
       - title: 多账号托管
         icon: users
         details: 可以保存多个账号的配置，在它们之间自动切换
         link: https://starrailassistant.top/getstarted/advance.html#%E5%A4%9A%E8%B4%A6%E5%8F%B7%E6%89%98%E7%AE%A1
+        
+      - title: 货币战争
+        icon: play
+        details: 现已全面支持货币战争，您可以选择标准博弈或超频博弈、设置不同的难度，也可以刷开局。支持自定义策略。
+        link: https://starrailassistant.top/getstarted/getstarted.html#%E8%B4%A7%E5%B8%81%E6%88%98%E4%BA%89
+        
+      - title: 差分宇宙
+        icon: play
+        details: 现已支持差分宇宙，通过刷取第一层来完成每周的差分宇宙任务。
+        link: https://starrailassistant.top/getstarted/getstarted.html#%E6%A8%A1%E6%8B%9F%E5%AE%87%E5%AE%99
 
 
   - header: 为什么选择StarRailAssistant?
@@ -71,13 +76,9 @@ highlights:
         icon: box
         details: 程序提供安装程序和绿色压缩文件，确保用户开箱即用
 
-      - title: 安全
-        icon: lock
-        details: SRA注重您的隐私安全，程序会自动帮您加密需要保存的密码。
-
-      # - title: 可拓展性
-      #   icon: plug
-      #   details: SRA支持安装插件来拓展功能。
+      - title: 体积小巧
+        icon: cube
+        details: 程序体积小巧，完整安装包不到 120 MB，解压后不到 400 MB。
 
       - title: 更多
         icon: ellipsis
