@@ -11,6 +11,17 @@ export default navbar([
       icon: "book",
       children:[
         {
+          text: "问题排查",
+          icon: "info",
+          // prefix: "/getstarted/",
+          children: [
+            {
+              text: "SRA 问题排查指南",
+              link: "/trouble/having_trouble"
+            }
+          ]
+        },
+        {
           text: "快速上手",
           prefix: "/getstarted/",
           children: [
@@ -46,10 +57,10 @@ export default navbar([
           text: "项目仓库",
           link: "https://github.com/Shasnow/StarRailAssistant"
         },
-        // {
-        //   text: "插件管理平台（测试环节）",
-        //   link: "https://sra-pm-platform.netlify.app/"
-        // }
+        {
+          text: "加入SRA交流群",
+          link: "https://qm.qq.com/q/1oGjAXkegE"
+        }
       ]
     }
 ]);

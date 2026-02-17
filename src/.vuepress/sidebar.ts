@@ -3,6 +3,27 @@ import { sidebar } from "vuepress-theme-hope";
 export default sidebar({
   "/": [
     {
+      text: "问题排查",
+      icon: "info",
+      // prefix: "/getstarted/",
+      children: [
+        {
+          text: "常见问题",
+          // prefix: "/trouble/",
+          children: [
+            { text: "常见问题", link: "/faq" },
+          ]
+        },
+        {
+          text: "快速排查",
+          prefix: "/trouble/",
+          children: [
+            { text: "SRA 问题排查指南", link: "/trouble/having_trouble" },
+          ]
+        }
+      ]
+    },
+    {
       text: "开始使用",
       icon: "signs-post",
       prefix: "/getstarted/",

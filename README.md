@@ -17,6 +17,8 @@
 ```sh
 npm install  # 或者使用 pnpm install / yarn install
 ```
+> 如果你看到了类似 `npm error While resolving: vuepress-theme-hope@2.0.0-rc.92` 的错误，可以尝试用 `npm install @vuepress/plugin-docsearch@2.0.0-rc.108 --save-dev` 解决。
+
 
 ### 2️⃣ 本地运行
 ```sh
