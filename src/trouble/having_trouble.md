@@ -33,6 +33,14 @@ order: 1
 
 打开 Windows Defender(Windows 安全中心),在左侧选择“应用与浏览器控制”，将“基于声誉的保护”关闭。
 
+特征：
+
+- 打开后有一个窗口并有类似 `找不到xxx\AppData\Roaming\SRA\settings.json`
+
+解决方法：
+
+下错版本了，应该下载`StarRailAssistant_版本号.zip`或`StarRailAssistant_版本号_Setup.exe`，不要下载`StarRailAssistant_Core_版本号.zip`或`StarRailAssistant_Lite_v2.7.0.zip`。
+
 ![与图片相同就对了](/img/wd_safe.png)
 
 ## SRA 打不开
@@ -89,3 +97,4 @@ order: 1
 **对于寰宇纷争**：
 
 - 可能没在指定页面开始任务，请检查[特定要求](../getstarted/getstarted.html#模拟宇宙)。
+
