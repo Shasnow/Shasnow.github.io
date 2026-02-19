@@ -10,6 +10,8 @@ order: 1
 
 本页面目前只整合了最少、最常见的问题。如果您的问题在本页和[常见问题](/faq)都没有，请前往官方群反馈问题。
 
+想为此文档做出贡献？在文档尾部点击 *在 GitHub 上编辑此页* 
+
 你可以在外部链接中找到官方群的进群链接。
 
 ## 找不到文件
@@ -25,6 +27,8 @@ order: 1
 
 然后，重新解压程序（如果你使用的是安装包，请重新打开安装包安装程序）
 
+---
+
 特征：
 
 - 控制台提示启动失败：An error occurred trying to start prosess "SRA-cli.exe" with working directory 'xxx'. 应用程序控制策略已阻止文件。恶意二进制信誉
@@ -33,15 +37,19 @@ order: 1
 
 打开 Windows Defender(Windows 安全中心),在左侧选择“应用与浏览器控制”，将“基于声誉的保护”关闭。
 
+![与图片相同就对了](/img/wd_safe.png)
+
+---
+
 特征：
 
-- 打开后有一个窗口并有类似 `找不到xxx\AppData\Roaming\SRA\settings.json`
+- 打开后有一个窗口并有类似 `找不到xxx\AppData\Roaming\SRA\settings.json`的提示
 
 解决方法：
 
 下错版本了，应该下载`StarRailAssistant_版本号.zip`或`StarRailAssistant_版本号_Setup.exe`，不要下载`StarRailAssistant_Core_版本号.zip`或`StarRailAssistant_Lite_v2.7.0.zip`。
 
-![与图片相同就对了](/img/wd_safe.png)
+---
 
 ## SRA 打不开
 
@@ -52,6 +60,8 @@ order: 1
 解决方法：
 
 点击`Download it now`，在弹出的浏览器窗口等待程序下载完成，打开下载的程序安装。
+
+---
 
 ## 更新后（可能）任务无法执行
 
@@ -81,6 +91,8 @@ order: 1
 第二种方案：
 
 - 在任务页中，设置或重新设置游戏路径
+
+---
 
 ## 图片识别失败
 
