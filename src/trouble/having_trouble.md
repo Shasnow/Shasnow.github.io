@@ -48,9 +48,9 @@ order: 1
 解决方法：
 
 - 情况一：文件夹中同时存在SRA.exe和SRA-cli.exe
- - 打开SRA.exe而不是SRA-cli.exe
+  - 打开SRA.exe而不是SRA-cli.exe
 - 情况二：文件夹中只有SRA-cli.exe
- - 下错版本了，应该下载`StarRailAssistant_版本号.zip`或`StarRailAssistant_版本号_Setup.exe`，不要下载`StarRailAssistant_Core_版本号.zip`或`StarRailAssistant_Lite_v2.7.0.zip`。
+  - 下错版本了，应该下载`StarRailAssistant_版本号.zip`或`StarRailAssistant_版本号_Setup.exe`，不要下载`StarRailAssistant_Core_版本号.zip`或`StarRailAssistant_Lite_v2.7.0.zip`。
 
 ---
 
