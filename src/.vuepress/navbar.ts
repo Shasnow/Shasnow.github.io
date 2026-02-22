@@ -11,17 +11,6 @@ export default navbar([
       icon: "book",
       children:[
         {
-          text: "问题排查",
-          icon: "info",
-          // prefix: "/getstarted/",
-          children: [
-            {
-              text: "SRA 问题排查指南",
-              link: "/trouble/having_trouble"
-            }
-          ]
-        },
-        {
           text: "快速上手",
           prefix: "/getstarted/",
           children: [
