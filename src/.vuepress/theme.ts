@@ -135,10 +135,10 @@ export default hopeTheme({
 
     comment: {
       provider: "Giscus",
-      repo: "EveGlowLuna/Shasnow.github.io",
-      repoId: "R_kgDOO-vJFw",
+      repo: "Shasnow/Shasnow.github.io",
+      repoId: "R_kgDOOcHrXA",
       category: "Announcements",
-      categoryId: "DIC_kwDOO-vJF84Crvke",
+      categoryId: "DIC_kwDOOcHrXM4C3BiW",
     },
 
 
