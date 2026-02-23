@@ -359,7 +359,7 @@ sra> task run 114 514
 sra> task run "path\to\my_config.json"
 ```
 
-示例： 运行当前配置中的单个任务 `领取奖励`：
+示例：运行当前配置中的单个任务 `领取奖励`：
 
 ```bash
 sra> task single ReceiveRewardsTask

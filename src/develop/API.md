@@ -18,203 +18,203 @@ actions:
   - text: 旧版 API 文档
     link: API-old
 ```
-
-## operator 模块
-operator 模块提供了与游戏窗口交互的功能，包括截图、图像识别、鼠标点击、键盘按键等操作。
 * 部分内容可能过时，以源码内注释为准。
 
-# 类：
+## SRACore.operators 软件包
 
-## Operator
+## ioperator 模块
+  ioperator 模块定义了操作游戏窗口的接口类 `IOperator`
+
+## IOperator
 ```python :no-line-numbers
-class SRACore.operator.Operator
+class SRACore.operators.ioperator.IOperator(ABC)
 ```
-Operator 是操作游戏窗口的核心类，封装了与游戏窗口交互的各种方法。
-要创建`Operator`，可调用其构造函数。不接收任何参数。
-```python :no-line-numbers
-operator = Operator()
-```
+`IOperator` 是一个抽象基类，定义了操作游戏窗口的接口方法。具体实现由 `Operator` 类提供。
 
 ### 属性
-- `window_title` (str)：游戏窗口标题。默认值为`"崩坏：星穹铁道"`。
-- `gcm` (GlobalConfigManager)：全局配置管理器实例。
-- `confidence` (float)：图像识别置信度。从 `gcm` 获取，范围为0.0~1.0。默认值为0.9。
-- `zoom` (float)：屏幕缩放比例。从 `gcm` 获取。默认值为1.25。
-- `active_window` (bool)：是否在获取窗口区域时激活窗口。默认值为True。
+- `settings` (dict): 存储应用程序设置项，从配置文件加载。
+- `confidence` (float): 模板图像匹配的置信度阈值，范围为0.0~1.0。从`settings`中加载，默认值为0.9。
+- `zoom` (float): 窗口缩放比例，从`settings`中加载。
+- `top` (int): 窗口区域的顶部坐标缓存。
+- `left` (int): 窗口区域的左侧坐标缓存。
+- `width` (int): 窗口区域的宽度缓存。
+- `height` (int): 窗口区域的高度缓存。
 
-一个`Operator`实例可调用以下方法：
 
-### Operator.is_window_active
+### 方法
+
+#### is_window_active
 ```python :no-line-numbers
 @property
-Operator.is_window_active() -> bool
+@abstractmethod
+def is_window_active(self) -> bool: ...
 ```
 检查游戏窗口是否为当前活动窗口。
 
-`返回值`：
-- `True`：窗口为当前活动窗口。
-- `False`：窗口不为当前活动窗口。
-
-### Operator.get_win_region
+#### get_win_region
 ```python :no-line-numbers
-Operator.get_win_region(active_window: bool|None = None, raise_exception: bool = True) -> Region | None
+@abstractmethod
+def get_win_region(self, active_window: bool | None = None, raise_exception: bool = True) -> Region | None: ...
 ```
-获取游戏窗口区域。
+获取目标窗口的区域坐标
 
 `参数`：
-- `active_window`：是否在获取时激活窗口。
-    - `True`：获取前激活窗口。
-    - `False`：获取前不激活窗口。
-    - `None`：使用当前实例默认值。（默认值为`True`）
-- `raise_exception`：是否在获取失败时抛出异常。
-    - `True`：获取失败时抛出异常。
-    - `False`：获取失败时返回`None`。
-  
+- `active_window` (bool | None, optional): 是否在获取窗口区域前激活窗口。
+- `raise_exception` (bool, optional): 如果无法获取窗口区域，是否抛出异常。默认为True。
 `返回值`：
-- `Region`：获取成功，返回窗口区域。
-- `None`：获取失败，返回`None`。
-
+- `Region | None`: 返回窗口区域对象，如果无法获取且raise_exception为False，则返回None。
 `异常`：
-- `Exception`：未找到游戏窗口 | 窗口未激活 | 获取失败
+- `Exception`: 如果无法获取窗口区域且raise_exception为True，则抛出异常。
 
-### Operator.screenshot
+#### screenshot
 ```python :no-line-numbers
-@overload
-Operator.screenshot(region: Region | None = None) -> PIL.Image.Image
+def screenshot(self, region: Region | None = None,
+                   *,
+                   from_x: float | None = None,
+                   from_y: float | None = None,
+                   to_x: float | None = None,
+                   to_y: float | None = None) -> Image: ...
 ```
-截取游戏窗口区域的截图。
+截取屏幕截图
 
 `参数`：
-- `region`：截图区域。
-    - `Region`：截图指定区域。
-    - `None`：截图整个窗口区域。
-
+- `region` (Region | None, optional): 要截取的区域对象，包含left, top, width, height属性。
+        如果为None，则默认截取当前活动窗口的区域。默认为None。
+- `from_x` (float, optional): 起始点X坐标比例 (0-1)，相对于窗口左上角
+- `from_y` (float, optional): 起始点Y坐标比例 (0-1)，相对于窗口左上角
+- `to_x` (float, optional): 结束点X坐标比例 (0-1)，相对于窗口左上角
+- `to_y` (float, optional): 结束点Y坐标比例 (0-1)，相对于窗口左上角
 `返回值`：
-- `PIL.Image.Image`：截图成功，返回截图图像。
-
-```python :no-line-numbers
-@overload
-Operator.screenshot(from_x: float, from_y: float, to_x: float, to_y: float) -> PIL.Image.Image
-```
-截取游戏窗口区域的截图。
-
-`参数`：
-- `from_x`：截图区域左上角的相对X坐标，范围为0.0~1.0。
-- `from_y`：截图区域左上角的相对Y坐标，范围为0.0~1.0。
-- `to_x`：截图区域右下角的相对X坐标，范围为0.0~1.0。
-- `to_y`：截图区域右下角的相对Y坐标，范围为0.0~1.0。
-
-`返回值`：
-- `PIL.Image.Image`：截图成功，返回截图图像。
-
+- `PIL.Image.Image`: 返回截取的屏幕区域图像对象
+`注意`：
+- 当region为None时，会自动获取活动窗口区域
+- 坐标比例是基于当前窗口区域计算的
+- 当传入完整的比例坐标时，region参数会被忽略
 `异常`：
-- `ValueError`：参数错误
+- `ValueError`: 如果坐标比例参数不完整或不在0-1范围内
 
-### Operator.locate
+#### locate
 ```python :no-line-numbers
-@overload
-Operator.locate(template: str | Path, region: Region | None = None, trace: bool = True) -> Box | None
+def locate(self,
+            template: str,
+            region: Region | None = None,
+            *,
+            from_x: float | None = None,
+            from_y: float | None = None,
+            to_x: float | None = None,
+            to_y: float | None = None,
+            confidence: float | None = None,
+            trace: bool = True) -> Box | None: ...
 ```
-在游戏窗口区域内查找指定模板图像。
+在窗口内查找模板图片位置
 
 `参数`：
-- `template`：模板图像路径。
-- `region`：查找区域。
-    - `Region`：在指定区域内查找。
-    - `None`：在整个窗口区域内查找。
-- `trace`：是否显示查找过程。
-    - `True`：显示查找过程。
-    - `False`：不显示查找过程。
-
+- `template` (str): 模板图片路径
+- `region` (Region | None, optional): 要查找的区域对象，包含left, top, width, height属性。
+        如果为None，则默认查找当前活动窗口的区域。默认为None。
+- `from_x` (float, optional): 起始点X坐标比例 (0-1), 相对于窗口左上角
+- `from_y` (float, optional): 起始点Y坐标比例 (0-1), 相对于窗口左上角
+- `to_x` (float, optional): 结束点X坐标比例 (0-1), 相对于窗口左上角
+- `to_y` (float, optional): 结束点Y坐标比例 (0-1), 相对于窗口左上角
+- `confidence` (float | None, optional): 匹配置信度阈值 (0-1), 如果为None则使用默认值。默认为None。
+- `trace` (bool, optional): 是否打印调试信息。默认为True。
 `返回值`：
-- `Box`：查找成功，返回模板图像在窗口区域内的位置。
-- `None`：查找失败，返回`None`。
+- `Box | None`: 找到的图片位置，如果未找到则返回None
+`异常`：
+- `ValueError`: 如果坐标比例参数不完整或不在0-1范围内
 
+#### locate_any
 ```python :no-line-numbers
-@overload
-Operator.locate(template: str | Path, 
-                from_x: float, 
-                from_y: float, 
-                to_x: float, 
-                to_y: float, 
-                trace: bool = True) -> Box | None
+def locate_any(self,
+            templates: list[str],
+            region: Region | None = None,
+            *,
+            from_x: float | None = None,
+            from_y: float | None = None,
+            to_x: float | None = None,
+            to_y: float | None = None,
+            confidence: float | None = None,
+            trace: bool = True) -> tuple[int, Box | None]: ...
 ```
-在游戏窗口区域内查找指定模板图像。
+在窗口内查找任意一张图片位置
+        
+`参数`：
+- `templates` (list[str]): 模板图片路径列表
+- `region` (Region | None, optional): 要查找的区域对象，包含left, top, width, height属性。
+        如果为None，则默认查找当前活动窗口的区域。默认为None。
+- `from_x` (float, optional): 起始点X坐标比例 (0-1)，相对于窗口左上角
+- `from_y` (float, optional): 起始点Y坐标比例 (0-1)，相对于窗口左上角
+- `to_x` (float, optional): 结束点X坐标比例 (0-1)，相对于窗口左上角
+- `to_y` (float, optional): 结束点Y坐标比例 (0-1)，相对于窗口左上角
+- `confidence` (float | None, optional): 匹配度, 0-1之间的浮点数, 默认为self.confidence
+- `trace` (bool, optional): 是否打印调试信息。默认为True。
+`返回值`：
+- `tuple[int, Box | None]`: 找到的图片索引和位置，如果未找到则返回-1和None
+`异常`：
+- `ValueError`: 如果坐标比例参数不完整或不在0-1范围内
+
+#### locate_all
+```python :no-line-numbers
+def locate_all(self,
+            template: str,
+            region: Region | None = None,
+            *,
+            from_x: float | None = None,
+            from_y: float | None = None,
+            to_x: float | None = None,
+            to_y: float | None = None,
+            confidence: float | None = None,
+            trace: bool = True) -> list[Box] | None: ...
+```
+在窗口内查找所有匹配的图片位置
 
 `参数`：
-- `template`：模板图像路径。
-- `from_x`：查找区域左上角的相对X坐标，范围为0.0~1.0。
-- `from_y`：查找区域左上角的相对Y坐标，范围为0.0~1.0。
-- `to_x`：查找区域右下角的相对X坐标，范围为0.0~1.0。
-- `to_y`：查找区域右下角的相对Y坐标，范围为0.0~1.0。
-- `trace`：是否显示查找过程。
-    - `True`：显示查找过程。
-    - `False`：不显示查找过程。
-
+- `template` (str): 模板图片路径
+- `region` (Region | None, optional): 要查找的区域对象，包含left, top, width, height属性。
+        如果为None，则默认查找当前活动窗口的区域。默认为None。
+- `from_x` (float, optional): 起始点X坐标比例 (0-1), 相对于窗口左上角
+- `from_y` (float, optional): 起始点Y坐标比例 (0-1), 相对于窗口左上角
+- `to_x` (float, optional): 结束点X坐标比例 (0-1), 相对于窗口左上角
+- `to_y` (float, optional): 结束点Y坐标比例 (0-1), 相对于窗口左上角
+- `confidence` (float | None, optional): 匹配置信度阈值 (0-1), 如果为None则使用默认值。默认为None。
+- `trace` (bool, optional): 是否打印调试信息。默认为True。
 `返回值`：
-- `Box`：查找成功，返回模板图像在窗口区域内的位置。
-- `None`：查找失败，返回`None`。
+- `list[Box] | None`: 找到的所有图片位置列表，如果未找到则返回None
+`异常`：
+- `ValueError`: 如果坐标比例参数不完整或不在0-1范围内
 
-### Operator.locate_any
+
+
+#### ocr
 ```python :no-line-numbers
-@overload
-Operator.locate_any(templates: list[str | Path],
-                    region: Region | None = None,
-                    trace: bool = True) -> tuple[int, Box | None]
+def ocr(self,
+        region: Region | None = None,
+        *,
+        from_x: float | None = None,
+        from_y: float | None = None,
+        to_x: float | None = None,
+        to_y: float | None = None,
+        trace: bool = True) -> list[Any] | None: ...
 ```
-在游戏窗口区域内查找指定模板图像列表中的任意一个。
+执行 OCR 文字识别
 
+考虑使用 ocr_match 或 ocr_match_any 方法来处理文本匹配和位置获取，而不是直接使用此方法。
 `参数`：
-- `templates`：模板图像路径列表。
-- `region`：查找区域。
-    - `Region`：在指定区域内查找。
-    - `None`：在整个窗口区域内查找。
-- `trace`：是否显示查找过程。
-
+- `region` (Region | None, optional): 要识别的区域对象，包含left, top, width, height属性。
+        如果为None，则默认识别当前活动窗口的区域。默认为None。如果传入完整的比例坐标时，region参数会被忽略
+- `from_x` (float, optional): 起始点X坐标比例 (0-1)，相对于窗口左上角
+- `from_y` (float, optional): 起始点Y坐标比例 (0-1)，相对于窗口左上角
+- `to_x` (float, optional): 结束点X坐标比例 (0-1)，相对于窗口左上角
+- `to_y` (float, optional): 结束点Y坐标比例 (0-1)，相对于窗口左上角
+- `trace` (bool, optional): 是否打印调试信息。默认为True。
 `返回值`：
-- `tuple[int, Box | None]`：查找成功，返回找到的模板图像在列表中的索引及其在窗口区域内的位置；查找失败，返回-1及`None`。
+- `list[Any] | None`: OCR 引擎返回的原始结果。如果发生错误，返回None。
+`异常`：
+- `ValueError`: 如果坐标比例参数不完整或不在0-1范围内
 
 ```python :no-line-numbers
 @overload
-Operator.locate_any(templates: list[str | Path],
-                    from_x: float,
-                    from_y: float,
-                    to_x: float,
-                    to_y: float,
-                    trace: bool = True) -> tuple[int, Box | None]
-```
-在游戏窗口区域内查找指定模板图像列表中的任意一个。
-
-`参数`：
-- `templates`：模板图像路径列表。
-- `from_x`：查找区域左上角的相对X坐标，范围为0.0~1.0。
-- `from_y`：查找区域左上角的相对Y坐标，范围为0.0~1.0。
-- `to_x`：查找区域右下角的相对X坐标，范围为0.0~1.0。
-- `to_y`：查找区域右下角的相对Y坐标，范围为0.0~1.0。
-- `trace`：是否显示查找过程。
-
-`返回值`：
-- `tuple[int, Box | None]`：查找成功，返回找到的模板图像在列表中的索引及其在窗口区域内的位置；查找失败，返回-1及`None`。
-
-### Operator.ocr
-```python :no-line-numbers
-@overload
-Operator.ocr(region: Region | None = None, trace: bool = True) -> list[Any] | None
-```
-在窗口的指定区域内执行 OCR 文字识别，返回原始 OCR 结果（包含文本、坐标、置信度等）。
-`参数`：
-- `region`：OCR 识别区域。
-    - `Region`：在指定区域内识别。
-    - `None`：在整个窗口区域内识别。
-- `trace`：是否显示错误信息。
-
-`返回值`：
-- `list[Any]`：识别成功，返回 OCR 结果列表。
-- `None`：识别失败，返回`None`。
-
-```python :no-line-numbers
-@overload
-Operator.ocr(from_x: float, from_y: float, to_x: float, to_y: float, trace: bool = True) -> list[Any] | None
+def ocr(self, from_x: float, from_y: float, to_x: float, to_y: float, trace: bool = True) -> list[Any] | None: ...
 ```
 在窗口的指定区域内执行 OCR 文字识别，返回原始 OCR 结果（包含文本、坐标、置信度等）。
 `参数`：
@@ -239,46 +239,103 @@ ocr_result = operator.ocr(region=region)
 ocr_result = operator.ocr(from_x=0.1, from_y=0.1, to_x=0.5, to_y=0.5)
 ```
 
-### Operator.ocr_match
+#### ocr_match
 ```python :no-line-numbers
-Operator.ocr_match(text: str,
-                   confidence: float = 0.9,
-                   *args, **kwargs) -> Box | None
+def ocr_match(self,
+                text: str,
+                confidence=0.9,
+                region: Region = None,
+                *,
+                from_x: float | None = None,
+                from_y: float | None = None,
+                to_x: float | None = None,
+                to_y: float | None = None,
+                trace: bool = True) -> Box | None: ...
 ```
-在窗口的指定区域内执行 OCR 文字识别，并查找指定文本。
+OCR识别并匹配指定文本，返回文本位置
+
+当提供完整4个比例坐标时，region参数会被忽略。
+`参数`：
+- `text` (str): 要识别的文本
+- `confidence` (float, optional): 识别置信度。默认为0.9。
+- `region` (Region | None, optional): 识别区域。如果为None，则默认识别当前活动窗口的区域。默认为None。
+- `from_x` (float, optional): 识别区域起始x坐标比例(0-1)。
+- `from_y` (float, optional): 识别区域起始y坐标比例(0-1)。
+- `to_x` (float, optional): 识别区域结束x坐标比例(0-1)。
+- `to_y` (float, optional): 识别区域结束y坐标比例(0-1)。
+- `trace` (bool, optional): 是否打印调试信息。默认为True。
+`返回值`：
+- `Box | None`: 找到的文本位置，如果未找到则返回None。
+
+#### ocr_match_any
+```python :no-line-numbers
+def ocr_match_any(self,
+                      texts: list[str],
+                      confidence=0.9,
+                      region: Region = None,
+                      *,
+                      from_x: float | None = None,
+                      from_y: float | None = None,
+                      to_x: float | None = None,
+                      to_y: float | None = None,
+                      trace: bool = True) -> tuple[int, Box | None]: ...
+```
+OCR识别并匹配任意指定文本，返回文本索引和位置
+
+当提供完整4个比例坐标时，region参数会被忽略。
+`参数`：
+- `texts` (list[str]): 要识别的文本列表
+- `confidence` (float, optional): 识别置信度。默认为0.9。
+- `region` (Region | None, optional): 识别区域。如果为None，则默认识别当前活动窗口的区域。默认为None。
+- `from_x` (float, optional): 识别区域起始x坐标比例(0-1)。
+- `from_y` (float, optional): 识别区域起始y坐标比例(0-1)。
+- `to_x` (float, optional): 识别区域结束x坐标比例(0-1)。
+- `to_y` (float, optional): 识别区域结束y坐标比例(0-1)。
+- `trace` (bool, optional): 是否打印调试信息。默认为True。
+`返回值`：
+- `tuple[int, Box | None]`: 找到的文本索引和位置，如果未找到则返回-1和None
+
+#### wait_ocr
+```python :no-line-numbers
+def wait_ocr(self, text: str, timeout: float = 10, interval: float = 0.2, confidence=0.9, *args,
+                 **kwargs) -> Box | None: ...
+```
+等待指定文本出现在窗口中，返回文本位置
 
 `参数`：
-- `text`：要查找的文本。
-- `confidence`：文本匹配置信度，范围为0.0~1.0。默认值为0.9。
-- `*args`：传递给`Operator.ocr`的其他参数。
-- `**kwargs`：传递给`Operator.ocr`的其他参数。
+- `text`：要等待的文本。
+- `timeout`：等待超时时间，单位为秒。默认值为10秒。
+- `interval`：检查间隔时间，单位为秒。默认值为0.2秒。
+- `confidence`：识别置信度。默认值为0.9。
+- `*args`：额外的位置参数。
+- `**kwargs`：额外的关键字参数。
 
 `返回值`：
-- `Box`：查找成功，返回文本在窗口区域内的位置。
-- `None`：查找失败，返回`None`
+- `Box | None`：找到的文本位置，如果未找到则返回`None`。
 
-### Operator.wait_ocr
+#### wait_ocr_any
 ```python :no-line-numbers
-Operator.wait_ocr(text: str,
-                   timeout: float = 10,
-                   interval: float = 0.2,
-                   confidence: float = 0.9,
-                   *args, **kwargs) -> Box | None
+def wait_ocr_any(self, texts: list[str], timeout: float = 10, interval: float = 0.2, confidence=0.9, *args,
+                     **kwargs) -> tuple[int, Box | None]: ...
 ```
-在窗口的指定区域内等待指定文本出现。
+等待任意指定文本出现在窗口中，返回文本索引和位置
+
 `参数`：
-- `text`：要查找的文本。
+- `texts`：要等待的文本列表。
 - `timeout`：等待超时时间，单位为秒。默认值为10秒。
-- `interval`：每次识别间隔时间，单位为秒。默认值为0.2秒。
-- `confidence`：文本匹配置信度，范围为0.0~1.0。默认值为0.9。
-- `*args`：传递给`Operator.ocr`的其他参数。
-- `**kwargs`：传递给`Operator.ocr`的其他参数。
+- `interval`：检查间隔时间，单位为秒。默认值为0.2秒。
+- `confidence`：识别置信度。默认值为0.9。
+- `*args`：额外的位置参数。
+- `**kwargs`：额外的关键字参数。
+
+`返回值`：
+- `tuple[int, Box | None]`：找到的文本索引和位置，如果未找到则返回-1和None。
                      
-### Operator.click_point
+#### click_point
 ```python :no-line-numbers
-Operator.click_point(x: int | float, y: int | float, 
-                     x_offset: int = 0, y_offset: int = 0,
-                     after_sleep: float = 0) -> bool
+@abstractmethod
+def click_point(self, x: int | float, y: int | float, x_offset: int | float = 0, y_offset: int | float = 0,
+                after_sleep: float = 0, tag: str = "") -> bool: ...
 ```
 在游戏窗口区域内点击指定位置。
 
@@ -299,79 +356,70 @@ Operator.click_point(x: int | float, y: int | float,
 `异常`：
 - `ValueError`：参数错误
 
-### Operator.click_box
+#### click_box
 ```python :no-line-numbers
-Operator.click_box(box: Box,
-                  x_offset: int = 0, y_offset: int = 0,
-                  after_sleep: float = 0) -> bool
+def click_box(self, box: Box,
+                x_offset: int = 0, y_offset: int = 0,
+                after_sleep: float = 0) -> bool: ...
 ```
-在游戏窗口区域内点击指定位置。
-
+点击Box区域中心
+        
+计算box中心点坐标并调用click_point方法进行点击
 `参数`：
-- `box`：点击位置的区域。
-- `x_offset`：点击位置的X偏移量，单位为像素。默认值为0。
-- `y_offset`：点击位置的Y偏移量，单位为像素。默认值为0。
-- `after_sleep`：点击后等待的时间，单位为秒。默认值为0。
-
+- `box` (Box): Box对象，表示要点击的区域
+- `x_offset` (int | float, optional): x偏移量(px)或百分比(float)。默认值为0。
+- `y_offset` (int | float, optional): y偏移量(px)或百分比(float)。默认值为0。
+- `after_sleep` (float, optional): 点击后等待时间，单位秒。默认值为0。
 `返回值`：
-- `bool`：点击成功，返回`True`；点击失败，返回`False`
+- `bool`: 点击成功返回True，否则返回False
 
-### Operator.click_img
+#### click_img
 ```python :no-line-numbers
-Operator.click_img(img_path: str | Path,
-                   x_offset: int = 0, y_offset: int = 0,
-                   after_sleep: float = 0) -> bool
+def click_img(self, template: str, x_offset: int | float = 0, y_offset: int | float = 0,
+                  after_sleep: float = 0) -> bool: ...
 ```
-在游戏窗口区域内查找指定模板图像并点击其中心位置。
-
+查找图片并点击其中心位置
+        
+先调用locate方法查找图片位置，如果找到则调用click_box方法点击
 `参数`：
-- `img_path`：模板图像路径。
-- `x_offset`：点击位置的X偏移量，单位为像素。默认值为0。
-- `y_offset`：点击位置的Y偏移量，单位为像素。默认值为0。
-- `after_sleep`：点击后等待的时间，单位为秒。默认值为0。
-
+- `template` (str): 模板图片路径
+- `x_offset` (int | float, optional): x偏移量(px)或百分比(float)。默认值为0。
+- `y_offset` (int | float, optional): y偏移量(px)或百分比(float)。默认值为0。
+- `after_sleep` (float, optional): 点击后等待时间，单位秒。默认值为0。
 `返回值`：
-- `bool`：点击成功，返回`True`；点击失败，返回`False`
+- `bool`: 点击成功返回True，否则返回False
 
-### Operator.wait_img
+#### wait_img
 ```python :no-line-numbers
-Operator.wait_img(img_path: str | Path,
-                  timeout: float = 10,
-                  interval: float = 0.5) -> Box | None
+def wait_img(self, template: str, timeout: int = 10, interval: float = 0.5) -> Box | None:
 ```
-在游戏窗口区域内等待指定模板图像出现。
-
+等待模板图片出现
+        
 `参数`：
-- `img_path`：模板图像路径。
-- `timeout`：等待超时时间，单位为秒。默认值为10秒。
-- `interval`：每次查找间隔时间，单位为秒。默认值为0.5秒。
-
+- `template` (str): 模板图片路径
+- `timeout` (int, optional): 超时时间，单位秒。默认值为10秒。
+- `interval` (float, optional): 检查间隔时间，单位秒，默认为0.5秒。默认值为0.5秒。
 `返回值`：
-- `Box`：图像出现，返回模板图像在窗口区域内的位置；超时未出现，返回`None`
+- `Box | None`: 找到的图片位置，如果未找到则返回None
 
-### Operator.wait_any_img
+#### wait_any_img
 ```python :no-line-numbers
-Operator.wait_any_img(img_paths: list[str | Path],
-                      timeout: float = 10,
-                      interval: float = 0.5) -> int
+def wait_any_img(self, templates: list[str], timeout: int = 10, interval: float = 0.2) -> tuple[int, Box | None]:
 ```
 在游戏窗口区域内等待指定模板图像列表中的任意一个出现。
 
 `参数`：
-- `img_paths`：模板图像路径列表。
+- `templates`：模板图像路径列表。
 - `timeout`：等待超时时间，单位为秒。默认值为10秒。
-- `interval`：每次查找间隔时间，单位为秒。默认值为0.5秒。
+- `interval`：每次查找间隔时间，单位为秒。默认值为0.2秒。
 
 `返回值`：
 - `int`：图像出现，返回找到的模板图像在列表中的索引；超时未出现，返回-1
 
-### Operator.press_key
+#### press_key
 ```python :no-line-numbers
 @staticmethod
-Operator.press_key(key: str, 
-                   presses: int = 1,
-                   interval: float = 0,
-                   wait: float = 0) -> bool
+def press_key(key: str, presses: int = 1, interval: float = 0, wait: float = 0) -> bool: ...    
 ```
 模拟按下指定键。
 
@@ -384,10 +432,10 @@ Operator.press_key(key: str,
 `返回值`：
 - `bool`：按键成功，返回`True`；按键失败，返回`False`
 
-### Operator.hold_key
+#### hold_key
 ```python :no-line-numbers
 @staticmethod
-Operator.hold_key(key: str, duration: float = 0) -> bool
+def hold_key(key: str, duration: float = 0) -> bool: ...
 ```
 模拟按住指定键一段时间。
 
@@ -398,10 +446,10 @@ Operator.hold_key(key: str, duration: float = 0) -> bool
 `返回值`：
 - `bool`：按键成功，返回`True`；按键失败，返回`False`
 
-### Operator.sleep
+#### sleep
 ```python :no-line-numbers
 @staticmethod
-Operator.sleep(seconds: float) -> None
+def sleep(seconds: float) -> None: ...  
 ```
 暂停程序执行一段时间。
 
@@ -411,20 +459,20 @@ Operator.sleep(seconds: float) -> None
 `返回值`：
 - `None`
 
-### Operator.copy
+#### copy
 ```python :no-line-numbers
-@staticmethod
-Operator.copy(text: str) -> Any
+@staticmethod   
+def copy(text: str) -> Any: ...
 ```
 将指定文本复制到系统剪贴板。
 
 `参数`：
 - `text`：要复制的文本。
 
-### Operator.paste
+#### paste
 ```python :no-line-numbers
 @staticmethod
-Operator.paste() -> None
+def paste() -> None: ...
 ```
 模拟粘贴操作，将系统剪贴板中的文本粘贴到当前光标位置。
 
@@ -434,10 +482,10 @@ Operator.paste() -> None
 `返回值`：
 - `None`
 
-### Operator.move_rel
+#### move_rel
 ```python :no-line-numbers
-@staticmethod
-Operator.move_rel(x_offset: int, y_offset: int) -> bool
+@abstractmethod
+def move_rel(self, x_offset: int, y_offset: int) -> bool: ...
 ```
 模拟鼠标相对移动。
 
@@ -448,10 +496,10 @@ Operator.move_rel(x_offset: int, y_offset: int) -> bool
 `返回值`：
 - `bool`：移动成功，返回`True`；移动失败，返回`False`
 
-### Operator.move_to
+#### move_to
 ```python :no-line-numbers
-@staticmethod
-Operator.move_to(x: int | float, y: int | float, duration: float = 0.0) -> bool
+@abstractmethod
+def move_to(self, x: int | float, y: int | float, duration: float = 0.0) -> bool: ...
 ```
 模拟鼠标移动到指定位置。
 
@@ -467,10 +515,46 @@ Operator.move_to(x: int | float, y: int | float, duration: float = 0.0) -> bool
 `返回值`：
 - `bool`：移动成功，返回`True`；移动失败，返回`False`
 
-### Operator.scroll
+#### mouse_down
+```python :no-line-numbers
+@abstractmethod
+def mouse_down(self, x: int | float | None, y: int | float | None) -> bool:
+```
+模拟鼠标按键按下。
+
+`参数`：
+- `x`：鼠标点击位置的X坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+- `y`：鼠标点击位置的Y坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+
+`返回值`：
+- `bool`：按下成功，返回`True`；按下失败，返回`False`
+
+#### mouse_up
+```python :no-line-numbers
+@abstractmethod
+def mouse_up(self, x: int | float | None, y: int | float | None) -> bool: ...
+```
+模拟鼠标按键释放。
+
+`参数`：
+- `x`：鼠标点击位置的X坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+- `y`：鼠标点击位置的Y坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+
+`返回值`：
+- `bool`：释放成功，返回`True`；释放失败，返回`False`
+
+#### scroll
 ```python :no-line-numbers
 @staticmethod
-Operator.scroll(distance: int) -> bool
+def scroll(distance: int) -> bool: ...
 ```
 模拟鼠标滚轮滚动。
 
@@ -480,149 +564,231 @@ Operator.scroll(distance: int) -> bool
 `返回值`：
 - `bool`：滚动成功，返回`True`；滚动失败，返回`False`
 
-## Executable
+#### drag_to
 ```python :no-line-numbers
-class SRACore.util.operator.Executable(Operator)
+@abstractmethod
+def drag_to(self, from_x: int | float, from_y: int | float, to_x: int | float, to_y: int | float,
+                duration: float = 0.5) -> bool:
 ```
-`Executable` 仅继承自 `Operator`，无新增属性和方法。可直接创建实例使用。
+模拟鼠标拖动到指定位置。
+
+`参数`：
+- `from_x` (int | float): 拖动开始位置的X坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+- `from_y` (int | float): 拖动开始位置的Y坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+- `to_x` (int | float): 拖动结束位置的X坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+- `to_y` (int | float): 拖动结束位置的Y坐标。
+    - `int`：绝对坐标，单位为像素。
+    - `float`：相对坐标，范围为0.0~1.0。
+- `duration` (float): 拖动持续时间，单位为秒。默认值为0.5秒。
+`返回值`：
+- `bool`: 如果拖动成功则返回 True，否则返回 False。
+
+#### do_while
 ```python :no-line-numbers
-executable = Executable()
+@staticmethod
+def do_while(action: Callable[[], Any], condition: Callable[[], bool], interval: float = 0.1,
+                 max_iterations: int = 50) -> bool:
 ```
+重复执行操作，直到满足条件或达到最大迭代次数。
+
+`参数`：
+- `action`：要重复执行的操作函数。
+- `condition`：判断是否继续执行的条件函数。
+- `interval`：每次执行之间的间隔时间，单位为秒。默认值为0.1秒。
+- `max_iterations`：最大迭代次数。默认值为50次。
+
+`返回值`：
+- `bool`：因不再满足条件而退出返回 True，达到最大迭代次数返回 False。
+
+## model 模块
+model 模块提供了与模型相关的功能，包括表示矩形区域的 Box 类和表示矩形区域的 Region 类。
 
 ## Box
 ```python :no-line-numbers
 @dataclasses.dataclass
-class SRACore.util.operator.Box
+class SRACore.operators.model.Box
 ```
 表示一个矩形区域，包含位置和尺寸信息。
-属性
+
+例如，Box(0,0,0,0) 表示窗口左上角的一个点
+
+### 属性
 - `left` (int)：矩形左上角的X坐标。
 - `top` (int)：矩形左上角的Y坐标。
 - `width` (int)：矩形的宽度。
 - `height` (int)：矩形的高度。
+- `source` (str | None)：矩形的来源，用于标识矩形的来源。默认值为None。
 
-方法
-### Box.center
+### 方法
+#### center
 ```python :no-line-numbers
 @property
-Box.center() -> tuple[int, int]
+center() -> tuple[int, int]
 ```
 计算并返回矩形的中心点坐标。
 
 ## Region
 ```python :no-line-numbers
 @dataclasses.dataclass
-class SRACore.util.operator.Region
+class SRACore.operators.model.Region
 ```
 表示一个矩形区域，包含位置和尺寸信息。
-属性
+
+### 属性
 - `left` (int)：矩形左上角的X坐标。
 - `top` (int)：矩形左上角的Y坐标。
 - `width` (int)：矩形的宽度。
 - `height` (int)：矩形的高度。
+- `parent` (Region | None)：矩形的父区域，用于表示矩形的嵌套关系。默认值为None。
 
-方法
-### Region.tuple
+### 方法
+#### tuple
 ```python :no-line-numbers
 @property
-Region.tuple() -> tuple[int, int, int, int]
+tuple() -> tuple[int, int, int, int]
 ```
 将区域信息转换为元组形式，返回 (left, top, width, height)。
 
-## system 模块
-system 模块提供了与系统交互的功能，包括执行命令、检查进程、终止进程等操作。
-# 方法: 
-### Popen
+#### sub_region
 ```python :no-line-numbers
-SRACore.util.system.Popen(arg: str | list[str], 
-                           shell: bool = False, 
-                           **kwargs) -> bool
+def sub_region(self, from_x: float, from_y: float, to_x: float, to_y: float) -> 'Region':
 ```
-使用子进程执行指定命令。是对`psutil.Popen`的封装。
+创建一个子区域，基于当前区域的位置和尺寸。
 
-然而`psutil.Popen`是对`subprocess.Popen`的封装。
-`参数`:
-- `arg`: 要执行的命令字符串或字符串列表。
-- `shell`: 是否通过shell执行命令。默认值为`False`。
-- `**kwargs`: 传递给`subprocess.Popen`的其他参数。
+`参数`：
+- `from_x` (float)：子区域左上角的X坐标，范围为0.0~1.0。
+- `from_y` (float)：子区域左上角的Y坐标，范围为0.0~1.0。
+- `to_x` (float)：子区域右下角的X坐标，范围为0.0~1.0。
+- `to_y` (float)：子区域右下角的Y坐标，范围为0.0~1.0。
 
-`返回值`:
-- `bool`: 命令执行成功，返回`True`；命令执行失败，返回`False`
+`返回值`：
+- `Region`：新创建的子区域对象。
 
-### is_process_running
+## Operator
 ```python :no-line-numbers
-SRACore.util.system.is_process_running(process_name: str) -> bool
+class SRACore.operators.ioperator.Operator(IOperator)
 ```
-检查指定名称的进程是否正在运行。
-`参数`:
-- `process_name`: 要检查的进程名称。
+实现了操作游戏窗口的具体方法。基于PC端的窗口操作。
 
-`返回值`:
-- `bool`: 进程正在运行，返回`True`；进程未运行，返回`False`
+## SRACore.task 软件包
 
-### task_kill
+### task 模块
+task 模块定义了任务系统的基类，所有任务类都应继承自 `BaseTask`
+
+## Executable
 ```python :no-line-numbers
-SRACore.util.system.task_kill(process_name: str) -> bool
+class SRACore.task.Executable
 ```
-终止指定名称的进程。
-`参数`:
-- `process_name`: 要终止的进程名称。
+`Executable` 是一个基础类，为可执行对象提供操作符和设置访问。
 
-`返回值`:
-- `bool`: 进程终止成功，返回`True`；进程终止失败，返回`False`
+### 属性
+- `operator` (IOperator): 操作符实例，用于执行窗口操作。
+- `settings` (dict): 应用程序设置项，从操作符的设置中加载。
 
-## config 模块
-config 模块提供了配置文件管理的功能，包括加载、获取、设置和保存配置项等操作。
-
-方法：
-### load_config
+## BaseTask
 ```python :no-line-numbers
-SRACore.util.config.load_config(name: str ) -> dict[str, Any]
+class SRACore.task.BaseTask(Executable, ABC)
 ```
-加载指定名称的配置文件。
-`参数`:
-- `name`: 配置名称。
-`返回值`:
-- `dict[str, Any]`: 加载成功，返回配置字典。
-- `{}`: 加载失败，返回空字典。
+`BaseTask` 是所有任务类的抽象基类，定义了任务的基本结构和生命周期。
 
-### load_settings
+### 属性
+- `operator` (IOperator): 操作符实例，用于执行窗口操作。
+- `settings` (dict): 应用程序设置项，从操作符的设置中加载。
+- `config` (dict): 任务配置字典。
+- `stop_flag` (bool): 停止标志，用于控制任务执行。
+
+### 方法
+
+#### __init__
 ```python :no-line-numbers
-SRACore.util.config.load_settings() -> dict[str, Any]
+def __init__(self, operator: IOperator, config: dict):
 ```
-加载全局设置配置文件。
-`返回值`:
-- `dict[str, Any]`: 加载成功，返回配置字典。
-- `{}`: 加载失败，返回空字典。
+初始化任务实例。
 
-### load_cache
+`参数`：
+- `operator` (IOperator): 操作符实例。
+- `config` (dict): 任务配置字典。
+
+#### _post_init
 ```python :no-line-numbers
-SRACore.util.config.load_cache() -> dict[str, Any]
+def _post_init(self):
 ```
-加载缓存配置文件。
-`返回值`:
-- `dict[str, Any]`: 加载成功，返回配置字典。
-- `{}`: 加载失败，返回空字典。
+子类可重写此方法以进行额外初始化。
 
-## encryption 模块
-encryption 模块提供了数据加密和解密的功能，使用Windows的DPAPI进行加密和解密操作。
-方法:
-### win_decryptor
+`注意`：
+- 此方法在 `__init__` 方法末尾自动调用。
+- 子类可以重写此方法来执行额外的初始化逻辑。
+
+#### run
 ```python :no-line-numbers
-SRACore.util.encryption.win_decryptor(encrypted_note: str, entropy: bytes = None) -> str
+@abstractmethod
+def run(self):
 ```
-使用Windows DPAPI解密数据
-`参数`:
-- `encrypted_note`: 要解密的Base64编码字符串。
-- `entropy`: 可选的附加熵，默认为`None`。
+执行任务的主要逻辑。
 
-`返回值`:
-- `str`: 解密后的字符串。
+`注意`：
+- 这是一个抽象方法，子类必须实现。
+- 任务的具体执行逻辑应在此方法中实现。
+- 应定期检查 `stop_flag` 以支持任务中断。
 
-## logger 模块
-logger 模块提供了日志记录的功能
-### logger
+#### stop
 ```python :no-line-numbers
-from SRACore.util.logger import logger
+def stop(self):
 ```
-`logger` 是一个预配置的日志记录器实例，使用Python的`loguru`库进行日志记录。
+停止任务执行。
+
+`注意`：
+- 设置 `stop_flag` 为 `True`。
+- 子类的 `run` 方法应定期检查此标志并优雅地停止执行。
+
+#### __str__
+```python :no-line-numbers
+def __str__(self):
+```
+返回任务的字符串表示。
+
+`返回值`：
+- `str`: 任务类的名称。
+
+#### __repr__
+```python :no-line-numbers
+def __repr__(self):
+```
+返回任务的正式字符串表示。
+
+`返回值`：
+- `str`: 任务类的正式表示，格式为 `<ClassName>`。
+
+### 使用示例
+
+```python :no-line-numbers
+from SRACore.task import BaseTask
+from SRACore.operators import Operator
+
+class MyTask(BaseTask):
+    def _post_init(self):
+        # 额外的初始化逻辑
+        self.max_attempts = self.config.get('max_attempts', 10)
+        self.attempts = 0
+    
+    def run(self):
+        while not self.stop_flag and self.attempts < self.max_attempts:
+            # 执行任务逻辑
+            self.operator.press_key('space')
+            self.operator.sleep(1)
+            self.attempts += 1
+
+# 使用示例
+operator = Operator()
+config = {'max_attempts': 5}
+task = MyTask(operator, config)
+task.run()
+task.stop()
+```
+
