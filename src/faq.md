@@ -14,17 +14,17 @@ icon: question
 ## 有关 SRA 的常见问题
 
 ::: details SRA能支持Linux/macOS/*nix吗
-对于Linux,官方已经将其提上行程 !!~~某作者之前说支持Linux没用来着？~~!!，[StarRailAssistant.Neo](https://github.com/EveGlowLuna/StarRailAssistant.Neo)项目的[后端项目 Linux开发分支](https://github.com/EveGlowLuna/SRA-CE-Cli/tree/linux_dev)已有雏形，可前往查看。该fork的效果不代表官方的最终效果。
+对于 *Linux* ,官方内部已有计划 !!~~某SRA作者之前说支持Linux没用来着？~~!!；此外[StarRailAssistant.Neo](https://github.com/EveGlowLuna/StarRailAssistant.Neo)项目的[后端项目 Linux开发分支](https://github.com/EveGlowLuna/SRA-CE-Cli/tree/linux_dev)已有雏形，可前往查看。该fork的效果不代表官方的最终效果。
 
-对于macOS,如果你有足够资金供开发者购入MacBook, iMac, Mac mini或Mac Studio设备，我们（团队贡献中的某一个人）会针对macOS系统着手开发。
+对于 *macOS* ,如果你有足够资金供开发者购入**MacBook**, **iMac**, **Mac mini**或**Mac Studio**设备并向我们提供，我们（或团队贡献中的某一个人）会着手针对 *macOS* 系统开发。
 
-对于其他系统*例如FreeBSD*？洗洗睡吧喵，梦里啥都有喵
+对于其他系统 *例如FreeBSD* ？洗洗睡吧喵，梦里啥都有喵
 :::
 
 ::: details 挂后台会抢鼠标吗？/可以挂后台吗？
 包抢的，SRA使用模拟操作技术，需要真实的控制您的鼠标去移动和点击。
 
-不过您可以查看我们的新项目(https://github.com/Shasnow/ok-starrailassistant)，这个项目或许能解决您的要求（不过目前暂停了维护）
+不过您可以查看我们的*新*项目(https://github.com/Shasnow/ok-starrailassistant)，这个项目或许能解决您的要求（不过目前暂停了维护）
 :::
 
 ::: details 可以做一做绝区零的/有没有绝区零版本？
@@ -68,7 +68,7 @@ SRA已接入Mirror酱，可以尝试使用。
 不会，不同手机之间屏幕大小各不相同，实现难度较大。
 :::
 
-::: details 为什么文件是*潜在的危害文件*？
+::: details 为什么文件会被报告为*具有可能有害的行为*？
 SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无法正常运行。请放心，SRA不会对您的电脑造成任何损害。运行软件前，请将SRA的目录添加入 Windows Defender 排除项以及防病毒软件的信任区或开发者目录，避免被误杀。
 :::
 
@@ -87,30 +87,21 @@ SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无�
 
 然后，重新解压程序（如果你使用的是安装包，请重新打开安装包安装程序）
 
----
+:::
+
+::: details SRA 启动问题
 
 特征：
 
-- 控制台提示启动失败：An error occurred trying to start prosess "SRA-cli.exe" with working directory 'xxx'. 应用程序控制策略已阻止文件。恶意二进制信誉
-
-解决方法：
-
-打开 Windows Defender(Windows 安全中心),在左侧选择“应用与浏览器控制”，将“基于声誉的保护”关闭。
-
-![与图片相同就对了](/img/wd_safe.png)
-
----
-
-特征：
-
-- 打开后有一个窗口并有类似 `找不到xxx\AppData\Roaming\SRA\settings.json`的提示
+- 打开是一个*黑色窗口*，里面有一堆带颜色的文字；
+- 并且可能有类似 `找不到xxx\AppData\Roaming\SRA\settings.json`的提示
 
 解决方法：
 
 - 情况一：文件夹中同时存在SRA.exe和SRA-cli.exe
   - 打开SRA.exe而不是SRA-cli.exe
 - 情况二：文件夹中只有SRA-cli.exe
-  - 下错版本了，应该下载`StarRailAssistant_版本号.zip`或`StarRailAssistant_版本号_Setup.exe`，不要下载`StarRailAssistant_Core_版本号.zip`或`StarRailAssistant_Lite_v2.7.0.zip`。
+  - 下错版本了，如果你下载的文件为`StarRailAssistant_Core_版本号.zip`或`StarRailAssistant_Lite_v2.7.0.zip`，请删掉他们并前往下载`StarRailAssistant_版本号.zip`或`StarRailAssistant_版本号_Setup.exe`。
 
 :::
 
@@ -123,6 +114,19 @@ SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无�
 解决方法：
 
 点击`Download it now`，在弹出的浏览器窗口等待程序下载完成，打开下载的程序安装。
+
+---
+
+特征：
+
+- 控制台提示启动失败：An error occurred trying to start prosess "SRA-cli.exe" with working directory 'xxx'. 应用程序控制策略已阻止文件。恶意二进制信誉
+
+解决方法：
+
+打开 Windows Defender(Windows 安全中心),在左侧选择“应用与浏览器控制”，将“基于声誉的保护”关闭。
+
+![与图片相同就对了](/img/wd_safe.png)
+
 
 :::
 
@@ -150,7 +154,7 @@ SRA请求了管理员权限，但是部分杀毒软件会误报，导致SRA无�
 
 :::
 
-::: details 找不到游戏
+::: details SRA 找不到游戏
 
 特征：
 
