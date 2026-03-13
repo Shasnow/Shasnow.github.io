@@ -11,9 +11,9 @@ export default sidebar({
           text: "快速上手",
           prefix: "/getstarted/",
           children: [
-            { text: "彩蛋与特色功能", icon: "egg", link: "/getstarted/features"},
             { text: "基础操作", icon: "flag", link: "/getstarted/getstarted" },
-            { text: "进阶操作", icon: "rocket", link: "/getstarted/advance" }
+            { text: "进阶操作", icon: "rocket", link: "/getstarted/advance" },
+            { text: "彩蛋与特色功能", icon: "egg", link: "/getstarted/features"}
           ]
         }
       ]
