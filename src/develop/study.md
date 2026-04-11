@@ -471,6 +471,7 @@ with open(file_path_write, "w", encoding="utf-8") as f:
 # 文件写入的缓冲区：默认情况下，写入操作会先写入内存缓冲区，而不是立即写入磁盘
 # 可以使用 flush() 方法强制将缓冲区内容写入磁盘
 # 或者设置 buffering 参数来控制缓冲区大小
+```
 
 **核心概念：**
 * **写入方法**: 
@@ -481,6 +482,7 @@ with open(file_path_write, "w", encoding="utf-8") as f:
 * **原子写入**: 对于关键数据，可能需要临时文件+重命名的方式确保原子性
 * **性能考虑**: 大量小写入操作比少量大写入操作性能差
 
+```
 # 追加内容到文件 (Appending to a File)
 # 使用 'a' 模式打开文件，如果文件存在则在末尾追加内容。
 file_path_append = "example_append.txt"
@@ -493,6 +495,7 @@ with open(file_path_append, "a", encoding="utf-8") as f:
 #### 读取文件
 
 ```python
+#### 读取文件
 # 读取文件 (Reading from a File)
 # 使用 'r' 模式打开文件。
 file_path_read = "example_write.txt" # 读取之前写入的文件。
@@ -1248,7 +1251,7 @@ with DatabaseConnection("my_database") as db:
     # 模拟执行查询
     # raise ValueError("模拟数据库错误") # 可以测试异常处理
 print("数据库连接已关闭。")
-
+```
 
 **核心概念：**
 *   **资源管理**: 上下文管理器的核心目的是确保资源（如文件句柄、网络连接、数据库连接、线程锁等）在使用后能够被正确地获取和释放，即使在代码执行过程中发生异常也能保证资源的清理，从而避免资源泄露。
