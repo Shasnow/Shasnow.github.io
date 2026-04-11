@@ -495,7 +495,6 @@ with open(file_path_append, "a", encoding="utf-8") as f:
 #### 读取文件
 
 ```python
-#### 读取文件
 # 读取文件 (Reading from a File)
 # 使用 'r' 模式打开文件。
 file_path_read = "example_write.txt" # 读取之前写入的文件。
