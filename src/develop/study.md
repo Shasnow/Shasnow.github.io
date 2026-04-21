@@ -482,7 +482,7 @@ with open(file_path_write, "w", encoding="utf-8") as f:
 * **原子写入**: 对于关键数据，可能需要临时文件+重命名的方式确保原子性
 * **性能考虑**: 大量小写入操作比少量大写入操作性能差
 
-```
+```python
 # 追加内容到文件 (Appending to a File)
 # 使用 'a' 模式打开文件，如果文件存在则在末尾追加内容。
 file_path_append = "example_append.txt"
