@@ -196,6 +196,16 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-8.0.25-wind
 
 ### 任务执行问题
 
+#### 刷本时无限滚动 | 找不到材料
+
+特征：
+
+- 刷本时进入材料选择界面后无限滚动
+
+解决方法：
+
+- 确认材料是否按“命途”排序，而不是“更新时间”排序。
+
 #### **截图失败 | Error code from Windows: 0 - 操作成功完成**
 
 特征：
