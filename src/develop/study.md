@@ -23,7 +23,7 @@ _标有 * 的为选学内容，SRA中暂未涉及这些知识_
 ## 先决条件
 环境:
 
-- [Python 3.11.5](https://www.python.org/downloads/release/python-3115/)
+- [Python 3.12.10](https://www.python.org/downloads/release/python-31210/)
 - [PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/) 或 [Visual Studio Code](https://code.visualstudio.com/Download)
 - Windows 10 x64及以上版本
 - 如果你有更喜欢的配置，可以尝试使用自己的配置。
