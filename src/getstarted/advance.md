@@ -140,7 +140,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 ## 设置
 
 :::tip
-下面的内容以 `2.0.0` 版本为例进行说明。
+下面的内容以 `2.14.0` 版本为例进行说明。
 :::
 点击侧边栏'设置'进入标签页。此处可更改SRA的设置。
 
@@ -149,6 +149,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 ![任务通用设置](/img/use/settings/tasksetting.png)
 
 - 游戏路径：设置游戏的安装路径，默认会自动检查当前设备上安装的所有平台的游戏路径并提供选择。关闭自动检测后可手动添加游戏路径。
+- 使用云·星穹铁道：开启后SRA会使用云·星穹铁道进行游戏自动化。目前仅支持Microsoft Edge浏览器，请确保您的设备已安装。
 - 识图置信度阈值：控制应用识别游戏内元素的严格程度。默认值为 0.90（90%），可在 0~1
   之间调整，每次增减0.01。值越高，识别越精准（减少误识别）；值越低，识别范围越广（可能出现误识别）。
 - 停止快捷键：设置一个全局快捷键，用于在任务执行过程中立即停止当前任务。默认是 `F9` 键。点击输入框后按下所需快捷键即可更改。点击空白处可取消更改。
@@ -163,6 +164,8 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 - 无边框窗口：开启后，游戏窗口将没有边框和标题栏，提供更沉浸的体验。
 - 高级参数：在此输入框中可以添加额外的游戏启动参数。
 - 使用CMD启动游戏：开启后，SRA会通过命令行（CMD）来启动游戏，这对于某些需要特定环境变量或参数的游戏可能更有效。
+- 除此之外，启用启动参数还会附带以下功能：
+  - 开启沿用自动战斗设置和开启自动战斗
 
 ### 游戏内快捷键设置
 
@@ -276,9 +279,14 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 :::tip 尽管如此，您仍需要先通过主程序配置好任务，SRA-cli 仅用于执行任务。
 :::
 
+:::warning 已变更，在2.14版本后，不再提供独立的 SRA-cli.exe 文件
+用户可以直接在主程序的控制台标签页使用命令行功能。
+若要使用独立的命令行工具，请运行 `./python/python.exe main.py`.
+:::
+
 ### 简单使用
 
-双击运行 `SRA-cli.exe`，即可看到 SRA-cli 的控制台窗口。
+运行 `SRA-cli`，即可看到 SRA-cli 的控制台窗口。
 输入help查看可用命令：
 
 ```bash
@@ -447,105 +455,20 @@ sra>
 
 ### 高级使用
 
-SRA-cli 支持通过命令行参数调用。
-使用`SRA-cli --help`查看帮助信息：
+#### 启动后立即执行某些命令
 
+可以在启动 SRA-cli 时通过命令行参数来指定要执行的命令。
+例如，以下命令会在启动后立即运行 `Default` 配置中的任务：
 ```bash
-usage: SRA-cli [-h] [--inline] [--embed] [--version] [--log-level {TRACE,DEBUG,INFO,SUCCESS,WARNING,ERROR,CRITICAL}] {run,single} ...
-
-SRA-cli：SRA 命令行工具
-
-options:
-  -h, --help            show this help message and exit
-  --inline              内联模式（无命令提示符）
-  --embed               嵌入模式（无命令提示符）
-  --version             显示 SRA-cli 的版本并退出。
-  --log-level {TRACE,DEBUG,INFO,SUCCESS,WARNING,ERROR,CRITICAL}
-                        设置日志记录级别（默认：TRACE）。
-
-subcommands:
-  {run,single}
-    run                 运行指定配置文件中的所有选中的任务。输入 'run --help' 获取更多信息。
-    single              运行由其名称或索引指定的单个任务。输入 'single --help' 获取更多信息。
+SRA.exe -e task run Default
 ```
-
-#### 通过命令行参数运行任务
-
-输入 `SRA-cli run -h` 查看 `run` 命令的帮助信息：
-
+以下命令会在启动后立即运行 所有 配置中的任务：
 ```bash
-usage: SRA-cli run [-h] [--config [CONFIG ...]] [--once]
-
-运行指定配置文件中的所有任务。如果未指定配置文件，则使用缓存中的全部配置文件。此命令将阻塞 CLI 直到所有任务完成。
-
-options:
-  -h, --help            show this help message and exit
-  --config [CONFIG ...]
-                        配置文件名称或路径。
-  --once                运行命令后退出 SRA-cli。
+SRA.exe -e task run
 ```
-
-使用 `SRA-cli run --config [配置名称...]` 命令运行任务。
-如果不指定配置名称，则默认运行**全部**配置。
-可以指定多个配置名称，SRA-cli 会依次运行这些配置。
-使用此命令运行任务后，当前命令行会被阻塞，直到任务完成。可通过按下 `Ctrl+C` 停止任务。
-使用此命令运行任务后，SRA-cli 会在任务完成后返回交互模式。如果需要仅执行任务后退出，可以添加 `--once` 参数。
-
-示例：运行名为 `Default` 和 `PlanB` 的配置，并在任务完成后退出 SRA-cli：
-
+以下命令会在启动后立即**阻塞式**运行 所有 配置中的任务，并在任务完成后退出 SRA-cli：
 ```bash
-SRA-cli run --config Default PlanB --once
-```
-
-示例: 运行当前配置，并在任务完成后进入 SRA-cli：
-
-```bash
-SRA-cli run
-```
-
-示例: 运行指定目录下的 `my_config.json` 配置，并在任务完成后退出 SRA-cli：
-
-```bash
-SRA-cli run --config "path\to\my_config.json" --once
-```
-
-输入 `SRA-cli single -h` 查看 `single` 命令的帮助信息：
-
-```bash
-usage: SRA-cli single [-h] --task-name TASK_NAME [--config [CONFIG]] [--once]
-
-运行由其名称或索引指定的单个任务，无论它是否被选中。如果未指定配置文件，则使用缓存中的当前配置文件。此命令将阻塞 CLI 直到任务完成
-
-options:
-  -h, --help            show this help message and exit
-  --task-name TASK_NAME, -t TASK_NAME
-                        要运行的任务的名称或索引
-  --config [CONFIG]     配置文件名称或路径
-  --once                运行命令后退出 SRA-cli
-```
-
-使用 `SRA-cli single` 命令运行单个任务，无论它在配置中是否被启用。
-**必须通过 `--task-name` 或 `-t` 参数指定任务的名称或索引。**
-可以通过 `--config` 参数指定配置名称或路径。如果不指定，则默认使用**当前**配置。
-使用此命令运行任务后，当前命令行会被阻塞，直到任务完成。可通过按下 `Ctrl+C` 停止任务。
-使用此命令运行任务后，SRA-cli 会在任务完成后返回交互模式。如果需要仅执行任务后退出，可以添加 `--once` 参数。
-
-示例：运行当前配置中的单个任务 `领取奖励`，并在任务完成后退出 SRA-cli：
-
-```bash
-SRA-cli single --task-name ReceiveRewardsTask --once
-```
-
-或者
-
-```bash
-SRA-cli single -t 2 --once
-```
-
-示例：运行指定配置中的单个任务 `清开拓力`，并在任务完成后进入 SRA-cli：
-
-```bash
-SRA-cli single --task-name TrailblazePowerTask --config my_config.json
+SRA.exe -e run + exit
 ```
 
 #### 将 SRA 与第三方程序集成
