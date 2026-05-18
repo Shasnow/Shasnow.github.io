@@ -135,10 +135,10 @@ author: Shasnow
 2. 创建一个新的 Python 文件，例如 `MyCustomTask.py`。
 3. 在文件中编写任务代码，例如：
     ```python
-    from SRACore.task import BaseTask
+    from SRACore.task import BaseTask, task
     from SRACore.util.logger import logger
    
-   
+    @task
     class MyCustomTask(BaseTask):
         def run(self):
             logger.info("这是我的自定义任务！")
@@ -152,22 +152,11 @@ author: Shasnow
     - `logger.info("这是我的自定义任务！")`：打印日志信息。
     - `BaseTask` 类是所有任务的基类，必须继承它才能被 SRA 识别为任务。
     - `BaseTask` 要求实现 `run` 方法，作为任务的入口点。
+    - `@task` 装饰器将任务注册到 SRA 中，使其能够被识别和调用。
 
 4. 注册任务：
-   打开 `SRACore/config.toml` 在文件末尾追加：
-    ```toml
-    [[tasks]]
-    name = "自定义任务"
-    main = "MyCustomTask"
-    module = "tasks.MyCustomTask"
-    ```
-   解释：
-    - `[[tasks]]`：表示这是一个任务配置块。
-    - `name`：任务的显示名称。
-    - `main`：任务类的名称。
-    - `module`：任务类所在的模块路径。
-
-   **特别地，当使用任务名称来运行任务时，无需进行任务注册，SRA 会直接根据任务类名进行加载和运行。**
+   无需手段动修改任何注册代码，SRA 会自动扫描 `tasks` 文件夹中的所有 Python 文件，并将其中定义的任务类注册到系统中。
+   只要你的任务类正确地继承自 `BaseTask` 并使用 `@task` 装饰器，它就会被 SRA 自动识别和加载。
 
 5. 测试你的任务类：
    在进行下一步之前，确保你所有的修改都已保存。
