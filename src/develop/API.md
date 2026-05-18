@@ -1002,12 +1002,12 @@ class MyTask(BaseTask):
         return True
 ```
 
-#### `get_tasks()`
+#### `get_task_classes()`
 
 获取已注册的任务类列表，按执行顺序排序。
 
 ```python
-def get_tasks() -> list[type[BaseTask]]
+def get_task_classes() -> list[type[BaseTask]]
 ```
 
 **返回：** 已排序的任务类列表
