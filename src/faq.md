@@ -236,11 +236,11 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 
 ---
 
-#### 差分宇宙不能执行
+#### 差分宇宙/货币战争不能执行
 
 特征：
 
-- 差分宇宙不能执行
+- 点击开始任务后，没有任何行为
 
 解决方法：
 
