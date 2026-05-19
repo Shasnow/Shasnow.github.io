@@ -155,7 +155,7 @@ author: Shasnow
     - `@task` 装饰器将任务注册到 SRA 中，使其能够被识别和调用。
 
 4. 注册任务：
-   无需手段动修改任何注册代码，SRA 会自动扫描 `tasks` 文件夹中的所有 Python 文件，并将其中定义的任务类注册到系统中。
+   无需手段动修改任何注册代码，SRA 会自动扫描 `tasks` 文件夹中的所有 Python 文件（不包括子文件夹中的），并将其中定义的任务类注册到系统中。
    只要你的任务类正确地继承自 `BaseTask` 并使用 `@task` 装饰器，它就会被 SRA 自动识别和加载。
 
 5. 测试你的任务类：
@@ -207,3 +207,41 @@ author: Shasnow
 
 6. 恭喜！
    你已经成功创建并运行了一个自定义任务！如果想实现更复杂的功能，可以参考 SRA 的其他任务脚本，和 SRA 提供的 API 文档。
+
+## 为SRA添加新的本地化支持
+
+### 先决条件
+
+- 已安装 SRA 或已获取 SRA 源码
+- 了解 Python 编程基础
+- 文本编辑器（如 VSCode、Notepad++）
+
+### 分步教程
+1. 克隆仓库并创建新的分支
+2. 在 `SRACore/localization/` 目录下编辑 `resource.toml` 文件，添加新的语言支持
+
+   示例：
+    ```toml
+    [cli.intro] # 资源键
+    en-us = "SRA-cli {version} ({core})\nType 'help' or '?' to list commands." # 现有的英文翻译
+    zh-cn = "SRA-cli {version} ({core})\n输入 'help' 或 '?' 来查看命令列表。" # 现有的中文翻译
+    ```
+
+   新增语言键：
+    ```toml
+    [cli.intro]
+    # ......
+    es-es = "SRA-cli {version} ({core})\nEscriba 'help' o '?' para listar los comandos." # 新增的西班牙语翻译
+    ```
+
+3. 运行转换脚本：
+    ```bash
+    python scripts/pyl10nc/__main__.py SRACore/localization/resource.toml
+    ```
+    或
+    ```bash
+    npm run pyl10nc
+    ```
+4. 将更改提交 Pull Request。
+
+SRA 前端采用 `ResX` 进行本地化支持，推荐使用 `Rider` 或 `Visual Studio` 进行编辑。

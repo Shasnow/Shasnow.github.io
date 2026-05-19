@@ -46,7 +46,7 @@ SRA 和三月七小助手（下文简称 M7A）是两个不同的项目，由不
 :::
 
 ::: details SRA能支持Linux/macOS/*nix吗
-对于 *Linux*，官方内部已有相关计划。~~某 SRA 作者之前还说过 Linux 没用来着？~~
+对于 *Linux*，可以从源码自行编译，并使用云·星穹铁道模式。
 此外，[StarRailAssistant.Neo](https://github.com/EveGlowLuna/StarRailAssistant.Neo) 项目的 [后端项目 Linux 开发分支](https://github.com/EveGlowLuna/SRA-CE-Cli/tree/linux_dev) 已有雏形，可前往查看。该 fork 的效果不代表官方最终效果。
 
 对于 *macOS*，~~如果你愿意资助开发者购买 **MacBook**、**iMac**、**Mac mini** 或 **Mac Studio** 设备并提供给我们，可能会考虑针对 *macOS* 开发。~~
