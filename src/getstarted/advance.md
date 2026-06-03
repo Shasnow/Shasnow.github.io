@@ -1,3 +1,4 @@
+
 ---
 title: 进阶操作
 icon: rocket
@@ -288,7 +289,6 @@ SRA-cli 2.4.0 (2.4.0 on win32)
 输入 'help' 或 '?' 来查看命令列表。
 sra> help
 可用命令：
-  EOF - Ctrl+D exit command line tool
   exit - 退出 SRA-cli 应用程序。
   help - 显示命令的帮助信息。
   run - 运行指定配置文件中的所有选中的任务，输入 'help run' 获取更多信息。
@@ -337,7 +337,7 @@ sra> help trigger
   trigger stop                  停止触发器服务。
   trigger enable <trigger_name>    启用特定触发器。
   trigger disable <trigger_name>   禁用特定触发器。
-  trigger set-<type> <trigger_name> <property> <value>
+  trigger set  <--type TYPE> <trigger_name> <property> <value>
                                 更改特定触发器的属性。
 
 sra> 
@@ -352,7 +352,7 @@ sra> trigger enable AutoDialogueTrigger
 
 自动对话具有skip_plot属性，可以通过以下命令启用跳过对话功能：
 ```bash
-sra> trigger set-bool AutoDialogueTrigger skip_plot true
+sra> trigger set --type bool AutoDialogueTrigger skip_plot true
 ```
 
 ### 完整命令列表
@@ -429,27 +429,20 @@ SRA-cli：SRA 命令行工具
 options:
   -h, --help            show this help message and exit
   --inline              内联模式（无命令提示符）
-  --embed               嵌入模式（无命令提示符）
   --command [COMMAND ...], -c [COMMAND ...], --execute [COMMAND ...], -e [COMMAND ...]
                         The command to execute AFTER launch
   --version             显示 SRA-cli 的版本并退出。
   --log-level {TRACE,DEBUG,INFO,SUCCESS,WARNING,ERROR,CRITICAL}
                         设置日志记录级别（默认：TRACE）。
-
-subcommands:
-  {run,single}
-    run                 运行指定配置文件中的所有选中的任务。输入 'run --help' 获取更多信息。
-    single              运行由其名称或索引指定的单个任务。输入 'single --help' 获取更多信息。
+  --no-admin            以非管理员权限运行 SRA-cli。
 ```
 
 - `--inline`：内联模式，启动后直接进入命令输入状态，无需显示命令提示符。
-- `--embed`：嵌入模式，启动后直接进入命令输入状态，无需显示命令提示符。已过时，建议使用 `--inline` 替代。
 - `--command` 或 `-c` 或 `--execute` 或 `-e`：指定启动后要执行的命令，可以是单个命令或多个命令。命令之间用`+`分隔。
 - `--version`：显示 SRA-cli 的版本信息并退出。
 - `--log-level`：设置日志记录级别，默认为 `TRACE`，可选值包括 `TRACE`、`DEBUG`、`INFO`、`SUCCESS`、`WARNING`、`ERROR` 和
   `CRITICAL`。
-- `run`：子命令，用于运行指定配置文件中的所有选中的任务。已过时。
-- `single`：子命令，用于运行由其名称或索引指定的单个任务。已过时。
+- `--no-admin`：以非管理员权限运行 SRA-cli，默认情况下 SRA-cli 需要管理员权限才能正常运行，会自动以管理员权限重新启动自己，使用此参数可以禁止自动提升权限，以非管理员权限运行。
 
 示例：启动 SRA-cli 后立即运行名为 `Default` 的配置：
 ```bash
