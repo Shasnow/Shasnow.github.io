@@ -19,6 +19,7 @@ tagline: 下载StarRailAssistant，开始您的托管之旅。
 
 - [**GitHub Releases**](https://github.com/Shasnow/StarRailAssistant/releases/latest)
 - [**Mirror酱**](https://mirrorchyan.com/zh/projects?rid=StarRailAssistant&source=sra-webside)
+- [**夸克网盘**](https://pan.quark.cn/s/6d6080c19a66?pwd=YkGZ)
 
 <div style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: linear-gradient(to right, #2F3F4C, #576574); border-radius: 8px;">
   <div>
