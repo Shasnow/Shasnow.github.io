@@ -20,6 +20,7 @@ tagline: 下载StarRailAssistant，开始您的托管之旅。
 - [**GitHub Releases**](https://github.com/Shasnow/StarRailAssistant/releases/latest)
 - [**Mirror酱**](https://mirrorchyan.com/zh/projects?rid=StarRailAssistant&source=sra-webside)
 - [**夸克网盘**](https://pan.quark.cn/s/6d6080c19a66?pwd=YkGZ)
+- [**PyPI**](#pypi)
 
 <div style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: linear-gradient(to right, #2F3F4C, #576574); border-radius: 8px;">
   <div>
@@ -115,3 +116,59 @@ StarRailAssistant 服务器DLC
 - 包含SRA-server.exe文件
 - 提供一个服务器端，使SRA可以通过HTTP协议进行通信
 - 需要与StarRailAssistant_Core包（标准版）配合使用。
+
+## PyPI
+:::warning
+仅支持SRA-cli
+:::
+
+SRA-cli 已发布到 PyPI，提供更方便的使用方式。
+
+先决条件：
+- Python 3.12
+- 以管理员权限运行终端
+
+### pip 安装
+推荐为SRA创建专用虚拟环境，以避免与系统其他Python项目冲突。
+
+创建虚拟环境：（如果还没有创建）
+```bash
+mkdir starrailassistant
+cd starrailassistant
+python -m venv .venv
+```
+
+安装SRA-cli：
+```bash
+(venv) pip install starrailassistant
+```
+
+### pipx 安装
+```bash
+pipx install starrailassistant
+```
+
+### uv 安装
+```bash
+uv tool install starrailassistant
+```
+
+### 首次使用
+推荐创建SRA专用文件夹：`mkdir -p starrailassistant` (如果你在虚拟环境中安装，不需要这一步)
+运行初始化命令：`cd starrailassistant && sra-cli init`
+启动应用：
+```bash
+cd starrailassistant && sra-cli
+```
+
+### 更新应用
+```bash
+(venv) pip install --upgrade starrailassistant
+```
+```bash
+pipx upgrade starrailassistant
+```
+```bash
+uv tool upgrade starrailassistant
+```
+更新后可能需要重新运行`init`命令以应用新配置。
