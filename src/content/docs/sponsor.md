@@ -16,14 +16,14 @@ description: 支持 StarRailAssistant 持续维护与更新
 ### 直接赞助
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; align-items: start;">
   <figure style="margin: 0; padding: 16px; border: 1px solid var(--sl-color-gray-5); border-radius: 12px; background: var(--sl-color-bg-sidebar);">
-    <img src="/src/assets/img/sponsor/sponsor.png" alt="赞助二维码 1" style="width: 100%; height: auto; border-radius: 8px;" />
+    <img src="../../assets/img/sponsor/sponsor.png" alt="赞助二维码 1" style="width: 100%; height: auto; border-radius: 8px;" />
     <figcaption style="margin-top: 12px; color: var(--sl-color-gray-3);">
       扫描二维码完成赞助
     </figcaption>
   </figure>
 
   <figure style="margin: 0; padding: 16px; border: 1px solid var(--sl-color-gray-5); border-radius: 12px; background: var(--sl-color-bg-sidebar);">
-    <img src="/src/assets/img/sponsor/sponsor02.jpg" alt="赞助二维码 2" style="width: 100%; height: auto; border-radius: 8px;" />
+    <img src="../../assets/img/sponsor/sponsor02.jpg" alt="赞助二维码 2" style="width: 100%; height: auto; border-radius: 8px;" />
     <figcaption style="margin-top: 12px; color: var(--sl-color-gray-3);">
       备用赞助二维码
     </figcaption>

@@ -6,7 +6,7 @@ sidebar:
 
 在 SRA 2.0 版本中，我们提供了一个独立的命令行程序 `SRA-cli.exe`，用于在命令行中执行 SRA 任务。
 
-![SRA-cli](/src/assets/img/use/advance/software2.png)
+![SRA-cli](../../../assets/img/use/advance/software2.png)
 
 此应用程序是 SRA 的实际功能执行者，主程序通过嵌入式调用 SRA-cli 来完成任务。
 因此，您可以直接使用 SRA-cli 来执行任务，而无需打开主程序。

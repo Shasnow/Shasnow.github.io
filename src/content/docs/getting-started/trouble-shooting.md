@@ -19,7 +19,7 @@ sidebar:
 
 打开 Windows Defender（Windows 安全中心），在左侧选择“应用与浏览器控制”，将“基于声誉的保护”关闭。
 
-![与图片相同就对了](/src/assets/img/wd_safe.png)
+![与图片相同就对了](../../../assets/img/wd_safe.png)
 
 ---
 
@@ -30,7 +30,7 @@ sidebar:
 - 打开后是一个 *黑色窗口*，里面有一堆带颜色的文字；
 - 并且可能出现类似 `找不到 xxx\AppData\Roaming\SRA\settings.json` 的提示。
 
-  ![黑色窗口](/src/assets/img/faq/black_window.png)
+  ![黑色窗口](../../../assets/img/faq/black_window.png)
 
 解决方法：
 此问题通常出现在首次安装和启动 SRA 时。
@@ -128,7 +128,7 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 - 确认配置中是否勾选了任务。如果没有勾选任何任务，SRA 会认为所有任务已经完成，从而直接结束。
 - 确认配置中大类任务中的子任务是否勾选。如果没有勾选任何子任务，SRA 会认为该大类任务已经完成，从而直接结束。
 - 例如：
-  ![子任务勾选](/src/assets/img/faq/subtask.png)
+  ![子任务勾选](../../../assets/img/faq/subtask.png)
 
 ### 配置好了任务但不能执行 | Invalid task ID
 
@@ -168,7 +168,7 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 解决方法：
 
 - 游戏设置中，**其他** -> **战斗功能** -> **是否沿用自动战斗设置**：**是**，然后手动开启自动战斗（如果之前没开过的话）。
-  ![自动战斗](/src/assets/img/faq/auto_battle.png)
+  ![自动战斗](../../../assets/img/faq/auto_battle.png)
 
 ### 图片识别失败
 

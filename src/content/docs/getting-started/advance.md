@@ -10,12 +10,12 @@ sidebar:
 
 SRA 支持为多个账号配置不同的托管方案。
 下面的内容以 `2.0.0` 版本之后的操作面板为例进行说明。
-![操作面板](/src/assets/img/use/operation2.png)
+![操作面板](../../../assets/img/use/operation2.png)
 
 ### 新建方案
 
 点击操作面板左侧的 + 按钮，即可出现方案名称输入框。
-![新建方案](/src/assets/img/use/advance/newplan.png)
+![新建方案](../../../assets/img/use/advance/newplan.png)
 输入方案名称后，点击右侧确认按钮，即可向配置方案列表中添加一个新方案。
 如果方案名称为空，则会关闭输入框而不执行任何操作。
 
@@ -107,7 +107,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ## 扩展功能
 点击侧边栏中的 `扩展` 进入拓展标签页。
-![拓展界面](/src/assets/img/use/extension.png)
+![拓展界面](../../../assets/img/use/extension.png)
 
 ### 自动对话
 开启后在进入剧情时会自动播放对话、自动选择对话选项。
@@ -122,7 +122,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 任务通用设置
 
-![任务通用设置](/src/assets/img/use/settings/tasksetting.png)
+![任务通用设置](../../../assets/img/use/settings/tasksetting.png)
 
 - 游戏路径：设置游戏的安装路径，默认会自动检查当前设备上安装的所有平台的游戏路径并提供选择。关闭自动检测后可手动添加游戏路径。
 - 使用云·星穹铁道：开启后SRA会使用云·星穹铁道进行游戏自动化。目前仅支持Microsoft Edge浏览器，请确保您的设备已安装。
@@ -132,7 +132,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 游戏启动参数
 
-![游戏启动参数](/src/assets/img/use/settings/gameparam.png)
+![游戏启动参数](../../../assets/img/use/settings/gameparam.png)
 
 - 启用启动参数：开启后，SRA会在启动游戏时应用下面的设置。
 - 窗口尺寸：设置游戏窗口的分辨率，默认是 `1920x1080` 且无法修改，目前只支持此分辨率。
@@ -145,12 +145,12 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 游戏内快捷键设置
 
-![游戏内快捷键设置](/src/assets/img/use/settings/gamehotkey.png)
+![游戏内快捷键设置](../../../assets/img/use/settings/gamehotkey.png)
 应当根据游戏内对快捷键的修改，同步更新此处的快捷键设置，以确保 SRA 能正确执行游戏内的操作。
 
 ### 显示设置
 
-![显示设置](/src/assets/img/use/settings/displaysetting.png)
+![显示设置](../../../assets/img/use/settings/displaysetting.png)
 
 - 背景图片：设置主页的背景图片。粘贴图片的本地路径到输入框中即可完成修改，支持常见图片格式（如 PNG、JPG）。例如
   `"C:\path\to\your\image.png"`.
@@ -163,7 +163,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 常规设置
 
-![常规设置](/src/assets/img/use/settings/generalsetting.png)
+![常规设置](../../../assets/img/use/settings/generalsetting.png)
 
 - 通知管理
   - 允许通知：总开关，开启后才能接收应用的各类通知（默认开启）；关闭后所有通知都会被屏蔽。
@@ -176,7 +176,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 更新设置
 
-![更新设置](/src/assets/img/use/settings/updatesetting.png)
+![更新设置](../../../assets/img/use/settings/updatesetting.png)
 
 - 检查更新：点击按钮手动检查应用的新版本。
 - 自动更新：开启后，应用会自动检测新版本并下载和解压更新包。
@@ -188,7 +188,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 高级设置
 
-![高级设置](/src/assets/img/use/settings/advancedsetting.png)
+![高级设置](../../../assets/img/use/settings/advancedsetting.png)
 
 - 文件夹快捷打开按钮：点击对应按钮可快速打开应用的相关文件夹位置：
   - 后端日志文件夹：存放应用前端运行日志的文件夹。
@@ -199,7 +199,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 开发者选项
 
-![开发者选项](/src/assets/img/use/settings/devsetting.png)
+![开发者选项](../../../assets/img/use/settings/devsetting.png)
 
 在2.9版本后，可通过快速多次点击版本号的操作来启用开发者选项
 
@@ -212,13 +212,13 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 关于
 
-![关于](/src/assets/img/use/settings/about.png)
+![关于](../../../assets/img/use/settings/about.png)
 
 - 版本：显示当前应用的版本号。快速多次点击版本号来启用开发者选项。
 
 ## 控制台
 
-![控制台界面](/src/assets/img/use/advance/console.png)
+![控制台界面](../../../assets/img/use/advance/console.png)
 控制台标签页用于显示应用的运行日志，帮助用户了解应用的运行状态和调试信息。
 
 ### 日志过滤器
