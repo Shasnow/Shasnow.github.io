@@ -1,0 +1,47 @@
+---
+title: 从源代码运行 SRA 图形化界面
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+本章节介绍如何从源码运行 SRA GUI。
+
+## 先决条件
+
+- .NET 10.0 SDK 及以上版本
+- Git
+
+## 分步教程
+
+<Steps>
+
+1. 克隆存储库：
+   如果您已经克隆过存储库，可以跳过此步骤。
+   ```bash
+   git clone https://github.com/Shasnow/StarRailAssistant.git
+   ```
+   如果克隆较慢，考虑使用浅层克隆
+   ```bash
+   git clone https://github.com/Shasnow/StarRailAssistant.git --depth=1
+   ```
+2. 进入项目目录：
+   ```bash
+   cd StarRailAssistant
+   ```
+
+3. 运行项目：
+   ```bash
+   dotnet run --project ./SRAFrontend/SRAFrontend.csproj
+   ```
+   这会编译并运行 SRA GUI，你应该看到 SRA 窗口弹出。
+
+4. 尝试一下：
+   - 浏览各个功能模块，熟悉 SRA 的使用。
+   - 访问设置页面，调整 SRA 的配置。
+
+</Steps>
+
+## 常见问题
+- `请求的操作需要提升`:
+  - 考虑以管理员权限运行终端，然后重新执行步骤 3。
+  - 如果您使用 Visual Studio 等 IDE，请确保以管理员权限运行 IDE。

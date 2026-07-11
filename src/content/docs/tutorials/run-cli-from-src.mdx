@@ -1,0 +1,71 @@
+---
+title: 从源码运行 SRA CLI
+---
+import { Steps } from "@astrojs/starlight/components";
+
+本节将介绍如何从源码运行 SRA CLI。
+
+## 先决条件
+
+- Python 3.12 及以上版本
+- Git
+
+## 分步教程
+
+<Steps>
+
+1. 克隆存储库：
+    ```bash
+    git clone https://github.com/Shasnow/StarRailAssistant.git 
+    ```
+   如果克隆较慢，考虑使用浅层克隆
+    ```bash
+    git clone https://github.com/Shasnow/StarRailAssistant.git --depth=1
+    ```
+2. 进入项目目录：
+    ```bash
+    cd StarRailAssistant
+    ```
+
+3. 创建并激活虚拟环境：
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate  # Linux 或 macOS
+    .venv\Scripts\activate     # Windows
+    ```
+
+4. 安装依赖：
+    ```bash
+    pip install -r requirements.txt
+    ```
+   如果安装较慢，考虑使用国内镜像源，例如清华大学的 PyPI 镜像：
+    ```bash
+    pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+    ```
+
+5. 运行 SRA：
+    ```bash
+    python main.py
+    ```
+   这会让你进入 SRA 的交互式命令行界面，你应该看到下面的输出：
+    ```text
+    # ... 这些是一些调试信息
+    SRA-cli 2.4.0 (2.4.0 on win32)
+    输入 'help' 或 '?' 来查看命令列表。
+    sra> 
+    ```
+
+6. 运行任务，或进行其他操作：
+   参考进阶操作中 [SRA-cli](/getstarted/advance#sracli) 章节了解如何使用 SRA-cli。
+
+7. 尝试一下：
+    - 运行 `help` 命令查看可用命令。
+    - 运行 `version` 命令查看当前 SRA 版本。
+    - 运行 `exit` 命令退出 SRA-cli。
+
+</Steps>
+
+## 常见问题
+- SRA 提示 `WARNING | 您没有以管理员权限运行 SRA-cli。某些命令可能无法正常工作。`：
+    - 考虑以管理员权限运行终端，然后重新执行步骤 5。
+    - 如果您使用 Pycharm 等 IDE，请确保以管理员权限运行 IDE。
