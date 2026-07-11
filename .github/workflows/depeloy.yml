@@ -30,19 +30,19 @@ jobs:
       - name: 安装依赖
         run: |
           corepack enable
-          npm ci --legacy-peer-deps
+          pnpm install
 
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
-          npm run docs:build
-          > src/.vuepress/dist/.nojekyll
-          cp CNAME src/.vuepress/dist/
+          pnpm run build
+          > dist/.nojekyll
+          cp CNAME dist/
 
       - name: 部署文档
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           # 部署文档
           branch: gh-pages
-          folder: src/.vuepress/dist
+          folder: dist
