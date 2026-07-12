@@ -5,6 +5,7 @@ import starlightDocSearch from "@astrojs/starlight-docsearch";
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://starrailassistant.top',
 	integrations: [
 		starlight({
 			title: 'StarRailAssistant',
