@@ -8,7 +8,8 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'StarRailAssistant',
-			logo: { src: '/src/assets/SRAico.png'},
+			description: '崩坏：星穹铁道助手 | 一个基于图像识别的崩铁自动化程序，帮您完成从启动到退出的崩铁日常。',
+			logo: { src: './src/assets/SRAico.png'},
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/Shasnow/StarRailAssistant' }],
 			editLink: { baseUrl: 'https://github.com/Shasnow/Shasnow.github.io' },
 			sidebar: [
@@ -49,9 +50,11 @@ export default defineConfig({
 				})
 			],
 			customCss: [
-				'./src/styles/main.css'
+				'./src/styles/main.css',
+				'./src/styles/download.css',
 			],
-			favicon: 'favicon.ico'
+			favicon: 'favicon.ico',
+			lastUpdated: true
 		}),
 	],
 });

@@ -1,0 +1,75 @@
+.download-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  margin: 0 0 16px;
+  background: linear-gradient(to right, #2f3f4c, #576574);
+  border-radius: 8px;
+}
+
+.download-card__content {
+  min-width: 0;
+}
+
+.download-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.download-card__price {
+  display: flex;
+  align-items: stretch;
+}
+
+.download-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #75b022, #588a1b);
+  color: #d2efa9;
+  padding: 6px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .download-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .download-card__actions {
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .download-card__price {
+    flex: 1 1 auto;
+  }
+
+  .download-card__button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .download-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .download-card__price {
+    width: 100%;
+    justify-content: center;
+  }
+}
