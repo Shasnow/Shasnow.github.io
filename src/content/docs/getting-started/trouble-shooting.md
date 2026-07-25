@@ -83,7 +83,7 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 
 - 可能是误下载了精简版。如果你下载的是 `StarRailAssistant_Lite.zip`，请删除后改下载 `StarRailAssistant_版本号.zip` 或 `StarRailAssistant_版本号_Setup.exe`。
 - 可能是杀毒软件误杀了后端程序，请将 SRA 的目录添加到 Windows Defender 排除项，以及防病毒软件的信任区或开发者目录。
-  将 SRA 整体文件夹添加信任 [点击此处查看](../getstarted/getstarted.html#添加信任) 然后重新解压压缩包。
+  将 SRA 整体文件夹添加信任 [点击此处查看](./getting-started#添加信任) 然后重新解压压缩包。
 
 ---
 
@@ -189,7 +189,7 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 
 **对于旷宇纷争**：
 
-- 可能没在指定页面开始任务，请检查 [特定要求](../getstarted/getstarted.html#模拟宇宙)。
+- 可能没在指定页面开始任务，请检查 [特定要求](./getting-started#旷宇纷争-差分宇宙)。
 
 ---
 
