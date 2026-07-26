@@ -131,7 +131,8 @@
 <p>游戏路径：
 如果启用了“使用全局设置”，此处的设置将被全局设置覆盖，SRA会使用全局设置中的游戏路径来启动游戏。
 否则，SRA会使用此处设置的游戏路径来启动游戏。选择路径时，应该选择“游戏本体”，而不是“启动器”</p>
-<aside aria-label="提示" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>提示</p><div class="starlight-aside__content"><p>一个有效的游戏路径示例：<code dir="auto">C:\Program Files\miHoYo Launcher\games\Star Rail Game\StarRail.exe</code></p></div></aside>
+<aside aria-label="提示" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>提示</p><div class="starlight-aside__content"><p>一个有效的游戏路径示例：<code dir="auto">C:\Program Files\miHoYo Launcher\games\Star Rail Game\StarRail.exe</code>
+SRA提供服务器切换功能，如果你同时有官服、b服的游戏客户端，此处只需设置b服的路径即可。</p></div></aside>
 </li>
 <li>
 <p>自动登录：决定是否在启动后进行登录。
@@ -155,12 +156,13 @@
 <p>每次执行均从头开始执行，且执行完成后不会删除已经执行的任务。也就是下一次依然复用同样的清单。</p>
 <p>点击<code dir="auto">添加</code>按钮，可以添加新的任务项。
 <img alt="添加任务项" loading="lazy" decoding="async" width="1275" height="735" src="/_astro/addtask.C1A8RjaR_ZBqEua.webp" srcset="">
-对于每类副本，在左侧选择关卡、次数等信息，然后点击 <code dir="auto">确认</code> 将它添加进任务列表中。</p>
+对于每类副本，可以选择关卡、次数等信息，然后点击 <code dir="auto">确认</code> 将它添加进任务列表中。</p>
 <p>可以添加多种副本。当体力不足而未补充体力时，此后的战斗均不会执行。</p>
 <ul>
 <li>自动检测：启用后，将不允许手动修改次数，SRA会根据当前体力和关卡消耗自动计算可挑战次数。
 可以添加多个自动检测项，它们会平分当前体力。
-可以将自动检测与手动添加的关卡混合使用。手动添加的关卡总会会优先执行。</li>
+可以将自动检测与手动添加的关卡混合使用。手动添加的关卡总会会优先执行。
+如果关卡类型为“饰品提取”，会叠加消耗所有剩余沉浸器。</li>
 </ul>
 <aside aria-label="提示" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>提示</p><div class="starlight-aside__content"><p>示例：当前体力300，关卡A消耗60体力，关卡B消耗30体力。</p><ul>
 <li>添加关卡A，次数设置为自动检测</li>
@@ -180,7 +182,7 @@
 <p>使用支援角色：决定是否使用助战角色进行挑战。SRA只会使用支援列表中第一个角色。</p>
 </li>
 <li>
-<p>启用培养目标：如果启用，SRA会忽略任务清单中的关卡设置，并在游戏内根据培养目标界面中设置的目标自动分配体力。</p>
+<p>启用培养目标：如果启用，SRA会忽略任务清单中的关卡设置，并在游戏内根据培养目标界面中设置的角色自动分配体力。</p>
 </li>
 <li>
 <p>启用多倍活动检测：
@@ -195,10 +197,17 @@
 <p>在这个任务中包含了所有的每日奖励，如每日实训，无名勋礼。部分是默认启用的。</p>
 <p>还可以领取兑换码奖励，勾选此项，并在兑换码输入框内输入兑换码，可以输入多个兑换码，兑换码之间用空格或换行分隔。</p>
 <div class="sl-heading-wrapper level-h3"><h3 id="旷宇纷争-差分宇宙">旷宇纷争-差分宇宙</h3><a class="sl-anchor-link" href="#旷宇纷争-差分宇宙"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “旷宇纷争-差分宇宙”</span></a></div>
-<p>目前只支持差分宇宙-周期演算 刷第一关，即通过反复刷取第一关来提升等级。</p>
-<p>每周执行20次即可完成每周积分奖励。</p>
-<p><img alt="差分宇宙主界面" loading="lazy" decoding="async" width="1920" height="1041" src="/_astro/universehome.CAxkgEsr_Z51UDI.webp" srcset=""></p>
-<div><p>使用执行前，你需要确保已经完成至少一次差分宇宙以清除所有新手提示。</p></div>
+<ul>
+<li>模式：目前只支持差分宇宙-周期演算 刷第一关，即通过反复刷取第一关来提升等级。</li>
+<li>次数：设置执行的轮数。</li>
+<li>秘技速刷：如果启用，SRA会在进入差分宇宙后，在进入战斗前按E释放首位角色的技能。
+配合“白厄”，“流萤”，“大黑塔”这类具有秒杀能力的角色，可以快速结束战斗。
+然而不适配“黄泉”这类需要多次释放技能的角色。</li>
+<li>启用积分奖励：如果启用，SRA将在开始执行差分宇宙任务时，检测当前积分是否到达每周积分奖励上限，
+如果到达则跳过差分宇宙任务。</li>
+</ul>
+<p>通常每周执行20次即可完成每周积分奖励。</p>
+<div><p>执行前，你需要确保已经完成至少一次差分宇宙以清除所有新手提示。</p></div>
 <div class="sl-heading-wrapper level-h3"><h3 id="旷宇纷争-货币战争">旷宇纷争-货币战争</h3><a class="sl-anchor-link" href="#旷宇纷争-货币战争"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “旷宇纷争-货币战争”</span></a></div>
 <p>支持标准博弈和超频博弈或刷开局，可选择最高难度、最低难度或当前难度。分为全程模式和接管模式。</p>
 <ol>
@@ -212,7 +221,7 @@
 <div class="sl-heading-wrapper level-h4"><h4 id="全程模式">全程模式</h4><a class="sl-anchor-link" href="#全程模式"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “全程模式”</span></a></div>
 <aside aria-label="提示" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>提示</p><div class="starlight-aside__content"><p>这不是一个可供选择的任务模式，仅为SRA在指定条件下的运行逻辑。</p></div></aside>
 <p>在这个模式下，SRA会从头到尾完整地执行货币战争的所有步骤，包括选择难度、选择阵容、战斗等。</p>
-<p>要以全程模式执行货币战争任务，您必须处于货币战争的主界面或大世界界面。</p>
+<p>要以全程模式执行货币战争任务，您必须处于货币战争的主界面或大世界界面，且没有正在进行中的货币战争对局。</p>
 <p><img alt="货币战争主界面" loading="lazy" decoding="async" width="1934" height="1125" src="/_astro/currency_wars_main.BmPeZDlX_1JinaR.webp" srcset=""></p>
 <div class="sl-heading-wrapper level-h4"><h4 id="接管模式">接管模式</h4><a class="sl-anchor-link" href="#接管模式"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “接管模式”</span></a></div>
 <aside aria-label="提示" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>提示</p><div class="starlight-aside__content"><p>这不是一个可供选择的任务模式，仅为SRA在指定条件下的运行逻辑。</p></div></aside>
@@ -224,18 +233,18 @@
 在货币战争任务中，“类型”下拉菜单中选择“刷开局”</p>
 <ul>
 <li>Boss名称: 在此处填写你想要刷出的Boss名称，例如 <code dir="auto">巨鹿生物制药;增熵能源集团;金血记忆体联盟</code>，Boss名称以货币战争中显示的Boss名称为准。
-使用 <code dir="auto">;</code>（中英文均可）分隔每个Boss，分别代表期望在第一位面刷出“巨鹿生物制药”，第二位面刷出“增熵能源集团”，第三位面刷出“金血记忆体联盟”。
-如果对应位面没有期望的Boss，将其留空，例如 <code dir="auto">;;金血记忆体联盟</code>表示期望在第三位面刷出“金血记忆体联盟”，而第一、二位面则没有特定要求。</li>
-<li>Boss词条: 在此处填写你想要刷出的Boss词缀名称，例如 <code dir="auto">变宝为废</code>，使用空格分隔多个词缀。
-也可以在词缀名称前添加 <code dir="auto">!</code>（中英文均可） 来表示不想要的词缀，例如 <code dir="auto">!变宝为废</code> 表示不想要“变宝为废”这个词缀</li>
-<li>投资环境: 在此处填写你想要刷出的投资环境名称，例如 <code dir="auto">长线利好 轮岗</code>，使用空格分隔多个环境。
-也可以在环境名称前添加 <code dir="auto">?</code>（中英文均可） 来表示可选环境，例如 <code dir="auto">?长线利好</code> 表示如果有“长线利好”这个环境就更好，但没有也无所谓</li>
-<li>投资策略: 在此处填写你想要刷出的投资策略名称，例如 <code dir="auto">砂里淘金</code>，使用 <code dir="auto">;</code>（中英文均可）分隔不同位面的策略，
-例如 <code dir="auto">轮回不止；环保大使叽米</code>表示第一位面期望刷出“轮回不止”，第二位面期望刷出“环保大使叽米”。
+使用分号 <code dir="auto">;</code>（中英文均可）分隔每个Boss，分别代表期望在第一位面刷出“巨鹿生物制药”，第二位面刷出“增熵能源集团”，第三位面刷出“金血记忆体联盟”。
+如果对应位面没有期望的Boss，将其留空，例如 <code dir="auto">;;金血记忆体联盟</code> 表示期望在第三位面刷出“金血记忆体联盟”，而第一、二位面则没有特定要求。</li>
+<li>Boss词条: 在此处填写你想要刷出的Boss词条名称，例如 <code dir="auto">变宝为废</code>，Boss词条名称以货币战争中显示的Boss词条名称为准。
+使用空格分隔多个词条，也可以在词条名称前添加感叹号 <code dir="auto">!</code>（中英文均可） 来表示不想要的词条，例如 <code dir="auto">!变宝为废</code> 表示不想要“变宝为废”词条。</li>
+<li>投资环境: 在此处填写你想要刷出的投资环境名称，例如 <code dir="auto">长线利好 轮岗</code>，投资环境名称以货币战争中显示的环境名称为准。
+使用空格分隔多个环境，也可以在环境名称前添加问号 <code dir="auto">?</code>（中英文均可） 来表示可选环境，例如 <code dir="auto">?长线利好</code> 表示如果有“长线利好”这个环境就更好，但没有也无所谓。</li>
+<li>投资策略: 在此处填写你想要刷出的投资策略名称，例如 <code dir="auto">砂里淘金</code>，投资策略名称以货币战争中显示的策略名称为准。
+使用 <code dir="auto">;</code>（中英文均可）分隔不同位面的策略，例如 <code dir="auto">轮回不止；环保大使叽米</code>表示第一位面期望刷出“轮回不止”，第二位面期望刷出“环保大使叽米”。
 <code dir="auto">轮回不止；</code>或<code dir="auto">轮回不止</code>表示第一位面期望刷出“轮回不止”，第二位面没有特定要求。
 <code dir="auto">;环保大使叽米</code>表示第一位面没有特定要求，第二位面期望刷出“环保大使叽米”。</li>
 <li>特别地，所有的匹配都是双向子字符串匹配，你可以通过拼接不同的内容来实现更复杂的匹配。
-例如 <code dir="auto">白银投资 溜佩佩 招财狗；</code> 可以表示第一位面期望刷出“白银投资”或“溜佩佩“或“招财狗”，第二位面没有特定要求。
+例如投资策略中填入 <code dir="auto">白银投资 溜佩佩 招财狗；</code> 可以表示第一位面期望刷出“白银投资”或“溜佩佩“或“招财狗”，第二位面没有特定要求。
 <code dir="auto">轮回;环保大使</code> 等同于 <code dir="auto">轮回不止；环保大使叽米</code>。</li>
 </ul>
 <div class="sl-heading-wrapper level-h3"><h3 id="结束后">结束后</h3><a class="sl-anchor-link" href="#结束后"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “结束后”</span></a></div>
@@ -258,9 +267,9 @@
 <p>一但点击任务正确运行，按钮会变为<strong>停止</strong>，表示任务正在执行中。</p>
 <p>您可以转到控制台选项卡查看任务的执行日志。</p>
 <p>我们会在<a href="/getting-started/advance#%E6%97%A5%E5%BF%97%E8%BF%87%E6%BB%A4%E5%99%A8">进阶操作</a>中介绍日志过滤器。</p>
-<p>如果需要中断任务，可以点击<strong>停止</strong>，或按下快捷键 <code dir="auto">F9</code> ，任务会立即停止执行。</p>
+<p>如果需要中断任务，可以点击<strong>停止</strong>，或按下快捷键 <code dir="auto">F9</code> ，任务会在短暂延迟后停止执行。</p>
 <p><img alt="操作按钮" loading="lazy" decoding="async" width="919" height="142" src="/_astro/operation2.xWlOiUtW_EXl9c.webp" srcset=""></p>
 <p>开始执行任务时，SRA会尝试让游戏窗口处于焦点状态，此时不建议人工干预，除非需要中断任务。</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="更多">更多</h2><a class="sl-anchor-link" href="#更多"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “更多”</span></a></div>
 <p>请参阅<a href="/getting-started/advance">进阶操作</a>。</p>
-</div><footer class="sl-flex astro-qxlwq66t"><div class="meta sl-flex astro-qxlwq66t"><a href="https://github.com/Shasnow/Shasnow.github.io/src/content/docs/getting-started/getting-started.md" class="sl-flex print:hidden astro-gksxxg6p"><svg aria-hidden="true" class="astro-gksxxg6p astro-xik5oco4" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.2em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg>编辑此页</a><p>最近更新： <time datetime="2026-07-25T07:18:41.000Z">2026年7月25日</time></p></div><div class="pagination-links print:hidden astro-gcfo3mml" dir="ltr"><a href="/getting-started/download/" rel="prev" class="astro-gcfo3mml"><svg aria-hidden="true" class="astro-gcfo3mml astro-xik5oco4" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-gcfo3mml">上一页<br class="astro-gcfo3mml"><span class="link-title astro-gcfo3mml">获取SRA</span></span></a><a href="/getting-started/advance/" rel="next" class="astro-gcfo3mml"><svg aria-hidden="true" class="astro-gcfo3mml astro-xik5oco4" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-gcfo3mml">下一页<br class="astro-gcfo3mml"><span class="link-title astro-gcfo3mml">进阶操作</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
+</div><footer class="sl-flex astro-qxlwq66t"><div class="meta sl-flex astro-qxlwq66t"><a href="https://github.com/Shasnow/Shasnow.github.io/src/content/docs/getting-started/getting-started.md" class="sl-flex print:hidden astro-gksxxg6p"><svg aria-hidden="true" class="astro-gksxxg6p astro-xik5oco4" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.2em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg>编辑此页</a><p>最近更新： <time datetime="2026-07-26T08:10:28.000Z">2026年7月26日</time></p></div><div class="pagination-links print:hidden astro-gcfo3mml" dir="ltr"><a href="/getting-started/download/" rel="prev" class="astro-gcfo3mml"><svg aria-hidden="true" class="astro-gcfo3mml astro-xik5oco4" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-gcfo3mml">上一页<br class="astro-gcfo3mml"><span class="link-title astro-gcfo3mml">获取SRA</span></span></a><a href="/getting-started/advance/" rel="next" class="astro-gcfo3mml"><svg aria-hidden="true" class="astro-gcfo3mml astro-xik5oco4" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-gcfo3mml">下一页<br class="astro-gcfo3mml"><span class="link-title astro-gcfo3mml">进阶操作</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
