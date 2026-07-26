@@ -11,4 +11,4 @@ title: 简单使用
 ```bash
 SRA-server.exe --urls http://0.0.0.0:8080
 ```
-这将在启动一个监听端口为 `8080` 的 SRA HTTP 服务器。
+这将启动一个监听端口为 `8080` 的 SRA HTTP 服务器。

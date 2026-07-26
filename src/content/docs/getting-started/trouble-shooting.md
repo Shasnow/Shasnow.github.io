@@ -1,7 +1,7 @@
 ---
 title: 问题排查
 sidebar:
- order: 3
+  order: 3
 ---
 
 本页面目前只整理了最常见的问题，可能仍有遗漏。如果你的问题在这里没有找到，或者尝试后仍未解决，请前往官方群反馈。
@@ -27,7 +27,7 @@ sidebar:
 
 特征：
 
-- 打开后是一个 *黑色窗口*，里面有一堆带颜色的文字；
+- 打开后是一个 _黑色窗口_，里面有一堆带颜色的文字；
 - 并且可能出现类似 `找不到 xxx\AppData\Roaming\SRA\settings.json` 的提示。
 
   ![黑色窗口](../../../assets/img/faq/black_window.png)
@@ -35,11 +35,12 @@ sidebar:
 解决方法：
 此问题通常出现在首次安装和启动 SRA 时。
 请检查以下情况：
+
 - 情况一：文件夹中同时存在 `SRA.exe` 和 `SRA-cli.exe`
-    - 打开 `SRA.exe`，不要打开 `SRA-cli.exe`。
+  - 打开 `SRA.exe`，不要打开 `SRA-cli.exe`。
 - 情况二：文件夹中只有 `SRA-cli.exe`
-    - 你下载错版本了。如果下载的是 `StarRailAssistant_Core_版本号.zip` 或 `StarRailAssistant_Lite.zip`，请删除后改下载
-      `StarRailAssistant_版本号.zip` 或 `StarRailAssistant_版本号_Setup.exe`。
+  - 你下载错版本了。如果下载的是 `StarRailAssistant_Core_版本号.zip` 或 `StarRailAssistant_Lite.zip`，请删除后改下载
+    `StarRailAssistant_版本号.zip` 或 `StarRailAssistant_版本号_Setup.exe`。
 
 ---
 
@@ -65,6 +66,7 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 - 双击 SRA.exe 无法反应，没有弹出窗口或控制台。
 
 解决方法：
+
 - 发送日志文件给开发者，通常位于 `C:\Users\xxx\AppData\Roaming\SRA\log\`。
 - 如果无法找到日志文件，请与开发者联系。
 - 尝试更新 Windows 更新。
@@ -179,6 +181,7 @@ https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-10.0.7-wind
 解决方法：
 
 **对于连接了多台显示器的用户**：
+
 - 将 SRA 和游戏都放在主屏幕上。
 - 或拔掉一块屏幕，
 - 或者在设置中改为镜像屏幕或仅在 1 / 2 中显示。

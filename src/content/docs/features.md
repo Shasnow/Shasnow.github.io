@@ -9,7 +9,7 @@ title: 特色功能与彩蛋
 SRA会在启动时随机显示一条问候语，以下是目前的问候语列表：
 
 | 中文 | 英文 | 对应解释 |
-|---|---|---|
+| --- | --- | --- |
 | 欢迎使用 SRA！ | Welcome to SRA! | 普通的问候语。 |
 | 坐和放宽 | Sit back and relax | 2015年微软Windows 10预览版安装界面因机器翻译错误产生的网络流行语。 |
 | 并非'Sequence Read Archive' | not 'Sequence Read Archive' | SRA的英文全称是StarRailAssistant，和生物学中的一个数据库Sequence Read Archive同名。同时交流群加群时要求回答SRA的全称，相当一部分人因回答Sequence Read Archive而被拒之门外 |
@@ -23,6 +23,7 @@ SRA会在启动时随机显示一条问候语，以下是目前的问候语列�
 | May your path be clear | May your path be clear | 歌曲《远航星的告别》中的歌词。 |
 | May you get to where dreams are all crystalline and sweet | May you get to where dreams are all crystalline and sweet | 歌曲《远航星的告别》中的歌词。 |
 | 我们将在过去篆刻未来 | We will make the past with the future | 《鸣潮》过场动画 人类的“心脏” 中的台词 |
+| 铁花飞，飘逸不残灰 | | 歌曲《铁花飞》中的歌词。 |
 
 
 如果您有更多创意问候语的想法，欢迎联系我们投稿！
@@ -32,7 +33,7 @@ SRA会在启动时随机显示一条问候语，以下是目前的问候语列�
 在设置中的`背景图片路径`中输入指定内容，将触发特殊背景的显示。当前支持的特殊背景有：
 
 | 特殊背景 | 对应解释 |
-|---|---|
+| --- | --- |
 | shasnow | 将显示SRA的主要开发者`雪影`的角色形象 |
 
 

@@ -78,33 +78,39 @@ Mirror酱也可以负责接下来的更新工作。
 ### 版本说明
 
 StarRailAssistant 标准版
+
 - 显示名称：StarRailAssistant_Core_vx.x.x.zip, 其中x.x.x为版本号
 - 包含SRA-cli.exe文件
 - Core包提供最基本的功能，SRA-cli命令行工具包含在其中。
 - 单独使用Core包时，您需要手动创建配置文件、设置文件等，以确保SRA正常运行。
 
 StarRailAssistant 豪华版
+
 - 显示名称：StarRailAssistant_vx.x.x.zip, 其中x.x.x为版本号
 - 包含SRA.exe, SRA-cli.exe文件
 - 这个版本具有 SRA 100% 的功能，包括图形化界面、命令行工具等。**对于一般用户，我们建议您使用这个版本。**
 
 StarRailAssistant 尊享版
+
 - 显示名称：StarRailAssistant_Full_vx.x.x.zip, 其中x.x.x为版本号
 - 包含SRA.exe, SRA-cli.exe, SRA-server.exe文件
 - 这个版本为SRA拓展了HTTP接口，您可以使用HTTP协议来管理StarRailAssistant。
 
 StarRailAssistant 试用版
+
 - 显示名称：StarRailAssistant_Lite_vx.x.x.zip, 其中x.x.x为版本号
 - 包含SRA.exe, main.py文件
 - 实际由StarRailAssistant_DesktopDLC + SRA源码组成，因此需要手动配置python环境。
 
 StarRailAssistant 桌面DLC
+
 - 显示名称：StarRailAssistant_DesktopDLC_vx.x.x.zip, 其中x.x.x为版本号
 - 包含SRA.exe文件
 - 提供一个图形化界面，方便您管理StarRailAssistant。
 - 需要与StarRailAssistant_Core包（标准版）配合使用。
 
 StarRailAssistant 服务器DLC
+
 - 显示名称：StarRailAssistant_ServerDLC_vx.x.x.zip, 其中x.x.x为版本号
 - 包含SRA-server.exe文件
 - 提供一个服务器端，使SRA可以通过HTTP协议进行通信
@@ -119,6 +125,7 @@ StarRailAssistant 服务器DLC
 :::
 
 ## PyPI
+
 :::caution
 使用此方式只能获取 SRA-cli，无图形化界面。
 :::
@@ -126,13 +133,16 @@ StarRailAssistant 服务器DLC
 SRA-cli 已发布到 PyPI，提供更方便的使用方式。
 
 先决条件：
+
 - Python 3.12
 - 以管理员权限运行终端
 
 ### pip 安装
+
 推荐为SRA创建专用虚拟环境，以避免与系统其他Python项目冲突。
 
 创建虚拟环境：（如果还没有创建）
+
 ```bash
 mkdir starrailassistant
 cd starrailassistant
@@ -140,36 +150,45 @@ python -m venv .venv
 ```
 
 安装SRA-cli：
+
 ```bash
 (venv) pip install starrailassistant
 ```
 
 ### pipx 安装
+
 ```bash
 pipx install starrailassistant
 ```
 
 ### uv 安装
+
 ```bash
 uv tool install starrailassistant
 ```
 
 ### 首次使用
+
 推荐创建SRA专用文件夹：`mkdir -p starrailassistant` (如果你在虚拟环境中安装，不需要这一步)
 运行初始化命令：`cd starrailassistant && sra-cli init`
 启动应用：
+
 ```bash
 cd starrailassistant && sra-cli
 ```
 
 ### 更新应用
+
 ```bash
 (venv) pip install --upgrade starrailassistant
 ```
+
 ```bash
 pipx upgrade starrailassistant
 ```
+
 ```bash
 uv tool upgrade starrailassistant
 ```
+
 更新后可能需要重新运行`init`命令以应用新配置。
