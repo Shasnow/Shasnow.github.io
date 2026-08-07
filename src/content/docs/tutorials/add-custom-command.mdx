@@ -1,0 +1,163 @@
+---
+title: 添加自定义命令
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+## 在 SRA 中添加自定义命令
+
+### 工作原理
+
+SRA 的命令系统基于 Python 的 `cmd2` 库，通过一套"动态发现 + 自动注册"的机制加载命令：
+
+1. **动态导入**：`SRACore/__main__.py` 在启动时调用 `dynamic_import("tasks")`，扫描 `tasks/` 目录下所有 `.py` 文件并逐一 `importlib.import_module`。这一步确保 `tasks/` 中的所有模块都被加载到内存。
+
+2. **命令集（CommandSet）**：`cmd2` 提供了 `CommandSet` 基类。任何继承自 `cmd2.CommandSet[SRACli]` 的类，其内部以 `do_` 开头的方法会被 `cmd2` 自动识别为命令。你还可以使用 `@cmd2.with_argparser` 装饰器为命令添加参数解析，用 `@cmd2.as_subcommand_to` 创建子命令组。
+
+3. **自动注册**：`SRACli` 初始化时设置了 `auto_load_commands=True`。`cmd2` 会在所有已导入的模块中搜索 `CommandSet` 的子类，自动实例化并注册它们——无需手动调用任何注册函数。
+
+简单来说：**把文件放进 `tasks/` 目录，写一个 `CommandSet` 子类，SRA 启动时就会自动发现并注册你的命令。**
+
+### 先决条件
+
+- 已安装 SRA 或已获取 SRA 源码
+- 了解 Python 编程基础
+- 文本编辑器（如 VSCode、Notepad++）
+
+### 分步教程
+
+<Steps>
+
+1. 打开 SRA 的安装目录或源码目录，找到 `tasks` 文件夹。
+   这里存放了所有的任务脚本和命令脚本。
+   其中 `taskcli.py` 就是一个已存在的命令脚本，里面定义了 `tpconfig` 和 `strategy` 等命令。
+
+2. 创建一个新的 Python 文件，例如 `MyCommands.py`。
+
+3. 在文件中编写命令代码。下面我们来实现一个 `hello` 命令，它接受一个 `--name` 参数来个性化问候：
+
+   ```python
+   import argparse
+
+   import cmd2
+
+   from SRACore.cli2 import SRACli
+
+
+   class HelloCommands(cmd2.CommandSet[SRACli]):
+       DEFAULT_CATEGORY = 'My Commands'
+
+       @staticmethod
+       def _build_hello_parser() -> cmd2.Cmd2ArgumentParser:
+           parser = cmd2.Cmd2ArgumentParser(description='打个招呼')
+           parser.add_argument('--name', default='World', help='你要问候的名字')
+           return parser
+
+       @cmd2.with_argparser(_build_hello_parser)
+       def do_hello(self, args: argparse.Namespace) -> None:
+           """向世界（或者你指定的人）打个招呼"""
+           message = f"Hello, {args.name}!"
+           self._cmd.poutput(message)
+   ```
+
+   解释：
+
+   - `class HelloCommands(cmd2.CommandSet[SRACli]):` — 定义一个命令集，泛型参数 `SRACli` 让你能通过 `self._cmd` 访问到 CLI 实例。
+   - `DEFAULT_CATEGORY = 'My Commands'` — 命令分类名，在 `help` 输出中会按分类分组显示。
+   - `def do_hello(self, args):` — `do_` 前缀是 `cmd2` 的约定，`do_hello` 对应命令 `hello`。
+   - `@cmd2.with_argparser(_build_hello_parser)` — 绑定参数解析器，用户输入 `hello --name SRA` 时，`args.name` 的值为 `"SRA"`。
+   - `self._cmd.poutput(message)` — 通过 `self._cmd` 访问 CLI 实例，调用 `poutput` 打印输出。
+
+4. 运行 SRA 测试你的命令：
+   在进行下一步之前，确保你所有的修改都已保存。
+   运行 SRA：
+   - 如果你使用的是安装的 SRA，请在 SRA 安装目录下找到 `SRA-cli.exe` 并运行它。
+   - 如果你使用的是源码，请参考前面的章节了解如何运行 SRA。
+
+   如果一切正常，在 SRA-cli 中输入以下命令：
+
+   ```text
+   sra> hello
+   Hello, World!
+   sra> hello --name 开拓者
+   Hello, 开拓者!
+   sra> help hello
+   Usage: hello [-h] [--name NAME]
+
+   向世界（或者你指定的人）打个招呼
+
+   Options:
+     -h, --help   show this help message and exit
+     --name NAME  你要问候的名字
+   ```
+
+5. 进阶：创建子命令组
+
+   如果你有一组相关的命令，可以用 `@cmd2.as_subcommand_to` 把它们组织成子命令。下面是一个天气查询的例子，包含 `list` 和 `query` 两个子命令：
+
+   ```python
+   import argparse
+   from rich.text import Text
+
+   import cmd2
+
+   from SRACore.cli2 import SRACli
+
+
+   class WeatherCommands(cmd2.CommandSet[SRACli]):
+       DEFAULT_CATEGORY = 'Weather'
+
+       @staticmethod
+       def _build_weather_parser() -> cmd2.Cmd2ArgumentParser:
+           parser = cmd2.Cmd2ArgumentParser(description=Text.assemble('查询天气信息'))
+           parser.add_subparsers(metavar="SUBCOMMAND", help="子命令", required=True)
+           return parser
+
+       @cmd2.with_argparser(_build_weather_parser)
+       def do_weather(self, args: argparse.Namespace) -> None:
+           """天气查询"""
+           args.cmd2_subcommand_func(args)
+
+       @staticmethod
+       def _build_list_parser() -> cmd2.Cmd2ArgumentParser:
+           return cmd2.Cmd2ArgumentParser(description='列出所有支持查询的城市')
+
+       @cmd2.as_subcommand_to("weather", "list", _build_list_parser(), help='列出可用城市')
+       def _weather_list(self, _: argparse.Namespace) -> None:
+           self._cmd.poutput("支持查询的城市: 北京, 上海, 广州, 成都")
+
+       @staticmethod
+       def _build_query_parser() -> cmd2.Cmd2ArgumentParser:
+           parser = cmd2.Cmd2ArgumentParser(description='查询指定城市的天气')
+           parser.add_argument('city', help='城市名称')
+           return parser
+
+       @cmd2.as_subcommand_to("weather", "query", _build_query_parser(), help='查询城市天气')
+       def _weather_query(self, args: argparse.Namespace) -> None:
+           self._cmd.poutput(f"{args.city}: 晴天 25°C")
+   ```
+
+   使用方式：
+
+   ```text
+   sra> weather list
+   支持查询的城市: 北京, 上海, 广州, 成都
+   sra> weather query 成都
+   成都: 晴天 25°C
+   ```
+
+   解释：
+
+   - `do_weather` 定义父命令 `weather`，其解析器设置了 `add_subparsers(required=True)`，并调用 `args.cmd2_subcommand_func(args)` 分发到子命令。
+   - `@cmd2.as_subcommand_to("weather", "list", ...)` — 将方法注册为 `weather list` 子命令。第一个参数是父命令名，第二个是子命令名，第三个是参数解析器。
+   - 这与 `SRACli` 中 `task single`、`game screenshot` 等已有命令的写法一致。
+
+6. 恭喜！
+   你已经学会了如何在 SRA 中添加自定义命令。回顾一下关键点：
+   - 文件放在 `tasks/` 目录下
+   - 继承 `cmd2.CommandSet[SRACli]`
+   - `do_` 前缀定义命令，`@cmd2.with_argparser` 添加参数
+   - `@cmd2.as_subcommand_to` 创建子命令组
+   - SRA 启动时自动发现并注册，无需手动修改任何注册代码
+
+</Steps>

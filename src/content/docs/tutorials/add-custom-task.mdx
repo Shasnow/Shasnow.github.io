@@ -8,6 +8,18 @@ import { Steps } from "@astrojs/starlight/components";
 
 本章节介绍如何在 SRA 中添加一个自定义任务。
 
+### 工作原理
+
+SRA 的任务加载机制与命令加载共享同一套"动态发现"流程：
+
+1. **动态导入**：`SRACore/__main__.py` 在启动时调用 `dynamic_import("tasks")`，扫描 `tasks/` 目录下所有 `.py` 文件（不包括子文件夹）并逐一 `importlib.import_module` 导入。
+
+2. **任务注册**：被导入的模块中，凡是继承了 `BaseTask` 并使用 `@task` 装饰器的类，会被装饰器自动注册到全局任务列表中。`TaskManager` 通过 `get_task_classes()` 获取这个列表。
+
+3. **索引即顺序**：任务在列表中的位置就是它的索引。`task single 0` 执行第一个任务（通常是 `StartGameTask`），`task single 5` 执行第六个。文件按文件名排序后依次导入，因此任务索引由文件名在目录中的排序决定。
+
+简单来说：**把文件放进 `tasks/` 目录，继承 `BaseTask` 并加上 `@task` 装饰器，SRA 启动时就会自动发现并注册你的任务。**
+
 ### 先决条件
 
 - 已安装 SRA 或已获取 SRA 源码
