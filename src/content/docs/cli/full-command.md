@@ -4,13 +4,30 @@ sidebar:
   order: 2
 ---
 
+## 命令速查
+
+SRA-cli 当前内置命令主要包括：
+
+- `task`：任务管理
+- `extension`：扩展管理
+- `game`：游戏截图、OCR、进程控制
+- `run`：同步运行任务
+- `single`：同步运行单个任务
+- `init`：初始化资源和默认配置
+- `version`：显示版本号
+- `notify`：测试通知
+- `quit` / `exit`：退出 CLI
+- `help`：显示帮助
+
+此外，CLI 还会动态加载 `tasks/` 目录中的外部命令，例如 `strategy` 和 `tpconfig`。
+
 ## 内置命令
 
-这些命令是 SRA-cli 内置的命令，您无法删除或修改它们。
+这些命令是 SRA-cli 内置命令，默认提供且不能删除。
 
 ### `task` — 任务管理器
 
-管理 SRA-cli 的任务。
+管理当前任务的启动、停止和状态查询。
 
 ```text
 sra> help task
@@ -33,7 +50,7 @@ Subcommands:
 task run [config ...]
 ```
 
-- `config`：配置文件名（不含 `.json` 后缀）或配置文件路径。可指定多个配置，留空则使用当前配置。
+- `config`：配置文件名（不含 `.json` 后缀）或配置文件路径，可指定多个配置；留空时使用当前配置。
 
 示例：运行名为 `114` 和 `514` 的配置
 
@@ -49,7 +66,7 @@ sra> task run "path\to\my_config.json"
 
 #### `task single`
 
-运行指定的单个任务。任务在后台线程中执行，命令行不会被阻塞。
+运行指定的单个任务。任务会在后台线程中执行，命令行不会被阻塞。
 
 ```text
 task single task [--config CONFIG]
@@ -81,7 +98,7 @@ sra> task single TrailblazePowerTask --config my_config.json
 ```
 
 :::tip
-`清开拓力` 任务在 SRA 中的类名为 `TrailblazePowerTask`, 索引为 `1`。
+`清开拓力` 任务在 SRA 中的类名为 `TrailblazePowerTask`，索引为 `1`。
 :::
 
 #### `task stop`
@@ -92,7 +109,7 @@ sra> task single TrailblazePowerTask --config my_config.json
 sra> task stop
 ```
 
-如果当前没有任务在运行，会提示 "没有任务在运行"。
+如果当前没有任务在运行，会输出提示：`没有任务在运行`。
 
 #### `task status`
 
@@ -102,107 +119,159 @@ sra> task stop
 task status [--json]
 ```
 
-- `--json`：以 JSON 格式输出
+- `--json`：以 JSON 格式输出状态信息
 
-输出内容包括：
-- **Session ID**：当前会话 ID
-- **PID**：任务进程 ID
-- **Mode**：运行模式
-- **Configs**：使用的配置文件列表
-- **Task**：当前执行的任务
-- **Status**：任务状态
+输出字段包括：
 
-### `trigger` — 触发器管理器
+- `Session ID`：当前任务会话 ID
+- `PID`：任务进程 ID
+- `Mode`：运行模式
+- `Status`：当前状态
+- `Unit`：任务单位信息
+- `Configs`：使用的配置列表
+- `Progress`：当前进度
+- `Error`：错误信息（若存在）
 
-管理 SRA-cli 的触发器。触发器在后台监听游戏事件（如自动对话、自动战斗等）。
+### `extension` — 扩展管理器
+
+管理动态加载的扩展，包括查看、运行、停止和配置。
 
 ```text
-sra> help trigger
-Usage: trigger [-h] SUBCOMMAND ...
+sra> help extension
+Usage: extension [-h] SUBCOMMAND ...
 
-触发器管理器 - 管理 SRA-cli 的触发器。
+扩展管理：查看、运行已注册的扩展
 
 Subcommands:
-  run       运行触发器线程
-  stop      停止触发器线程
-  enable    启用指定触发器
-  disable   禁用指定触发器
-  set       设置触发器属性
+  list     列出所有已注册的扩展
+  run      运行指定扩展
+  info     显示扩展的配置 Schema 详情
+  reload   重新扫描并导入扩展模块
+  stop     停止指定后台扩展或当前正在运行的单次扩展
+  status   显示扩展运行状态
+  config   扩展配置管理
 ```
 
-#### `trigger run`
+#### `extension list`
 
-启动触发器线程。至少需要有一个触发器被启用时才能启动。
+列出当前已注册的扩展。
 
 ```text
-sra> trigger run
+extension list [--json]
 ```
 
-#### `trigger stop`
+- `--json`：输出一行 JSON
 
-停止触发器线程。
+示例：
 
 ```text
-sra> trigger stop
+sra> extension list
+sra> extension list --json
 ```
 
-#### `trigger enable`
+#### `extension run`
 
-启用指定的触发器。
+按扩展类型执行扩展。非后台扩展会走共享线程，后台扩展会走专用线程。
 
 ```text
-trigger enable NAME
+extension run NAME [--config CONFIG]
 ```
 
-- `NAME`：触发器的类名（不区分大小写），如 `AutoPlotTrigger`
+- `NAME`：扩展标识（可通过 `extension list` 查看）
+- `--config`：加载指定配置文件名，不带 `.json` 后缀
 
-示例：启用自动对话触发器
+示例：
 
 ```text
-sra> trigger enable AutoPlotTrigger
+sra> extension run hello
+sra> extension run hello --config my_ext
 ```
 
-#### `trigger disable`
+#### `extension info`
 
-禁用指定的触发器。
+查看扩展的配置 Schema 和类信息。
 
 ```text
-trigger disable NAME
+extension info NAME [--json]
 ```
 
-- `NAME`：触发器的类名（不区分大小写）
-
-示例：禁用自动对话触发器
+示例：
 
 ```text
-sra> trigger disable AutoPlotTrigger
+sra> extension info hello
+sra> extension info hello --json
 ```
 
-当所有触发器都被禁用时，触发器线程会自动停止。
+#### `extension reload`
 
-#### `trigger set`
-
-设置触发器的属性值。
+重新扫描并导入扩展模块，更新注册表。
 
 ```text
-trigger set NAME ATTR VALUE [--type {int,float,str,bool}]
+sra> extension reload
 ```
 
-- `NAME`：触发器的类名
-- `ATTR`：要设置的属性名
-- `VALUE`：属性值
-- `--type`：值的类型，默认为 `str`。可选值：`int`、`float`、`str`、`bool`
+#### `extension stop`
 
-示例：设置 `skip_plot` 属性为 `True`
+停止指定后台扩展，或停止当前正在运行的单次扩展。
 
 ```text
-sra> trigger set AutoPlotTrigger skip_plot true --type bool
+extension stop [NAME]
 ```
 
-示例：设置截图间隔为 `5` 秒
+- `NAME`：后台扩展标识；不传时停止当前单次扩展
+
+示例：
 
 ```text
-sra> trigger set AutoPlotTrigger screenshot_interval 5 --type int
+sra> extension stop my_background_ext
+```
+
+#### `extension status`
+
+显示扩展运行状态。
+
+```text
+sra> extension status
+```
+
+输出字段包括：
+
+- `Status`
+- `Unit`
+- `Error`
+
+#### `extension config`
+
+扩展配置管理。支持读取和写入配置。
+
+```text
+extension config SUBCOMMAND ...
+```
+
+##### `extension config get`
+
+获取扩展配置。
+
+```text
+extension config get NAME [--json]
+```
+
+##### `extension config set`
+
+设置扩展配置。
+
+```text
+extension config set NAME JSON
+```
+
+- `NAME`：扩展标识
+- `JSON`：配置 JSON 字符串
+
+示例：
+
+```text
+sra> extension config get hello
+sra> extension config set hello '{"enabled": true}'
 ```
 
 ### `game` — 游戏操作
@@ -243,7 +312,7 @@ game screenshot [--save SAVE] [--show] [--background]
 sra> game screenshot --save my_screenshot.png
 ```
 
-示例：截取后台画面并显示
+示例：在后台截取并显示截图
 
 ```text
 sra> game screenshot --background --show
@@ -251,7 +320,7 @@ sra> game screenshot --background --show
 
 #### `game ocr`
 
-对游戏画面执行 OCR 文字识别。
+对当前画面执行 OCR 文字识别。
 
 ```text
 game ocr [--region X1 Y1 X2 Y2] [--json]
@@ -260,17 +329,13 @@ game ocr [--region X1 Y1 X2 Y2] [--json]
 - `--region X1 Y1 X2 Y2`：指定识别区域的坐标比例（0 到 1 之间的浮点数），格式为左上角坐标和右下角坐标
 - `--json`：以 JSON 格式输出识别结果
 
-:::tip
-如果不指定 `--region`，则对整个游戏画面进行识别。
-:::
-
-示例：识别左上角区域的文字
+示例：识别左上角区域
 
 ```text
 sra> game ocr --region 0 0 0.5 0.3
 ```
 
-示例：以 JSON 格式输出完整画面的识别结果
+示例：输出完整画面的 OCR JSON
 
 ```text
 sra> game ocr --json
@@ -284,17 +349,17 @@ sra> game ocr --json
 sra> game kill
 ```
 
-该命令会强制关闭游戏进程（`StarRail.exe`）。使用时请谨慎。
+该命令会强制关闭游戏进程，使用前请谨慎。
 
 ### `run`
 
-运行指定配置文件中的所有选中的任务。与 `task run` 的区别在于，`run` 会**阻塞当前命令行**直到任务完成。
+运行指定配置文件中的所有选中的任务，并阻塞当前命令行，直到任务完成。
 
 ```text
 run [config ...]
 ```
 
-- `config`：配置文件名或路径。可指定多个配置。
+- `config`：配置文件名或路径，可指定多个配置
 
 示例：同步运行 `114` 配置
 
@@ -306,7 +371,7 @@ sra> run 114
 
 ### `single`
 
-运行单个指定的任务。与 `task single` 的区别在于，`single` 会**阻塞当前命令行**直到任务完成。
+运行单个指定任务，并阻塞当前命令行，直到任务完成。
 
 ```text
 single task [--config CONFIG]
@@ -325,19 +390,19 @@ sra> single ReceiveRewardsTask
 
 ### `init`
 
-初始化 SRA 应用。下载必要的资源文件并创建默认的设置和配置文件。
+初始化 SRA 应用：下载资源包并创建默认设置与配置文件。
 
 ```text
 sra> init
 ```
 
 :::warning
-此命令需要联网，会从 GitHub 下载资源包。如果资源文件已存在则会跳过创建步骤。
+此命令需要联网，会从 GitHub 下载资源包。如果资源文件已存在，则会跳过创建步骤。
 :::
 
 ### `version`
 
-显示 SRA-cli 的当前版本。
+显示 SRA-cli 当前版本号。
 
 ```text
 sra> version
@@ -345,22 +410,20 @@ sra> version
 
 ### `notify`
 
-发送测试通知，用于验证通知渠道（邮箱、Webhook、Telegram、Server酱、OneBot等）是否正常工作。
+发送测试通知，用于验证通知渠道是否可用。
 
 ```text
 notify test CHANNEL
 ```
 
 - `test`：固定子命令，用于发送测试通知
-- `CHANNEL`：通知渠道名称
+- `CHANNEL`：通知渠道名称，如 `email`、`webhook`、`telegram` 等
 
-示例：发送邮件测试通知
+示例：
 
 ```text
 sra> notify test email
 ```
-
-如果渠道配置正确，你会收到一条测试通知消息。
 
 ### `quit` / `exit`
 
@@ -371,11 +434,11 @@ sra> quit
 sra> exit
 ```
 
-退出前会自动清理所有运行中的任务和触发器线程。
+退出前会自动清理所有运行中的任务和事件监听器。
 
 ### `help`
 
-显示命令的帮助信息。
+显示命令帮助信息。
 
 ```text
 sra> help [command]
@@ -383,7 +446,7 @@ sra> help [command]
 
 - `command`：要查看帮助的命令名称，留空则列出所有命令
 
-示例：查看 `task` 命令的帮助
+示例：查看 `task` 命令帮助
 
 ```text
 sra> help task
@@ -391,11 +454,11 @@ sra> help task
 
 ## 外部命令
 
-这些命令是 SRA-cli 运行时动态加载的命令，您可以新增、删除或修改这些命令。它们定义在 `tasks/` 目录下的 Python 文件中。
+这些命令是 SRA-cli 运行时动态加载的命令，通常定义在 `tasks/` 目录下的 Python 文件中。它们可能会根据版本和插件扩展而变化。
 
 ### `strategy` — 货币战争攻略管理
 
-查询和管理货币战争的攻略配置。
+查询和管理货币战争攻略配置。
 
 ```text
 sra> help strategy
@@ -409,7 +472,7 @@ Subcommands:
 
 #### `strategy list`
 
-列出所有可用的货币战争攻略。
+列出所有可用攻略。
 
 ```text
 strategy list [--json]
@@ -417,31 +480,16 @@ strategy list [--json]
 
 - `--json`：以 JSON 格式输出
 
-输出内容包括每条攻略的：
-- **标题**
-- **文件名**
-- **作者**
-- **最低金币**
-- **最低等级**
-- **前台加成**（on_field）
-- **后台加成**（off_field）
-- **描述**
-
-示例：查看所有攻略
+示例：
 
 ```text
 sra> strategy list
-```
-
-示例：以 JSON 格式输出
-
-```text
 sra> strategy list --json
 ```
 
 ### `tpconfig` — 开拓力副本配置查询
 
-查询开拓力副本的配置信息。
+查询开拓力副本配置信息。
 
 ```text
 sra> help tpconfig
@@ -454,47 +502,25 @@ Positional Arguments:
 
 Options:
   -h, --help  show this help message and exit
-  --json      以JSON格式输出
+  --json      以 JSON 格式输出
 ```
 
-#### 无参数
-
-显示所有子任务的配置信息。
+示例：
 
 ```text
 sra> tpconfig
-```
-
-输出内容包括每个子任务的：
-- **函数名**
-- **体力消耗**
-- **最大次数**
-- **各关卡**（关卡 ID、名称、结算类型）
-
-#### 指定子任务
-
-只显示指定子任务的配置。
-
-```text
 sra> tpconfig calyx_golden
-```
-
-#### `--json` 输出
-
-以 JSON 格式输出配置数据，便于程序化处理。
-
-```text
 sra> tpconfig --json
 sra> tpconfig calyx_golden --json
 ```
 
 ## 快捷方式
 
-cmd2 提供了一些内置的快捷方式：
+cmd2 提供了一些内置快捷方式：
 
 | 快捷方式 | 说明 |
 |---------|------|
-| `@script.txt` | 运行指定的脚本文件（等同于 `run_script script.txt`） |
+| `@script.txt` | 运行脚本文件（等同于 `run_script script.txt`） |
 | `!command` | 在系统命令行中执行指定命令（等同于 `shell command`） |
 
 示例：
