@@ -46,6 +46,20 @@
       "startTime": "2026-08-10T04:00:00",
       "endTime": "2026-11-02T03:59:59",
       "cover": "https://i0.hdslb.com/bfs/new_dyn/c05ee2327918f3e4271db3ff66ce2026401742377.jpg"
+    },
+    {
+      "name": "绮衣珍赏·温煦",
+      "description": "活动期间，旅行者可以通过完成珍赏任务获得对应的「珍赏见闻」与重现晶簇，每周通过珍赏任务可获得奖励的次数具有上限。活动期间，「珍赏见闻」总值累计到特定值之后，即可领取奇偶装扮套装「琥色蜜酿」。",
+      "startTime": "2026-08-12T06:00:00",
+      "endTime": "2026-09-23T05:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/1b393bc42ce626e2faeff5cbae929dbb401742377.jpg"
+    },
+    {
+      "name": "无神怜爱的冻土",
+      "description": "时限内完成探索任务，可额外获得原石*400奖励",
+      "startTime": "2026-08-12T06:00:00",
+      "endTime": "2026-11-03T14:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/299a8faf70962ccc22f21e7592e2183d401742377.jpg"
     }
   ]
 }
