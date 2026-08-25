@@ -1,0 +1,23 @@
+---
+import { Tabs, TabItem, LinkButton, Code } from "@astrojs/starlight/components";
+import { games } from "../data/games";
+
+
+const baseUrl = "https://starrailassistant.top/api/v1/activity";
+---
+
+<Tabs>
+  {games.map((game) => (
+    <TabItem label={game.name}>
+      <Code code={`GET ${baseUrl}/${game.id}.json`} lang="text" frame="none" />
+      <LinkButton
+        href={`${baseUrl}/${game.id}.json`}
+        variant="secondary"
+        icon="external"
+        iconPlacement="start"
+      >
+        试一试：获取{game.name}活动数据
+      </LinkButton>
+    </TabItem>
+  ))}
+</Tabs>

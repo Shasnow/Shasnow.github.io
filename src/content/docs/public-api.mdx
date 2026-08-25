@@ -3,7 +3,7 @@ title: 公开 API
 description: StarRailAssistant 提供的公开数据 API。
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+import GameTabs from "../../components/GameTabs.astro";
 
 StarRailAssistant 提供了一套免费的公开 REST API，用于获取主流游戏的活动与公告数据。无需认证，直接调用即可。
 
@@ -21,41 +21,13 @@ https://starrailassistant.top/api/v1
 GET /activity/{game}.json
 ```
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
+| 参数   | 类型   | 说明     |
+| ------ | ------ | -------- |
 | `game` | string | 游戏标识 |
 
 #### 支持的游戏
 
-<Tabs>
-  <TabItem label="崩坏：星穹铁道">
-    ```
-    GET https://starrailassistant.top/api/v1/activity/sr.json
-    ```
-  </TabItem>
-  <TabItem label="原神">
-    ```
-    GET https://starrailassistant.top/api/v1/activity/ys.json
-    ```
-  </TabItem>
-  <TabItem label="绝区零">
-    ```
-    GET https://starrailassistant.top/api/v1/activity/zzz.json
-    ```
-  </TabItem>
-  <TabItem label="鸣潮">
-    ```
-    GET https://starrailassistant.top/api/v1/activity/ww.json
-    ```
-  </TabItem>
-  
-  <TabItem label="异环">
-    ```
-    GET https://starrailassistant.top/api/v1/activity/nte.json
-    ```
-  </TabItem>
-
-</Tabs>
+<GameTabs />
 
 #### 响应示例
 
@@ -80,19 +52,19 @@ GET /activity/{game}.json
 
 #### 响应字段说明
 
-| 字段 | 类型 | 说明 |
-| --- | --- | --- |
-| `version` | string | 当前游戏版本号 |
-| `versionName` | string | 版本名称 |
-| `startTime` | string | 版本开始时间（ISO 8601） |
-| `endTime` | string | 版本结束时间（ISO 8601） |
-| `cover?` | string? | 版本封面图 URL |
-| `activities` | array | 活动列表 |
-| `activities[].name` | string | 活动名称 |
-| `activities[].description` | string | 活动描述 |
-| `activities[].startTime` | string | 活动开始时间 |
-| `activities[].endTime` | string | 活动结束时间 |
-| `activities[].cover?` | string? | 活动封面图 URL |
+| 字段                       | 类型    | 说明                     |
+| -------------------------- | ------- | ------------------------ |
+| `version`                  | string  | 当前游戏版本号           |
+| `versionName`              | string  | 版本名称                 |
+| `startTime`                | string  | 版本开始时间（ISO 8601） |
+| `endTime`                  | string  | 版本结束时间（ISO 8601） |
+| `cover?`                   | string? | 版本封面图 URL           |
+| `activities`               | array   | 活动列表                 |
+| `activities[].name`        | string  | 活动名称                 |
+| `activities[].description` | string  | 活动描述                 |
+| `activities[].startTime`   | string  | 活动开始时间（ISO 8601） |
+| `activities[].endTime`     | string  | 活动结束时间（ISO 8601） |
+| `activities[].cover?`      | string? | 活动封面图 URL           |
 
 ## 贡献指南
 
@@ -124,18 +96,22 @@ GET /activity/{game}.json
       "cover": "https://..." // 活动封面图 URL
     }
     // 其他活动...
-    ]
+  ]
 }
 ```
 
 :::tip
+
 - 时间请使用 ISO 8601 格式（`YYYY-MM-DDTHH:mm:ss`）
 - `cover` 字段可选，如无封面图可留空字符串 `""`
 - 版本信息（`version`、`versionName`）需要同步更新
+
 :::
 
 :::note[注意事项]
+
 - 活动时间请确保准确，建议参考官方公告
 - 提交 PR 前请检查 JSON 格式是否正确
 - 如有疑问，可以在 [GitHub Issues](https://github.com/Shasnow/Shasnow.github.io/issues) 中讨论
+
 :::
