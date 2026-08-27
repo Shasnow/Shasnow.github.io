@@ -1,0 +1,157 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
+import TabbedContent from '../tabs/TabbedContent.astro';
+import TabListItem from '../tabs/TabListItem.astro';
+import TabPanel from '../tabs/TabPanel.astro';
+
+const { sidebar } = Astro.locals.starlightRoute;
+
+type SidebarEntry = StarlightRouteData['sidebar'][number];
+type Group = Extract<SidebarEntry, { type: 'group' }>;
+
+// Separate groups (rendered as tabs) from standalone links.
+const groups = sidebar.filter((e): e is Group => e.type === 'group');
+const standaloneLinks = sidebar.filter((e) => e.type === 'link');
+
+/** Convert a group label to an `id` for tab panels. */
+const makeId = (label: string) => '__tab-' + label.toLowerCase().replaceAll(/\s+/g, '-');
+
+/** Get the icon for a group. Update the icon names in the array to change the icons associated with a group. */
+const getIcon = (index: number) =>
+	(['rocket', 'open-book', 'information', 'puzzle'] as const)[index % 4];
+
+/** Determine if an array of sidebar items contains the current page. */
+const isCurrent = (entries: SidebarEntry[]): boolean =>
+	entries
+		.map((entry) => (entry.type === 'link' ? entry.isCurrent : isCurrent(entry.entries)))
+		.some((entry) => entry === true);
+
+// If no tab has the current page, default to the Guide tab (index 1).
+const anyTabIsCurrent = groups.some(({ entries }) => isCurrent(entries));
+const isInitial = (entries: SidebarEntry[], index: number) =>
+	anyTabIsCurrent ? isCurrent(entries) : index === 1;
+---
+
+<SidebarPersister>
+	<TabbedContent class="tabbed-sidebar">
+		<Fragment slot="tab-list">
+			{
+				groups.map(({ label, entries }, index) => (
+					<TabListItem id={makeId(label)} initial={isInitial(entries, index)} class="tab-item">
+						<Icon class="icon" name={getIcon(index)} /> {label}
+					</TabListItem>
+				))
+			}
+		</Fragment>
+		{
+			groups.map(({ label, entries }, index) => (
+				<TabPanel id={makeId(label)} initial={isInitial(entries, index)}>
+					<SidebarSublist sublist={entries} />
+				</TabPanel>
+			))
+		}
+	</TabbedContent>
+	{
+		standaloneLinks.length > 0 && (
+			<nav class="standalone-links">
+				<SidebarSublist sublist={standaloneLinks} />
+			</nav>
+		)
+	}
+</SidebarPersister>
+
+<style>
+	/** Always show the scrollbar gutter. */
+	:global(.sidebar-pane) {
+		overflow-y: scroll;
+	}
+
+	/* Styles for the custom tab switcher. */
+	.tabbed-sidebar {
+		/* Layout variables */
+		--tab-switcher-border-width: 1px;
+		--tab-switcher-padding: calc(0.25rem - var(--tab-switcher-border-width));
+		--tab-item-border-radius: 0.5rem;
+		--tab-switcher-border-radius: calc(
+			var(--tab-item-border-radius) + var(--tab-switcher-padding) + var(--tab-switcher-border-width)
+		);
+
+		/* Color variables */
+		--tab-switcher-border-color: var(--sl-color-hairline-light);
+		--tab-switcher-background-color: var(--sl-color-gray-7, var(--sl-color-gray-6));
+		--tab-switcher-text-color: var(--sl-color-gray-3);
+		--tab-switcher-text-color--active: var(--sl-color-white);
+		--tab-switcher-icon-color: var(--sl-color-gray-4);
+		--tab-switcher-icon-color--active: var(--sl-color-text-accent);
+		--tab-item-background-color--hover: var(--sl-color-gray-6);
+		--tab-item-background-color--active: var(--sl-color-black);
+	}
+	/* Dark theme variations */
+	:global([data-theme='dark']) .tabbed-sidebar {
+		--tab-switcher-text-color: var(--sl-color-gray-2);
+		--tab-switcher-icon-color: var(--sl-color-gray-3);
+		--tab-item-background-color--hover: var(--sl-color-gray-5);
+	}
+
+	@media (min-width: 50rem) {
+		:global([data-theme='dark']) .tabbed-sidebar {
+			--tab-switcher-background-color: var(--sl-color-black);
+			--tab-item-background-color--hover: var(--sl-color-gray-6);
+			--tab-item-background-color--active: var(--sl-color-gray-6);
+		}
+	}
+
+	.tabbed-sidebar.tab-list {
+		border: var(--tab-switcher-border-width) solid var(--tab-switcher-border-color);
+		border-radius: var(--tab-switcher-border-radius);
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		padding: var(--tab-switcher-padding);
+		background-color: var(--tab-switcher-background-color);
+		margin-bottom: 1.5rem;
+	}
+
+	.tab-item :global(a) {
+		border: var(--tab-switcher-border-width) solid transparent;
+		border-radius: var(--tab-item-border-radius);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: calc(0.5rem - var(--tab-switcher-border-width));
+		background-clip: padding-box;
+		line-height: var(--sl-line-height-headings);
+		text-decoration: none;
+		color: var(--tab-switcher-text-color);
+		font-weight: 600;
+	}
+
+	.tab-item :global(a:hover) {
+		color: var(--tab-switcher-text-color--active);
+		background-color: var(--tab-item-background-color--hover);
+	}
+	.tab-item :global(a[aria-selected='true']) {
+		border-color: var(--tab-switcher-border-color);
+		color: var(--tab-switcher-text-color--active);
+		background-color: var(--tab-item-background-color--active);
+	}
+
+	.icon {
+		margin: 0.25rem;
+		color: var(--tab-switcher-icon-color);
+	}
+	.tab-item :global(a:hover) .icon {
+		color: inherit;
+	}
+	.tab-item :global(a[aria-selected='true']) .icon {
+		color: var(--tab-switcher-icon-color--active);
+	}
+
+	.standalone-links {
+		margin-top: 0.5rem;
+		padding: 0.5rem;
+	}
+</style>
