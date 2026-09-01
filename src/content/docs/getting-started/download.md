@@ -24,42 +24,11 @@ Mirror酱也可以负责接下来的更新工作。
 
 <div class="download-card">
   <div class="download-card__content">
-    <h3 style="margin: 0; color: #FFFFFF;">下载 StarRailAssistant 标准版</h3>
-    <p style="margin: 0; color: #8BC53F;">包含1件物品：
-      <span style="color: #B0AEA3;">StarRailAssistant_Core</span>
-    </p>
-  </div>
-  <div class="download-card__actions">
-    <div class="download-card__price">
-      <span style="background-color: #4C6B22; font-weight: bold; color: #BEEE11; padding: 6px 8px; border-radius: 4px 0 0 4px;">-100%</span>
-      <span style="font-weight: bold; color: #BEEE11; background-color: #344654; padding: 6px 8px; border-radius: 0 4px 4px 0;">￥0.00</span>
-    </div>
-    <a class="download-card__button" href="https://github.com/Shasnow/StarRailAssistant/releases/latest">添加至购物车</a>
-  </div>
-</div>
-<div class="download-card">
-  <div class="download-card__content">
-    <h3 style="margin: 0; color: #FFFFFF;">下载 StarRailAssistant 豪华版</h3>
-    <p style="margin: 0; color: #8BC53F;">包含2件物品：
-      <span style="color: #B0AEA3;">StarRailAssistant_Core、</span>
-      <span style="color: #B0AEA3;">StarRailAssistant_DesktopDLC</span>
-    </p>
-  </div>
-  <div class="download-card__actions">
-    <div class="download-card__price">
-      <span style="background-color: #4C6B22; font-weight: bold; color: #BEEE11; padding: 6px 8px; border-radius: 4px 0 0 4px;">-100%</span>
-      <span style="font-weight: bold; color: #BEEE11; background-color: #344654; padding: 6px 8px; border-radius: 0 4px 4px 0;">￥0.00</span>
-    </div>
-    <a class="download-card__button" href="https://github.com/Shasnow/StarRailAssistant/releases/latest">添加至购物车</a>
-  </div>
-</div>
-<div class="download-card">
-  <div class="download-card__content">
-    <h3 style="margin: 0; color: #FFFFFF;">下载 StarRailAssistant 尊享版</h3>
+    <h3 style="margin: 0; color: #FFFFFF;">下载 StarRailAssistant </h3>
     <p style="margin: 0; color: #8BC53F;">包含3件物品：
-      <span style="color: #B0AEA3;">StarRailAssistant_Core、</span>
-      <span style="color: #B0AEA3;">StarRailAssistant_DesktopDLC、</span>
-      <span style="color: #B0AEA3;">StarRailAssistant_ServerDLC</span>
+      <span style="color: #B0AEA3;">SRA.exe、</span>
+      <span style="color: #B0AEA3;">SRA-cli.exe、</span>
+      <span style="color: #B0AEA3;">SRA-server.exe</span>
     </p>
   </div>
   <div class="download-card__actions">
@@ -77,49 +46,33 @@ Mirror酱也可以负责接下来的更新工作。
 
 ### 版本说明
 
-StarRailAssistant 标准版
+#### StarRailAssistant Core
 
-- 显示名称：StarRailAssistant_Core_vx.x.x.zip, 其中x.x.x为版本号
-- 包含SRA-cli.exe文件
-- Core包提供最基本的功能，SRA-cli命令行工具包含在其中。
-- 单独使用Core包时，您需要手动创建配置文件、设置文件等，以确保SRA正常运行。
+- 文件名：`StarRailAssistant_Core_vx.x.x.zip`
+- 包含：SRA-cli.exe 及核心资源（tasks、extensions、resources、SRACore）
+- 提供最基本的命令行功能。单独使用时需手动创建配置文件和设置文件。
 
-StarRailAssistant 豪华版
+#### StarRailAssistant
 
-- 显示名称：StarRailAssistant_vx.x.x.zip, 其中x.x.x为版本号
-- 包含SRA.exe, SRA-cli.exe文件
-- 这个版本具有 SRA 100% 的功能，包括图形化界面、命令行工具等。**对于一般用户，我们建议您使用这个版本。**
+- 文件名：`StarRailAssistant_vx.x.x.zip`
+- 包含：SRA.exe（图形化界面）、SRA-cli.exe（命令行）、SRA-server.exe（HTTP 服务端）及核心资源
+- 具有 SRA 全部功能，包括图形化界面、命令行工具和 HTTP 服务端。**对于一般用户，我们建议您使用这个版本。**
 
-StarRailAssistant 尊享版
+#### StarRailAssistant Lite
 
-- 显示名称：StarRailAssistant_Full_vx.x.x.zip, 其中x.x.x为版本号
-- 包含SRA.exe, SRA-cli.exe, SRA-server.exe文件
-- 这个版本为SRA拓展了HTTP接口，您可以使用HTTP协议来管理StarRailAssistant。
+- 文件名：`StarRailAssistant_Lite_vx.x.x.zip`
+- 包含：SRA.exe、main.py 及 Python 源码
+- 由桌面端发布产物与 SRA 源码组成，需要手动配置 Python 环境才能运行。
 
-StarRailAssistant 试用版
+#### StarRailAssistant Resources
 
-- 显示名称：StarRailAssistant_Lite_vx.x.x.zip, 其中x.x.x为版本号
-- 包含SRA.exe, main.py文件
-- 实际由StarRailAssistant_DesktopDLC + SRA源码组成，因此需要手动配置python环境。
-
-StarRailAssistant 桌面DLC
-
-- 显示名称：StarRailAssistant_DesktopDLC_vx.x.x.zip, 其中x.x.x为版本号
-- 包含SRA.exe文件
-- 提供一个图形化界面，方便您管理StarRailAssistant。
-- 需要与StarRailAssistant_Core包（标准版）配合使用。
-
-StarRailAssistant 服务器DLC
-
-- 显示名称：StarRailAssistant_ServerDLC_vx.x.x.zip, 其中x.x.x为版本号
-- 包含SRA-server.exe文件
-- 提供一个服务器端，使SRA可以通过HTTP协议进行通信
-- 需要与StarRailAssistant_Core包（标准版）配合使用。
+- 文件名：`StarRailAssistant_Resources_vx.x.x.zip`
+- 包含：tasks、extensions、resources 及 package.json
+- 仅包含资源文件，用于手动更新 Core 包中的资源，无需重新下载完整版本。
 
 ## 通过夸克网盘下载
 
-下载链接：[**夸克网盘**](https://pan.quark.cn/s/6d6080c19a66?pwd=YkGZ)
-
+下载链接：[**夸克网盘**](https://pan.quark.cn/s/8c00dec47499)
 :::note
 通过此方式获取的 SRA 版本可能滞后。
 :::

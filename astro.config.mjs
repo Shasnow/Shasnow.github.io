@@ -44,10 +44,13 @@ export default defineConfig({
               label: "教程",
               items: [{ autogenerate: { directory: "tutorials" } }],
             },
-            { label: "公开 API", slug: "public-api" },
             { label: "赞助", slug: "sponsor" },
             { label: "加入我们", slug: "join-us" },
           ],
+        },
+        {
+          label: "参考",
+          items: [{ autogenerate: { directory: "reference" } }],
         },
         {
           label: "公告",
