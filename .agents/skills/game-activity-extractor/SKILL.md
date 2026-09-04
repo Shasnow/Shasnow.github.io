@@ -24,17 +24,18 @@ Extract game version activity information from announcement articles (URLs or im
 
 Extract or infer the following version-level fields:
 
-| Field | Description | How to Determine |
-|-------|-------------|------------------|
-| `version` | Version number (e.g., "4.4", "3.5") | Usually stated in the article title or header |
-| `versionName` | Version subtitle/name (e.g., "鸣笛于归寂之时") | Usually in quotes in the article title |
-| `startTime` | Version start time (ISO 8601) | Maintenance/update start time stated in the article |
-| `endTime` | Version end time (ISO 8601) | Explicitly stated, or inferred from version cycle (~42 days) |
-| `cover` | Version cover image URL | Leave empty string `""` if not available |
+| Field         | Description                                    | How to Determine                                              |
+| ------------- | ---------------------------------------------- | ------------------------------------------------------------- |
+| `version`     | Version number (e.g., "4.4", "3.5")            | Usually stated in the article title or header                 |
+| `versionName` | Version subtitle/name (e.g., "鸣笛于归寂之时") | Usually in quotes in the article title                        |
+| `startTime`   | Version start time (ISO 8601)                  | Maintenance/update start time stated in the article           |
+| `endTime`     | Version end time (ISO 8601)                    | Explicitly stated, or inferred from version cycle (\~42 days) |
+| `cover`       | Version cover image URL                        | Leave empty string `""` if not available                      |
 
 ### Step 3: Identify Activities to Include
 
 **Include** the following types of activities:
+
 - Version limited-time events (版本限时活动)
 - Sign-in events (签到活动)
 - Combat/challenge events (战斗挑战活动)
@@ -42,6 +43,7 @@ Extract or infer the following version-level fields:
 - Version-rotating challenges (版本轮换挑战)
 
 **Exclude** the following types of content:
+
 - 网页活动 (Web/H5 events) — explicitly labeled as web events
 - 角色卡池/祈愿/唤取/棋盘 (Character banners/gacha)
 - 武器卡池/弧盘研募 (Weapon banners/gacha)
@@ -57,17 +59,31 @@ Extract or infer the following version-level fields:
 
 For each included activity, extract:
 
-| Field | Description | How to Determine |
-|-------|-------------|------------------|
-| `name` | Activity name | Use exact text from the article, including special characters like 「」・· |
-| `description` | Activity description | Use the descriptive text from the article. If no description is provided, summarize the activity purpose in one sentence. |
-| `startTime` | Activity start time (ISO 8601) | See "Time Format Rules" below |
-| `endTime` | Activity end time (ISO 8601) | See "Time Format Rules" below |
-| `cover` | Activity cover image URL | Leave empty string `""` if not available |
+| Field         | Description                    | How to Determine                                                                                                          |
+| ------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `name`        | Activity name                  | Use exact text from the article, including special characters like 「」・·                                                |
+| `description` | Activity description           | Use the descriptive text from the article. If no description is provided, summarize the activity purpose in one sentence. |
+| `startTime`   | Activity start time (ISO 8601) | See "Time Format Rules" below                                                                                             |
+| `endTime`     | Activity end time (ISO 8601)   | See "Time Format Rules" below                                                                                             |
+| `cover`       | Activity cover image URL       | Leave empty string `""` if not available. For recurring activities with fixed covers (see below), use the fixed cover URL |
+
+#### Fixed Covers for Recurring Activities
+
+These are the fixed covers for recurring activities:
+
+| Activity Prefix | Cover URL                                                                         |
+| --------------- | --------------------------------------------------------------------------------- |
+| 异相仲裁        | `https://i0.hdslb.com/bfs/new_dyn/0869ac215b041b4bbab8197c9c44cef71340190821.jpg` |
+| 末日幻影        | `https://i0.hdslb.com/bfs/article/839c3f2ba8ffc2b63b4cd209f8f989041340190821.jpg` |
+| 虚构叙事        | `https://i0.hdslb.com/bfs/new_dyn/13e21e998566cef8e41f4ae287c17fc11340190821.jpg` |
+| 异器盈界        | `https://i0.hdslb.com/bfs/new_dyn/125f62a2238e44ea5a0ae7278b4029501340190821.png` |
+| 花藏繁生        | `https://i0.hdslb.com/bfs/new_dyn/5cf1083cdeaabb38eb94d30ab2b6a2e51340190821.png` |
+| 位面分裂        | `https://i0.hdslb.com/bfs/new_dyn/234306c260be1c80654431efe81c6ce81340190821.png` |
 
 ### Step 5: Time Format Rules
 
 **General rules:**
+
 - All times must be in **ISO 8601 format**: `YYYY-MM-DDTHH:mm:ss`
 - All times are in **Asia/Shanghai timezone (UTC+8)** unless the article specifies otherwise
 - The article usually states times as "服务器时间" (server time), which defaults to UTC+8
@@ -75,23 +91,23 @@ For each included activity, extract:
 
 **Converting relative time references:**
 
-| Article Text | How to Convert |
-|--------------|----------------|
-| "X版本更新后" | Use the version maintenance completion time (e.g., if maintenance is 06:00-11:00, use 11:00:00) |
-| "X版本结束（前）" | Use the version end time |
-| "永久开放" | **Exclude** this activity — it's not a limited-time event |
-| "Y版本结束前" (references a future version) | Search the web for that version's end date, then use it. If not found, note it as an estimate. |
-| "活动期间" with no dates | If version-period aligned, use version start/end. If no dates at all, note it in the explanation. |
+| Article Text                                | How to Convert                                                                                    |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| "X版本更新后"                               | Use the version maintenance completion time (e.g., if maintenance is 06:00-11:00, use 11:00:00)   |
+| "X版本结束（前）"                           | Use the version end time                                                                          |
+| "永久开放"                                  | **Exclude** this activity — it's not a limited-time event                                         |
+| "Y版本结束前" (references a future version) | Search the web for that version's end date, then use it. If not found, note it as an estimate.    |
+| "活动期间" with no dates                    | If version-period aligned, use version start/end. If no dates at all, note it in the explanation. |
 
 **Common game time conventions:**
 
-| Game | Daily Reset | Version Update Time | Version End Time |
-|------|-------------|---------------------|------------------|
-| Genshin Impact (原神) | 04:00 | ~06:00 after maintenance | ~06:00 next version |
-| Honkai: Star Rail (崩坏：星穹铁道) | 04:00 | ~06:00 after maintenance | ~06:00 next version |
-| Zenless Zone Zero (绝区零) | 04:00 | ~06:00-11:00 after maintenance | ~06:00 next version |
-| Wuthering Waves (鸣潮) | 04:00 | ~04:00-11:00 after maintenance | ~03:59 next version |
-| Neverness To Eeverness (异环) | 05:00 | ~06:00-11:00 after maintenance | ~05:59 next version |
+| Game                               | Daily Reset | Version Update Time             | Version End Time     |
+| ---------------------------------- | ----------- | ------------------------------- | -------------------- |
+| Genshin Impact (原神)              | 04:00       | \~06:00 after maintenance       | \~06:00 next version |
+| Honkai: Star Rail (崩坏：星穹铁道) | 04:00       | \~06:00 after maintenance       | \~06:00 next version |
+| Zenless Zone Zero (绝区零)         | 04:00       | \~06:00-11:00 after maintenance | \~06:00 next version |
+| Wuthering Waves (鸣潮)             | 04:00       | \~04:00-11:00 after maintenance | \~03:59 next version |
+| Neverness To Eeverness (异环)      | 05:00       | \~06:00-11:00 after maintenance | \~05:59 next version |
 
 ### Step 6: Output JSON
 

@@ -13,16 +13,11 @@
       "cover": "https://resource.starrailassistant.top/QQ20260826-100606.png"
     },
     {
-      "name": "末日幻影•兵锋骑士",
-      "description": "拥有【坚防守备】的敌方单位被弱点击破时，使我方全体解除控制状态、恢复战技点并激活终结技。敌方全体受到的战技伤害提高25%，终结技伤害提高15%。",
-      "startTime": "2026-07-20T04:00:00",
-      "endTime": "2026-08-31T03:59:59"
-    },
-    {
       "name": "虚构叙事•构事生意",
       "description": "我方目标施放追加攻击攻击敌方目标后，每击中1个敌方目标，使我方额外积累8点「战意值」。",
       "startTime": "2026-08-03T04:00:00",
-      "endTime": "2026-09-14T03:59:59"
+      "endTime": "2026-09-14T03:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/13e21e998566cef8e41f4ae287c17fc11340190821.jpg"
     },
     {
       "name": "混沌回忆•扫除风暴",
@@ -42,7 +37,7 @@
       "description": "位面饰品限时双倍掉落！",
       "startTime": "2026-09-07T04:00:00",
       "endTime": "2026-09-21T03:59:59",
-      "cover": ""
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/234306c260be1c80654431efe81c6ce81340190821.png"
     },
     {
       "name": "方寸大冒险",
@@ -63,28 +58,28 @@
       "description": "高难挑战玩法，可获取孤星明尘、干涉密钥、自塑尘脂及限时头像框奖励。",
       "startTime": "2026-08-26T11:00:00",
       "endTime": "2026-09-28T03:59:59",
-      "cover": ""
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/0869ac215b041b4bbab8197c9c44cef71340190821.jpg"
     },
     {
       "name": "末日幻影•仙客天狼",
       "description": "拥有【坚防守备】的敌方单位被弱点击破时，使我方全体解除控制状态并激活终结技。敌方全体目标受到的战技伤害提高25%，欢愉技伤害提高15%。",
       "startTime": "2026-08-31T04:00:00",
       "endTime": "2026-10-05T03:59:59",
-      "cover": ""
+      "cover": "https://i0.hdslb.com/bfs/article/839c3f2ba8ffc2b63b4cd209f8f989041340190821.jpg"
     },
     {
       "name": "异器盈界",
       "description": "隧洞遗器限时双倍掉落！",
       "startTime": "2026-09-19T04:00:00",
       "endTime": "2026-09-28T03:59:59",
-      "cover": ""
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/125f62a2238e44ea5a0ae7278b4029501340190821.png"
     },
     {
       "name": "虚构叙事•立界开篇",
       "description": "每次获得笑点时，使我方额外积累2点「战意值」。",
       "startTime": "2026-09-14T04:00:00",
       "endTime": "2026-10-19T03:59:59",
-      "cover": ""
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/13e21e998566cef8e41f4ae287c17fc11340190821.jpg"
     }
   ]
 }
