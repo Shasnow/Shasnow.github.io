@@ -18,6 +18,14 @@ hero:
       link: https://github.com/Shasnow/StarRailAssistant
       icon: external
       variant: minimal
+    - text: MCP
+      link: /server/mcp/
+      icon: right-arrow
+      variant: minimal
+    - text: 公共API
+      link: /reference/public-api/
+      icon: right-arrow
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
@@ -45,6 +53,9 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   <Card title="多账号托管" icon="seti:happenings">
     可以保存多个账号的配置，在它们之间自动切换，助力您轻松管理多个账号。
   </Card>
+  <Card title="MCP服务器" icon="server">
+    支持与AI Agent集成, 实现更高级的功能
+  </Card>
 </CardGrid>
 
 ## 为什么选择SRA
@@ -61,5 +72,8 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   </Card>
   <Card title="支持远程控制">
     基于SRA-server，支持远程控制，轻松管理多个账号
+  </Card>
+  <Card title="MCP服务器">
+    提供MCP服务器，方便与AI Agent集成, 实现更高级的功能
   </Card>
 </CardGrid>
