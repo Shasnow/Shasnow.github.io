@@ -1,0 +1,37 @@
+{
+  "version": "2026-09",
+  "versionName": "国服活动",
+  "startTime": "2026-08-20T15:00:00",
+  "endTime": "2026-09-24T13:59:59",
+  "cover": "https://static.kivo.wiki/images/timeline/mhz6tE5zqBGVI5orfCCEOvZUo8GQFCHj.png",
+  "activities": [
+    {
+      "name": "活动【与联邦理事会一起 沙勒总决算】#12",
+      "description": "限时活动：沙勒总决算即将开启！完成活动可获得秘仪之书碎片等奖励。 ■ 活动时间 • 活动持续时间：08月20日 04:00 ~ 09月03日 13:59 • 商店兑换时间：08月20日 04:00 ~",
+      "startTime": "2026-08-20T15:00:00",
+      "endTime": "2026-09-03T13:59:59",
+      "cover": "https://static.kivo.wiki/images/timeline/tbntxKFeGLb1n6CLJSqZpPF8NfyL64Nu.jpg"
+    },
+    {
+      "name": "活动【和乐庆典特别宣传活动！】",
+      "description": "限时活动【和乐庆典特别宣传活动！】即将开启！ 活动期间，完成活动任务并收集活动道具\"千世喵玩偶\"，最高可获得【10次招募券 × 1】和大量养成材料 ■ 活动时间 08月20日 维护结束后 ~ 09月1",
+      "startTime": "2026-08-20T16:00:00",
+      "endTime": "2026-09-17T13:59:00",
+      "cover": "https://static.kivo.wiki/images/timeline/W7Emz2XLKjyHJWyQLVgJB5v7ojnqwRJe.jpg"
+    },
+    {
+      "name": "限时复刻活动【0068 来自歌剧的爱】",
+      "description": "便利屋68正在暗中展开行动！ 她们的目标是黑帮联盟的首领【唐·阿兰西诺】。 她们究竟能否成功完成委托呢？ ■ 活动时间 • 活动持续时间：09月03日 14:00 ~ 09月10日 13:59 • 商",
+      "startTime": "2026-09-03T14:00:00",
+      "endTime": "2026-09-10T13:59:59",
+      "cover": "https://static.kivo.wiki/images/timeline/N7oRPAaztutsLDJaA2g8jwG2OIX917z3.png"
+    },
+    {
+      "name": "限时活动【百芳丛中独一枝 ~堂堂正正，水上争锋~】",
+      "description": "百花缭乱的大家一起参加了【百夜水上节】，这是一场从100人中决出胜者的水上赛事。究竟最终的冠军会花落谁家呢？ ■ 活动时间 • 活动持续时间：09月10日 维护结束后 ~ 09月24日 13:59 •",
+      "startTime": "2026-09-10T18:00:00",
+      "endTime": "2026-09-24T13:59:59",
+      "cover": "https://static.kivo.wiki/images/timeline/mhz6tE5zqBGVI5orfCCEOvZUo8GQFCHj.png"
+    }
+  ]
+}

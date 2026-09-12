@@ -1,0 +1,23 @@
+{
+  "version": "2026-09",
+  "versionName": "国际服活动",
+  "startTime": "2026-09-01T10:00:00",
+  "endTime": "2026-09-15T09:59:59",
+  "cover": "https://static.kivo.wiki/images/timeline/ObrGDYp22vfTjH5gq9oGjE5yQFKV7hwO.jpg",
+  "activities": [
+    {
+      "name": "国际服活动「Pray-Ball! Swing for the Grand Slam!」复刻",
+      "description": "[Event Preview] Sensei, the 'Pray-Ball! Swing for the Grand Slam!' event is coming back soon! If you",
+      "startTime": "2026-09-01T10:00:00",
+      "endTime": "2026-09-08T09:59:59",
+      "cover": "https://static.kivo.wiki/images/timeline/d6wnK8vOMS8E9LIlPHtWiUoOHB0j5Spj.jpg"
+    },
+    {
+      "name": "国际服活动「Balancing Schale's Books with the General Student Council」#18",
+      "description": "[Mini Event Notice] Balancing Schale's Books with the General Student Council is back! Earn enhancem",
+      "startTime": "2026-09-08T15:30:00",
+      "endTime": "2026-09-15T09:59:59",
+      "cover": "https://static.kivo.wiki/images/timeline/ObrGDYp22vfTjH5gq9oGjE5yQFKV7hwO.jpg"
+    }
+  ]
+}
