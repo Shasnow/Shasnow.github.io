@@ -191,6 +191,35 @@ SRA 有三种可插拔模块，它们共享"动态发现"机制但定位不同�
 
 </Steps>
 
+## 无配置类扩展
+
+如果扩展不需要用户配置，可以直接继承 `BaseExtension`（不带泛型参数）：
+
+```python
+from SRACore.extension import BaseExtension, extension
+
+@extension(name="简单问候", description="不需要配置的简单扩展")
+class HelloExtension(BaseExtension):
+    """简单的问候扩展。"""
+
+    def run(self) -> bool:
+        print("Hello, SRA!")
+        return True
+```
+
+与带配置类型的写法相比，差异如下：
+
+| | `BaseExtension` | `BaseExtension[MyConfig]` |
+|---|---|---|
+| `self.config` | 始终为 `None` | 类型为 `MyConfig`，IDE 自动补全 |
+| JSON Schema | 不生成 | 自动生成 |
+| 前端配置表单 | 无 | 根据字段自动渲染 |
+| `extension run <id>` 参数覆盖 | 不可用 | 可用（如 `--count 3`） |
+
+:::note
+`@extension` 装饰器会自动检测泛型参数：有则提取配置类，无则注册为无配置扩展，两种写法的注册方式完全一致。
+:::
+
 ## 在扩展中使用热键监听
 
 SRA 内置了全局键盘监听器，扩展可以注册热键，让用户在扩展运行期间通过按键控制行为（如暂停/继续、重置等）。内置的"自动演奏"扩展（`extensions/auto_player.py`）就是一个典型的热键使用范例。
