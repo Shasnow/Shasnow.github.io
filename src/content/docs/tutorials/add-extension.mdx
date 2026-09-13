@@ -190,3 +190,112 @@ SRA 有三种可插拔模块，它们共享"动态发现"机制但定位不同�
    - 前端会根据配置 Schema 自动生成配置表单，无需编写 UI 代码
 
 </Steps>
+
+## 在扩展中使用热键监听
+
+SRA 内置了全局键盘监听器，扩展可以注册热键，让用户在扩展运行期间通过按键控制行为（如暂停/继续、重置等）。内置的"自动演奏"扩展（`extensions/auto_player.py`）就是一个典型的热键使用范例。
+
+### 工作原理
+
+1. **宿主创建单实例**：`KeyboardListener` 由宿主（CLI）创建并启动，同时负责注册全局停止热键（默认 `F9`，可在设置中修改）。
+2. **注入给扩展**：监听器实例会自动注入到扩展的 `self.event_listener` 属性，扩展无需自己创建。
+3. **扩展只注册/注销**：扩展只应调用 `register_key_event` / `unregister_key_event` 操作按键注册表，**不要**调用 `start()` / `stop()`，监听线程的生命周期由宿主管理。
+
+### 基本 API
+
+```python
+# 注册按键按下事件（重复注册同一按键会抛出 ValueError）
+self.event_listener.register_key_event(key, callback, args=None)
+
+# 注销指定按键的事件
+self.event_listener.unregister_key_event(key)
+```
+
+- `key` — 按键字符串。普通按键为字符本身（如 `'a'`、`'1'`），特殊按键使用 pynput 的名称（如 `'f8'`、`'enter'`、`'ctrl'`、`'space'`）。
+- `callback` — 按键按下时执行的回调函数，签名必须为 `callback(args)`，不需要参数时可写为 `def callback(_args): ...`。
+- `args` — 传给回调的参数（可选）。
+
+:::note
+热键带有防抖机制：按键按住期间只触发一次回调，释放按键后才会重新武装。回调在独立的守护线程中执行，不会阻塞键盘输入，但编写回调时需注意线程安全。
+:::
+
+### 完整示例
+
+下面是一个带"暂停/继续"热键的扩展，演示了热键监听的推荐写法：
+
+```python
+import threading
+import time
+from pydantic import BaseModel, Field
+from SRACore.extension import BaseExtension, extension
+from SRACore.util.errors import ThreadStoppedError
+
+class CounterConfig(BaseModel):
+    """热键扩展示例配置。"""
+    hotkey_pause: str = Field(default="f8", description="暂停/继续热键")
+
+@extension(name="热键示例", description="演示在扩展中使用热键监听")
+class HotkeyDemo(BaseExtension[CounterConfig]):
+    """带暂停热键的计数扩展示例。"""
+
+    def run(self) -> bool:
+        cfg = self.config or CounterConfig()
+
+        # 1. 检查监听器是否可用（可能未被宿主注入）
+        if self.event_listener is None:
+            print("未注入全局事件监听器，热键不可用，将直接运行")
+
+        # 2. 共享状态：热键线程与运行线程都会访问
+        paused = threading.Event()
+
+        # 3. 回调签名必须为 callback(args)
+        def on_pause(_args=None) -> None:
+            if paused.is_set():
+                paused.clear()
+                print("继续")
+            else:
+                paused.set()
+                print("已暂停（按热键继续）")
+
+        # 4. 注册热键
+        pause_key = cfg.hotkey_pause.strip().lower()
+        if self.event_listener is not None:
+            self.event_listener.register_key_event(pause_key, on_pause)
+            print(f"热键已启用：暂停/继续 [{pause_key.upper()}]")
+
+        # 5. 主循环：finally 保证注销热键
+        try:
+            for i in range(1, 11):
+                if self.operator.stop_event.is_set():
+                    raise ThreadStoppedError("任务停止", "线程已停止")
+                while paused.is_set():
+                    if self.operator.stop_event.wait(0.2):
+                        raise ThreadStoppedError("任务停止", "线程已停止")
+                print(f"计数 {i}/10")
+                time.sleep(1)
+        finally:
+            if self.event_listener is not None:
+                self.event_listener.unregister_key_event(pause_key)
+
+        return True
+```
+
+关键点解释：
+
+- **判空检查** — `self.event_listener` 类型为 `KeyboardListener | None`，在某些运行环境（如通过 SRA-server 运行）下可能为 `None`，使用前必须判断。
+- **可配置热键** — 将热键定义成配置字段（`hotkey_pause`），用户可以在前端配置表单中修改，避免与其他扩展或全局热键冲突。
+- **线程安全** — 回调运行在独立线程中，与 `run()` 的主线程共享状态时使用 `threading.Event` 等线程安全原语。
+- **finally 注销** — 无论扩展正常结束还是被停止（`ThreadStoppedError`），都必须注销热键，否则会残留已注册的按键，导致后续重复注册时报 `ValueError`。
+- **响应停止** — `self.operator.stop_event` 是全局停止事件（用户按 `F9` 时被设置），长时间运行的扩展应周期性检查它，否则任务停止后热键监听还会残留。
+
+### 注意事项
+
+:::caution
+注册热键前请确认按键未被占用：
+
+- 全局停止热键默认为 `F9`，注册它会与任务停止功能冲突。
+- 同一按键只能注册一个回调，重复注册会抛出 `ValueError: 按键 {key} 已被注册`。
+- 如果热键与扩展自身的模拟按键冲突（例如演奏类扩展），触发热键时可能会同时影响正常操作。
+
+建议像"自动演奏"扩展一样，把热键做成可配置项，并在启动时检测与已知按键的冲突，给出警告日志。
+:::
