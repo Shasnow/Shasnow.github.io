@@ -1,56 +1,17 @@
 {
   "linkset": [
     {
-      "anchor": "https://starrailassistant.top/",
-      "service-desc": [
-        {
-          "href": "https://starrailassistant.top/reference/api-reference",
-          "type": "text/html",
-          "title": "SRA Server API Reference"
-        }
-      ],
-      "service-doc": [
-        {
-          "href": "https://starrailassistant.top/reference/api-reference",
-          "type": "text/html",
-          "title": "SRA Server API Documentation"
-        },
-        {
-          "href": "https://starrailassistant.top/server/simple-usage",
-          "type": "text/html",
-          "title": "SRA Server Getting Started"
-        }
-      ]
-    },
-    {
-      "anchor": "https://starrailassistant.top/api/v1/anno.json",
-      "service-desc": [
-        {
-          "href": "https://starrailassistant.top/reference/api-reference",
-          "type": "text/html",
-          "title": "SRA API Reference"
-        }
-      ],
-      "service-doc": [
-        {
-          "href": "https://starrailassistant.top/reference/api-reference",
-          "type": "text/html",
-          "title": "SRA API Documentation"
-        }
-      ]
-    },
-    {
       "anchor": "https://starrailassistant.top/api/v1/activity/",
       "service-desc": [
         {
-          "href": "https://starrailassistant.top/reference/api-reference",
+          "href": "https://starrailassistant.top/reference/public-api",
           "type": "text/html",
           "title": "SRA API Reference"
         }
       ],
       "service-doc": [
         {
-          "href": "https://starrailassistant.top/reference/api-reference",
+          "href": "https://starrailassistant.top/reference/public-api",
           "type": "text/html",
           "title": "SRA API Documentation"
         }
