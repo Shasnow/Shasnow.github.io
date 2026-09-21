@@ -1,6 +1,5 @@
 # robots.txt for StarrailAssistant.top
 User-agent: *
 Allow: /
-Disallow: /api/
 
-Sitemap: https://starrailassistant.top/sitemap.xml
+Sitemap: https://starrailassistant.top/sitemap-0.xml
