@@ -1,45 +1,10 @@
 {
-  "version": "7.0",
-  "versionName": "无神怜爱的雪国",
-  "startTime": "2026-08-12T06:00:00",
-  "endTime": "2026-09-23T06:00:00",
-  "cover": "https://i0.hdslb.com/bfs/new_dyn/5c26c8084940b6aac9dc218748a18b1d401742377.png",
+  "version": "7.1",
+  "versionName": "往冥府的安魂歌",
+  "startTime": "2026-09-23T06:00:00",
+  "endTime": "2026-11-04T06:00:00",
+  "cover": "https://i0.hdslb.com/bfs/new_dyn/b422b41acb65e5f3f38a25d2756c12d7401742377.png",
   "activities": [
-    {
-      "name": "新芽相助·初探雪原",
-      "description": "版本活动，累计原石×420。",
-      "startTime": "2026-08-12T06:00:00",
-      "endTime": "2026-08-24T03:59:59",
-      "cover": "https://i0.hdslb.com/bfs/new_dyn/d1075121d8050149092a710df13ea142401742377.jpg"
-    },
-    {
-      "name": "幽境危战",
-      "description": "战斗挑战活动，累计原石×450。",
-      "startTime": "2026-08-19T04:00:00",
-      "endTime": "2026-09-22T03:59:59",
-      "cover": "https://i0.hdslb.com/bfs/new_dyn/01ef0d698adb352a2973d308b8af27f7401742377.jpg"
-    },
-    {
-      "name": "险境征者竞锋大赛",
-      "description": "竞锋大赛活动，累计原石×920。",
-      "startTime": "2026-08-28T04:00:00",
-      "endTime": "2026-09-14T03:59:59",
-      "cover": "https://i0.hdslb.com/bfs/new_dyn/435bcccabf57bf6b9172144e86f286ce401742377.jpg"
-    },
-    {
-      "name": "禁界拟想阵地战",
-      "description": "阵地战活动，累计原石×420。",
-      "startTime": "2026-09-07T04:00:00",
-      "endTime": "2026-09-17T03:59:59",
-      "cover": ""
-    },
-    {
-      "name": "盛材移涌",
-      "description": "秘境奖励双倍活动，地脉移涌UP。",
-      "startTime": "2026-09-14T04:00:00",
-      "endTime": "2026-09-21T03:59:59",
-      "cover": ""
-    },
     {
       "name": "砺行修远（第五期）",
       "description": "纪行/成长系统第五期，含养成材料及奖励。",
@@ -48,18 +13,53 @@
       "cover": "https://i0.hdslb.com/bfs/new_dyn/c05ee2327918f3e4271db3ff66ce2026401742377.jpg"
     },
     {
-      "name": "绮衣珍赏·温煦",
-      "description": "活动期间，旅行者可以通过完成珍赏任务获得对应的「珍赏见闻」与重现晶簇，每周通过珍赏任务可获得奖励的次数具有上限。活动期间，「珍赏见闻」总值累计到特定值之后，即可领取奇偶装扮套装「琥色蜜酿」。",
-      "startTime": "2026-08-12T06:00:00",
-      "endTime": "2026-09-23T05:59:59",
-      "cover": "https://i0.hdslb.com/bfs/new_dyn/1b393bc42ce626e2faeff5cbae929dbb401742377.jpg"
-    },
-    {
       "name": "无神怜爱的冻土",
       "description": "时限内完成探索任务，可额外获得原石*400奖励",
       "startTime": "2026-08-12T06:00:00",
       "endTime": "2026-11-03T14:59:59",
       "cover": "https://i0.hdslb.com/bfs/new_dyn/299a8faf70962ccc22f21e7592e2183d401742377.jpg"
+    },
+    {
+      "name": "桌上剧团·冒险的前夜会",
+      "description": "自选邀请限定5星角色活动，可从达达利亚、妮露、白术、千织、克洛琳德、瓦雷莎中自选一名加入队伍。",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-03T14:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/a8477e96f61505a72990c0d91034ad3c401742377.jpg"
+    },
+    {
+      "name": "巡历雪境，凝铸锋锐",
+      "description": "自选邀请「奔行世间」常驻祈愿5星角色活动，自选一名常驻5星角色加入队伍。",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-03T14:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/5e0bb0eea63cedadb92b3b397addda1f401742377.png"
+    },
+    {
+      "name": "虹旅藏金·耀星烁熠",
+      "description": "登录福利活动，含佳礼来信邮件签到与耀星烁熠累计登录，可获取原石×1600、纠缠之缘×10等奖励。",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-04T05:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/c499d7f590120aec86c5e21c3f5a453e401742377.png"
+    },
+    {
+      "name": "绮衣珍赏·晴暖",
+      "description": "完成珍赏任务获得「珍赏见闻」与重现晶簇，「珍赏见闻」总值累计到特定值后即可领取自选奇偶装扮套装「午后蜜果」一套。",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-04T05:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/de34efb3379442545367d2a5172bdf59401742377.png"
+    },
+    {
+      "name": "往冥府的安魂歌",
+      "description": "时限内完成魔神任务第七章·第三幕、第四幕及系列尾声任务，可获得原石、角色突破素材、角色培养素材等奖励。",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-03T14:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/77ea6038f12122492df3dedba462eb12401742377.png"
+    },
+    {
+      "name": "银翎溯月，玄鸟结璘",
+      "description": "逐月节版本活动，完成玩法任务可获取活动专属武器「单手剑·银釭」、原石、智识之冕等奖励。",
+      "startTime": "2026-09-24T10:00:00",
+      "endTime": "2026-10-12T03:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/928aca829606c87e2fc80bb98b6ec8a8401742377.png"
     }
   ]
 }
