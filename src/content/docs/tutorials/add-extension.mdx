@@ -220,6 +220,164 @@ class HelloExtension(BaseExtension):
 `@extension` 装饰器会自动检测泛型参数：有则提取配置类，无则注册为无配置扩展，两种写法的注册方式完全一致。
 :::
 
+## 后台扩展
+
+前面的扩展都是"单次运行"模式：`extension run <id>` 启动后执行一次 `run()` 就结束。但有些场景需要扩展**持续运行**（如监控游戏状态、定时轮询、实时响应事件），这时可以使用**后台扩展**。
+
+### 声明方式
+
+在 `@extension` 装饰器中传入 `background=True`：
+
+```python
+import time
+from pydantic import BaseModel, Field
+from SRACore.extension import BaseExtension, extension
+from SRACore.util.errors import ThreadStoppedError
+
+class MonitorConfig(BaseModel):
+    """后台监控扩展配置。"""
+    interval: float = Field(default=5.0, ge=0.5, le=3600, description="轮询间隔（秒）")
+
+@extension(name="状态监控", description="定期检查游戏状态", background=True)
+class MonitorExtension(BaseExtension[MonitorConfig]):
+    """后台轮询扩展示例。"""
+
+    def run(self) -> bool:
+        cfg = self.config or MonitorConfig()
+
+        # 后台扩展的 run() 应做一轮工作后返回，
+        # 框架会周期性地再次调用它
+        screenshot = self.operator.screenshot()
+        # ... 执行检查逻辑 ...
+        print(f"[Monitor] 检查完成，等待 {cfg.interval} 秒后下一轮")
+
+        # 利用 stop_event 实现可中断的等待
+        if self.operator.stop_event.wait(cfg.interval):
+            raise ThreadStoppedError("监控停止", "线程已停止")
+
+        return True
+```
+
+### 运行机制
+
+后台扩展与单次扩展的运行方式完全不同：
+
+|  | 单次扩展 | 后台扩展 |
+|---|---|---|
+| 声明 | `@extension(...)` | `@extension(..., background=True)` |
+| 启动命令 | `extension run <id>` | `extension run <id>`（自动分发） |
+| 线程模型 | 独占线程，与任务互斥 | **共享轮询线程**，多个后台扩展可同时运行 |
+| `run()` 调用 | 执行一次后结束 | **被周期性重复调用**，每轮调用间间隔约 500ms |
+| 停止命令 | `extension stop`（无参数） | `extension stop <id>`（指定 ID） |
+| 配置热更新 | 不支持（需重新运行） | 支持，修改配置后自动替换实例，不中断线程 |
+
+关键设计：
+
+1. **共享线程** — 所有后台扩展共享一个轮询线程，`_background_loop` 每 500ms 遍历所有已启用的后台扩展并调用其 `run()`。这意味着多个后台扩展是**串行轮询**的，一个扩展的 `run()` 阻塞会影响后续扩展的调度。
+2. **`run()` 应快速返回** — 每次 `run()` 调用应完成一轮工作后及时返回，将长时间等待交给 `stop_event.wait()` 而非 `time.sleep()`，这样停止请求能被立即响应。
+3. **自动分发** — `extension run <id>` 会检查扩展的 `background` 标志：后台扩展走 `start_extension()`，单次扩展走 `run_in_thread()`，用户无需区分。
+
+### CLI 操作
+
+```text
+sra> extension list
+已注册 3 个扩展：
+  AutoPlayer  自动演奏    AutoPlayerExtension (config: AutoPlayerConfig)    按 JSON 乐谱自动演奏...
+  Monitor     状态监控    MonitorExtension (config: MonitorConfig)        定期检查游戏状态
+
+sra> extension run Monitor
+已启动后台扩展 'Monitor'
+[Monitor] 检查完成，等待 5.0 秒后下一轮
+[Monitor] 检查完成，等待 5.0 秒后下一轮
+
+sra> extension stop Monitor
+已停止后台扩展 'Monitor'
+```
+
+:::note
+`extension stop` 的行为取决于是否传参：
+
+- **`extension stop <id>`** — 停止指定的后台扩展（必须是 `background=True` 的扩展）
+- **`extension stop`**（无参数）— 停止当前正在运行的单次扩展（非后台扩展）
+
+对非后台扩展使用 `extension stop <id>` 会报错：`扩展 '<id>' 不是后台扩展，不能通过 stop 指定停止`。
+:::
+
+### 配置热更新
+
+后台扩展支持配置热更新——修改配置后，框架会**自动替换实例**，无需手动重启：
+
+1. 用户通过前端或 `extension config` 修改了某个后台扩展的配置
+2. `ExtensionConfigManager.set()` 触发 `reload_extension` 回调
+3. 框架用新配置创建一个全新的扩展实例，替换 `self.extensions[id]` 中的旧实例
+4. 共享轮询线程**不中断**，下一轮调用自然使用新实例
+
+这意味着扩展开发者无需为配置更新做任何特殊处理——每次 `run()` 调用时读取 `self.config` 即可自动使用最新配置。
+
+### `extension reload` 的行为
+
+`extension reload` 会重新扫描 `extensions/` 目录、重新导入所有模块。对于正在运行的后台扩展：
+
+1. 记录当前活跃的后台扩展 ID 列表
+2. 停止所有后台扩展
+3. 重新导入模块（触发 `@extension` 装饰器重新注册）
+4. 对仍存在（未被删除）的后台扩展自动重新启动
+
+因此开发者在修改后台扩展代码后，直接 `extension reload` 即可热加载，无需重启 SRA。
+
+### 完整示例：实时事件监控
+
+下面是一个更完整的后台扩展示例，演示了轮询模式与异常处理：
+
+```python
+from pydantic import BaseModel, Field
+from SRACore.extension import BaseExtension, extension
+from SRACore.util.errors import ThreadStoppedError
+
+class WatcherConfig(BaseModel):
+    """事件监控配置。"""
+    check_interval: float = Field(default=10.0, ge=1.0, le=300, description="检查间隔（秒）")
+    notify_on_event: bool = Field(default=True, description="检测到事件时发送通知")
+
+@extension(name="事件监控", description="后台监控游戏内事件", background=True)
+class EventWatcher(BaseExtension[WatcherConfig]):
+    """后台事件监控扩展。"""
+
+    def on_start(self) -> None:
+        self._event_count = 0
+
+    def run(self) -> bool:
+        cfg = self.config or WatcherConfig()
+
+        try:
+            # 每轮做一次检查
+            screenshot = self.operator.screenshot()
+            if self._detect_event(screenshot):
+                self._event_count += 1
+                if cfg.notify_on_event:
+                    self.send_notification("检测到事件", f"累计 {self._event_count} 次")
+            # 利用 stop_event 实现可中断的等待
+            if self.operator.stop_event.wait(cfg.check_interval):
+                raise ThreadStoppedError("监控停止", "线程已停止")
+        except ThreadStoppedError:
+            raise  # 不要吞掉停止信号
+        except Exception as e:
+            # 后台扩展的 run() 抛出异常会被框架捕获并自动停止该扩展
+            # （见 _background_loop 中的 except 分支）
+            # 如需容错（不因单轮异常而退出），在此 try/except 并 return True
+            raise
+
+        return True
+
+    def _detect_event(self, screenshot) -> bool:
+        # ... 实际的事件检测逻辑 ...
+        return False
+```
+
+:::caution
+后台扩展的 `run()` 抛出未捕获异常时，框架会**自动停止该扩展**（从轮询列表中移除并记录错误日志）。如果希望单轮异常不影响后续轮次，在 `run()` 内部 try/except 并返回 `True` 即可。
+:::
+
 ## 在扩展中使用热键监听
 
 SRA 内置了全局键盘监听器，扩展可以注册热键，让用户在扩展运行期间通过按键控制行为（如暂停/继续、重置等）。内置的"自动演奏"扩展（`extensions/auto_player.py`）就是一个典型的热键使用范例。
