@@ -80,6 +80,7 @@ These are the fixed covers for recurring activities:
 | 花藏繁生        | `https://i0.hdslb.com/bfs/new_dyn/5cf1083cdeaabb38eb94d30ab2b6a2e51340190821.png` |
 | 位面分裂        | `https://i0.hdslb.com/bfs/new_dyn/234306c260be1c80654431efe81c6ce81340190821.png` |
 | 砺行修远        | `https://i0.hdslb.com/bfs/new_dyn/c05ee2327918f3e4271db3ff66ce2026401742377.jpg` |
+| 声弦涤荡        | `https://i0.hdslb.com/bfs/new_dyn/d28121ede1d524963a69bd0687731d3a1955897084.jpg` |
 
 ### Step 5: Time Format Rules
 
