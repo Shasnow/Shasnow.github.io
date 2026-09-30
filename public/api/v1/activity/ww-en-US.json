@@ -1,0 +1,79 @@
+{
+  "version": "3.7",
+  "versionName": "Prism's Illusion, Heart's Illumination",
+  "startTime": "2026-09-30T11:00:00",
+  "endTime": "2026-11-11T03:59:59",
+  "cover": "",
+  "activities": [
+    {
+      "name": "Cubie Wars",
+      "description": "Leisure event. With Encore's help, the Second Coming of Solaris has built a Wooly Stage for the Cubie Wars. On this stage, the Cubie Warriors will make use of magical items to wage a fierce battle!",
+      "startTime": "2026-09-30T11:00:00",
+      "endTime": "2026-11-11T11:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Dreams in the Capsule",
+      "description": "Area exploration event. Here Mengzhou's mountains and rivers, its woods and wilds, meet its pavilions and towers, the very place the people of Mengzhou, bound to one another across time, make their homes and live out their lives. This is the Simulacrum Nexus.",
+      "startTime": "2026-09-30T11:00:00",
+      "endTime": "2026-11-11T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Gifts of Waking Moon",
+      "description": "7-Day Login Event. During the event, log in to claim the day's login rewards from the event page.",
+      "startTime": "2026-09-30T11:00:00",
+      "endTime": "2026-11-11T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Moonlit Path",
+      "description": "During the event, obtain Moonlit Rings to unlock rewards including Accessories, Sigil, Avatar, Motorbike Accessory, and Collection Item.",
+      "startTime": "2026-09-30T11:00:00",
+      "endTime": "2026-11-11T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Artisan's Search",
+      "description": "Featured Combat Event. Lisha, apprentice Artisan, reporting for duty!",
+      "startTime": "2026-10-08T04:00:00",
+      "endTime": "2026-10-26T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Bountiful Crescendo",
+      "description": "Limited-Time Material Double Drop Event. Complete Simulation Challenge and Forgery Challenges during the event and spend Waveplates for double rewards.",
+      "startTime": "2026-10-15T04:00:00",
+      "endTime": "2026-10-22T03:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/c748978107a473b51d8d3e5cd6e0fd9e1955897084.jpg"
+    },
+    {
+      "name": "Echo Erase",
+      "description": "Leisure Event. The latest flagship offering from Second Coming of Solaris! Come experience the fun of tapping Echo Pieces away!",
+      "startTime": "2026-10-22T10:00:00",
+      "endTime": "2026-11-09T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Gifts of Singing Drizzle",
+      "description": "Limited-Time Login Event. After the event starts, log in to the game daily to add one day to your cumulative login days. Once your cumulative login days meet the requirement, the corresponding cumulative login reward will be ready to claim.",
+      "startTime": "2026-10-22T10:00:00",
+      "endTime": "2026-11-11T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Beyond the Waves: Land of Xuanfang",
+      "description": "Featured Exploration Event. During the event, you can complete event tasks once per day to obtain a set number of Adventure Logs. Each Adventure Log can be exchanged for an Adventure Package.",
+      "startTime": "2026-10-29T04:00:00",
+      "endTime": "2026-11-11T03:59:59",
+      "cover": ""
+    },
+    {
+      "name": "Chord Cleansing",
+      "description": "Limited-Time Echo Double Drop Event. Complete Tacet Suppression challenges during the event and spend Waveplates for double rewards.",
+      "startTime": "2026-11-04T04:00:00",
+      "endTime": "2026-11-11T03:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/d28121ede1d524963a69bd0687731d3a1955897084.jpg"
+    }
+  ]
+}

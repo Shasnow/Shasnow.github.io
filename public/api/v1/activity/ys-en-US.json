@@ -1,0 +1,37 @@
+{
+  "version": "7.1",
+  "versionName": "A Rekviem for the Underworld",
+  "startTime": "2026-09-23T06:00:00",
+  "endTime": "2026-11-04T06:00:00",
+  "cover": "",
+  "activities": [
+    {
+      "name": "Tabletop Troupe: A Gathering on Adventure's Eve",
+      "description": "Choose a limited 5-star character (Tartaglia, Nilou, Baizhu, Chiori, Clorinde, or Varesa) to join your party.",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-03T14:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/a8477e96f61505a72990c0d91034ad3c401742377.jpg"
+    },
+    {
+      "name": "Across the Frozen Wilds, Honing One's Edge",
+      "description": "Choose a permanent 5-star character from the Standard Wish to join your party.",
+      "startTime": "2026-09-23T11:00:00",
+      "endTime": "2026-11-03T14:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/5e0bb0eea63cedadb92b3b397addda1f401742377.png"
+    },
+    {
+      "name": "Silverwing in Pursuit of the Moon",
+      "description": "Version event: complete challenges to obtain the event-exclusive weapon \"Silver Light,\" Primogems, Crowns of Insight, and more.",
+      "startTime": "2026-09-24T10:00:00",
+      "endTime": "2026-10-12T03:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/928aca829606c87e2fc80bb98b6ec8a8401742377.png"
+    },
+    {
+      "name": "Rainbow's End: Resplendent Starlight",
+      "description": "Login reward event featuring mail-in gifts and cumulative login bonuses, awarding up to 1600 Primogems, 10 Intertwined Fates, and more.",
+      "startTime": "2026-09-28T00:00:00",
+      "endTime": "2026-11-04T05:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/c499d7f590120aec86c5e21c3f5a453e401742377.png"
+    }
+  ]
+}

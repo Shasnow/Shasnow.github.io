@@ -1,26 +1,83 @@
 ---
 name: "game-activity-extractor"
-description: "Extracts game version activity info from URLs or images and outputs structured JSON. Invoke when user provides an article URL or image and asks to extract version activity info."
+description: "Collects game version activity data from the data sources configured in src/data/games.ts (or a user-provided announcement URL/image) and outputs structured JSON as {id}-{locale}.json. Invoke when user asks to update or extract version activity info for a game."
 ---
 
 # Game Activity Extractor
 
-Extract game version activity information from announcement articles (URLs or images) and output structured JSON.
+Collect game version activity information for a game from the data sources configured in `src/data/games.ts` — rather than waiting for the user to paste an announcement URL — and write structured JSON per locale. A user-provided announcement URL or image may still be used as a direct shortcut when given.
 
 ## When to Invoke
 
-- User provides a URL (e.g., miyoushe.com, bilibili.com) or an uploaded image containing a game version update announcement
-- User asks to extract version activity information / 活动信息 from an article or image
+- User asks to update / refresh / extract a game's version activity data (e.g. "更新 xx 活动信息")
+- User provides a URL (e.g., miyoushe.com, bilibili.com) or image containing a game version update announcement
 - User asks to output game activity data in JSON format
 
 ## Workflow Steps
 
-### Step 1: Fetch Source Content
+### Step 1: Resolve the Game and Its Data Sources
 
-- If the input is a **URL**: Use `WebFetch` to retrieve the article content.
-- If the input is an **uploaded image**: Use `Read` with the image file path to extract all visible text (activity names, date ranges, reward amounts, category labels, etc.).
+Read `src/data/games.ts` and locate the target game entry (match by `id` or `name`):
 
-### Step 2: Identify Version-Level Information
+| Field           | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| `id`            | Game identifier — base of the output filename (e.g., `sr`, `ys`) |
+| `name`          | Game name in Chinese                                             |
+| `locales`       | All locales that must be produced                                |
+| `defaultLocale` | Locale whose output omits the `-{locale}` suffix                 |
+| `dataSources`   | Map of locale → announcement list URL to collect data from       |
+
+**Output file naming** — write to `public/api/v1/activity/`:
+
+- Default locale: `{id}.json` (e.g., `sr.json` for `defaultLocale: "zh-CN"`)
+- Other locales: `{id}-{locale}.json` (e.g., `sr-en-US.json`)
+
+Produce one file per entry in `locales`, collecting from that locale's `dataSources` URL. If the user provided an explicit announcement URL or image, fetch it directly for the corresponding locale instead of walking the data-source listing.
+
+### Step 2: Fetch Source Content
+
+For each locale:
+
+1. Use `WebFetch` on the locale's `dataSources` URL (announcement/news listing page).
+2. Locate the latest version update announcement — see "Priority Articles" below for which title to pick.
+3. `WebFetch` the announcement article itself to get the full body.
+
+#### Priority Articles: What to Focus On
+
+Do **not** browse articles one by one. A single article type usually contains everything the output needs — target it first:
+
+| Priority | Title Pattern (zh / en)                                                                                                              | Contains                                                                                  |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| **1**    | 「X.X版本更新说明」「X.X版本「副标题」更新公告」 / "Version X.X … Update Details", "… Update Announcement", "Ver. X.X … Patch Notes" | Version start/end + every activity with exact start/end times — **one article is enough** |
+| 2        | 「X.X版本内容一览」「活动速递」 (mainly 原神)                                                                                        | Full activity timetable, but may be image-only — cross-check against Priority 1 or wiki   |
+| 3        | 「「活动名」活动说明」 / single-activity notices                                                                                     | Exact clock times for one activity — use only to verify individual entries                |
+| skip     | 「前瞻特别节目 情报回顾」, 专题页, 「Server Maintenance Notice」 (no version number)                                                 | Image-heavy / fragmented / no timetable — never the primary source                        |
+
+Gacha banners, shop, compensation mail, and permanent-content articles are never sources (see Step 4 exclusions).
+
+#### Listing-Page Fallbacks
+
+Hoyo/kuro listing pages are often JS-rendered or serve stale snapshots that lack the latest notice. Escalate in this order, and note which fallback was used in the Step 8 explanation:
+
+1. `WebFetch` the listing → if the latest version notice is not linked, go to 2.
+2. `WebSearch` for the exact title pattern (e.g. `{game} {version}版本更新说明 site:{domain}`), then `WebFetch` the detail URL.
+
+**Article IDs are NOT shared across languages** — zh and en notices always have different IDs (e.g. ys zh 166392 vs en 166383). Never reuse a URL from one locale for the other.
+
+#### Probing an Unfamiliar Data Source
+
+When a game's listing page behaves unexpectedly — or a **new game** has been added to `games.ts` with no prior notes — identify its fetch pattern with this generic checklist instead of assuming any site works like the known ones:
+
+1. **Classify the listing response.** After `WebFetch`ing the `dataSources` URL, determine which mode it is:
+   - _Static / SSR with links_ → pick the target article directly (still verify it is the **latest** version notice).
+   - _JS-rendered shell or empty body_ → the listing is unusable; go to fallback 2 below.
+   - _HTTP 200 but stale snapshot_ (old dates, expired IDs) → treat it as unusable even though it "succeeded"; go to fallback 2.
+2. **Discover the detail-page pattern from any working article.** Find one article URL (via listing, `WebSearch`, or a shared link), then generalize its shape: where the numeric/encoded ID sits, whether a date or locale segment is embedded (e.g. `/{yyyyMMdd}/{id}.html`, `/en/` prefix), and whether query params are required. Try to fetch the target article by substituting IDs if needed.
+3. **Test the mobile-mirror variant early.** If the desktop detail page fails with a resource-loading error or empty shell, retry the same path prefixed with `/m/` (a common pattern on hoyo-family sites).
+4. **Learn the ID behavior before probing.** Adjacent-ID probing (±1 around a known related article) only helps if IDs are dense and sequential; some sites use sparse or per-category IDs where probing wastes calls. Also verify — never assume — that IDs are **not** shared across language subdomains (they usually differ per locale).
+5. **Record the outcome in the Step 8 explanation**: which listing mode the site used, the working detail-URL pattern, and which fallback succeeded, so future updates of the same game can skip steps 1–4.
+
+### Step 3: Identify Version-Level Information
 
 Extract or infer the following version-level fields:
 
@@ -32,7 +89,7 @@ Extract or infer the following version-level fields:
 | `endTime`     | Version end time (ISO 8601)                    | Explicitly stated, or inferred from version cycle (\~42 days) |
 | `cover`       | Version cover image URL                        | Leave empty string `""` if not available                      |
 
-### Step 3: Identify Activities to Include
+### Step 4: Identify Activities to Include
 
 **Include** the following types of activities:
 
@@ -53,9 +110,9 @@ Extract or infer the following version-level fields:
 - 版本更新公告本身 (The version update notice itself)
 - 新手活动 (New player activities, unless they are version-limited)
 
-**Preserve ongoing activities from previous versions:** When updating an existing game's JSON file, check the previous version's activities. If any activity's `endTime` is after the new version's `startTime`, that activity is still ongoing and **must be kept** in the updated JSON, even if the new version introduces a replacement activity of the same type.
+**Preserve ongoing activities from previous versions:** When updating an existing file, read that same file's current contents first. If any activity's `endTime` is after the new version's `startTime`, that activity is still ongoing and **must be kept** in the updated JSON, even if the new version introduces a replacement activity of the same type. Check per locale — each `{id}-{locale}.json` is compared against itself.
 
-### Step 4: Extract Activity-Level Fields
+### Step 5: Extract Activity-Level Fields
 
 For each included activity, extract:
 
@@ -79,11 +136,11 @@ These are the fixed covers for recurring activities:
 | 异器盈界        | `https://i0.hdslb.com/bfs/new_dyn/125f62a2238e44ea5a0ae7278b4029501340190821.png` |
 | 花藏繁生        | `https://i0.hdslb.com/bfs/new_dyn/5cf1083cdeaabb38eb94d30ab2b6a2e51340190821.png` |
 | 位面分裂        | `https://i0.hdslb.com/bfs/new_dyn/234306c260be1c80654431efe81c6ce81340190821.png` |
-| 砺行修远        | `https://i0.hdslb.com/bfs/new_dyn/c05ee2327918f3e4271db3ff66ce2026401742377.jpg` |
+| 砺行修远        | `https://i0.hdslb.com/bfs/new_dyn/c05ee2327918f3e4271db3ff66ce2026401742377.jpg`  |
 | 声弦涤荡        | `https://i0.hdslb.com/bfs/new_dyn/d28121ede1d524963a69bd0687731d3a1955897084.jpg` |
 | 回音盈域        | `https://i0.hdslb.com/bfs/new_dyn/c748978107a473b51d8d3e5cd6e0fd9e1955897084.jpg` |
 
-### Step 5: Time Format Rules
+### Step 6: Time Format Rules
 
 **General rules:**
 
@@ -112,9 +169,9 @@ These are the fixed covers for recurring activities:
 | Wuthering Waves (鸣潮)             | 04:00       | \~04:00-11:00 after maintenance | \~03:59 next version |
 | Neverness To Eeverness (异环)      | 05:00       | \~06:00-11:00 after maintenance | \~05:59 next version |
 
-### Step 6: Output JSON
+### Step 7: Output JSON
 
-Output the final result as a JSON code block with the following structure:
+Write the result to `public/api/v1/activity/{id}.json` (default locale) or `public/api/v1/activity/{id}-{locale}.json` (other locales), with the following structure:
 
 ```json
 {
@@ -135,18 +192,21 @@ Output the final result as a JSON code block with the following structure:
 }
 ```
 
-### Step 7: Provide Explanations
+When writing, overwrite the whole file with `Write`, keeping 2-space indentation.
 
-After the JSON output, provide a brief **说明** (explanation) section covering:
+### Step 8: Provide Explanations
+
+After writing the JSON, provide a brief **说明** (explanation) section covering:
 
 1. **Version time**: How the version start/end times were determined
 2. **Excluded items**: List what was excluded and why (e.g., web events, gacha, permanent content)
 3. **Time notes**: Explain any time assumptions or conversions made (e.g., "3.5版本更新后" was converted to 11:00 as the maintenance completion time)
-4. **Estimated dates**: If any dates were estimated (e.g., referencing a future version's end date), note that the actual date should be confirmed with official announcements
+4. **Preserved activities**: Which ongoing activities were carried over from the previous version
+5. **Estimated dates**: If any dates were estimated (e.g., referencing a future version's end date), note that the actual date should be confirmed with official announcements
 
 ## Additional Rules
 
-- **Language matching**: All output (JSON values, descriptions, explanations) must be in the same language as the source article (typically Chinese for miyoushe.com/bilibili.com articles).
+- **Language matching**: All output (JSON values, descriptions, explanations) must be in the language of the source used for that locale (zh-CN data source → Chinese; en-US data source → English). The 说明 section follows the user's message language.
 - **Description text**: Use the article's original descriptive text verbatim when available. If the article doesn't provide a description, write a concise one-sentence summary.
 - **Cover field**: Leave as empty string `""` unless a specific cover image URL is available for that activity.
 - **Ordering**: List activities in chronological order by start time.
