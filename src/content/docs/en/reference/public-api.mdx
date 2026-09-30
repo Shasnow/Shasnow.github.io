@@ -1,0 +1,146 @@
+---
+title: SRA Public API
+description: Public data APIs provided by StarRailAssistant.
+---
+
+import GameTabs from "../../../../components/GameTabs.astro";
+
+StarRailAssistant provides a set of free public REST APIs for fetching various data. No authentication is required — just call them directly.
+
+## API Endpoints
+
+The base URL for all APIs is:
+
+```
+https://starrailassistant.top/api/v1
+```
+
+### Get Activity Data
+
+```
+GET /activity/{game}.json
+GET /activity/{game}-{locale}.json
+```
+
+| Parameter | Type   | Description                                                                     |
+| -------- | ------ | ------------------------------------------------------------------------------- |
+| `game`   | string | Game identifier                                                                  |
+| `locale` | string | Optional, language tag (e.g. `en-US`); omitted for the default language data |
+
+#### Supported Games
+
+<GameTabs />
+
+#### Response Example
+
+```json
+{
+  "version": "4.4",
+  "versionName": "鸣笛于归寂之时",
+  "startTime": "2026-07-15T06:00:00",
+  "endTime": "2026-08-26T06:00:00",
+  "cover": "https://...",
+  "activities": [
+    {
+      "name": "反贪「砖」家",
+      "description": "世上没有不落灰的角落...",
+      "startTime": "2026-07-15T06:00:00",
+      "endTime": "2026-08-26T03:59:59",
+      "cover": "https://..."
+    }
+  ]
+}
+```
+
+#### Response Fields
+
+| Field                      | Type    | Description                          |
+| -------------------------- | ------- | ------------------------------------ |
+| `version`                  | string  | Current game version number          |
+| `versionName`              | string  | Version name                         |
+| `startTime`                | string  | Version start time (ISO 8601)        |
+| `endTime`                  | string  | Version end time (ISO 8601)          |
+| `cover?`                   | string? | Version cover image URL              |
+| `activities`               | array   | List of activities                   |
+| `activities[].name`        | string  | Activity name                        |
+| `activities[].description` | string  | Activity description                 |
+| `activities[].startTime`   | string  | Activity start time (ISO 8601)       |
+| `activities[].endTime`     | string  | Activity end time (ISO 8601)         |
+| `activities[].cover?`      | string? | Activity cover image URL             |
+
+## Contributing
+
+Community contributions of activity data are welcome! If you want to add support for more games, or find activity information that is incorrect or missing, you can contribute in the following ways.
+
+### Adding Support for a New Game
+
+1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/Shasnow.github.io) and fork it.
+2. **Add the game**: add a new game entry in `src/data/games.ts`, filling in the game identifier, name, language list, data source URL, etc.
+3. **Submit a PR**: create a Pull Request describing the newly added game support.
+
+### Game Entry Format
+
+When adding or updating game support, please follow this format:
+
+```json
+{
+  "id": "game-id", // Game identifier, e.g. "sr"
+  "name": "Readable game name",
+  "locales": [
+    "zh-CN", // Supported language list
+    "en-US" // Other languages
+  ],
+  "defaultLocale": "zh-CN", // Default language; the default-language file omits the locale suffix when generated
+  "dataSource": "Data source URL" // The original source of the game's activity data. This field is mainly for AI, telling it how to fetch the game data.
+}
+```
+
+### Manual Maintenance
+
+The following approach applies to simple content changes (such as fixing an activity's time, name, or description, or adding a cover image):
+
+1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/Shasnow.github.io) and fork it.
+2. **Edit the data**: edit the corresponding JSON file under the `public/api/v1/activity/` directory. Default-language data lives in `/{game}.json` (Chinese); other languages live in `/{game}-{locale}.json` (e.g. `sr-en-US.json`).
+3. **Submit a PR**: create a Pull Request describing your changes.
+
+### Activity Data Format
+
+When adding or updating activity data, please follow this format:
+
+```json
+{
+  "version": "Current game version number",
+  "versionName": "Current game version name",
+  "startTime": "2026-07-15T06:00:00", // Version start time
+  "endTime": "2026-08-26T06:00:00", // Version end time
+  "cover": "https://...", // Version cover image URL
+  "activities": [
+    {
+      "name": "Activity name",
+      "description": "Activity description",
+      "startTime": "2026-07-15T06:00:00", // Activity start time
+      "endTime": "2026-08-26T03:59:59", // Activity end time
+      "cover": "https://..." // Activity cover image URL
+    }
+    // More activities...
+  ]
+}
+```
+
+:::tip
+
+- Use ISO 8601 format for times (`YYYY-MM-DDTHH:mm:ss`)
+- The `cover` field is optional; use an empty string `""` if there is no cover image
+- Version info (`version`, `versionName`) must be kept in sync
+- Data for other languages goes into `{game}-{locale}.json` (e.g. `sr-en-US.json`), following the same structure as the default-language file
+
+:::
+
+:::note[Notes]
+
+- Make sure activity times are accurate; refer to official announcements when possible
+- Only write down times with a verifiable source; leave out or omit activities that cannot be verified
+- Check that the JSON is valid before submitting a PR
+- If you have questions, discuss them in [GitHub Issues](https://github.com/Shasnow/Shasnow.github.io/issues)
+
+:::

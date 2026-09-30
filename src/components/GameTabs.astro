@@ -1,20 +1,25 @@
 ---
 import { Tabs, TabItem, LinkButton, Code } from "@astrojs/starlight/components";
-import { games } from "../data/games";
+import { games, type Game } from "../data/games";
 
 
 const baseUrl = "https://starrailassistant.top/api/v1/activity";
+
+// games.ts 的 name 键（zh-CN / en）与 Astro.currentLocale 一致，直接使用。
+const nameKey = Astro.currentLocale ?? 'zh-CN';
+const gameName = (game: Game) =>
+  typeof game.name === 'string'
+    ? game.name
+    : game.name[nameKey] ?? game.name[game.defaultLocale] ?? game.id;
 ---
 
 <Tabs>
   {games.map((game) => (
-    <TabItem label={game.name}>
+    <TabItem label={gameName(game)}>
       <Tabs>
         {game.locales.map((locale) => {
           const file = locale === game.defaultLocale ? `${game.id}.json` : `${game.id}-${locale}.json`;
-          const label = locale === game.defaultLocale
-            ? `试一试：获取${game.name}活动数据`
-            : `试一试：获取${game.name}活动数据（${locale}）`;
+          const label = Astro.locals.t( $ => $.gameTab.tryLabel, { name: gameName(game), locale })
           return (
             <TabItem label={locale}>
               <Code code={`GET ${baseUrl}/${file}`} lang="text" frame="none" />

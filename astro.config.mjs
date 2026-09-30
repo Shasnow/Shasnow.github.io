@@ -23,13 +23,16 @@ export default defineConfig({
       sidebar: [
         {
           label: "文档",
+          translations: { en: "Docs" },
           items: [
             {
               label: "从这里开始",
+              translations: { en: "Start Here" },
               items: [{ autogenerate: { directory: "getting-started" } }],
             },
             {
               label: "SRA-cli 命令行工具",
+              translations: { en: "SRA-cli" },
               items: [{ autogenerate: { directory: "cli" } }],
             },
             {
@@ -38,22 +41,26 @@ export default defineConfig({
             },
             {
               label: "指南",
+              translations: { en: "Guides" },
               items: [{ autogenerate: { directory: "guides" } }],
             },
             {
               label: "教程",
+              translations: { en: "Tutorials" },
               items: [{ autogenerate: { directory: "tutorials" } }],
             },
-            { label: "赞助", slug: "sponsor" },
-            { label: "加入我们", slug: "join-us" },
+            { label: "赞助", translations: { en: "Sponsor" }, slug: "sponsor" },
+            { label: "加入我们", translations: { en: "Join Us" }, slug: "join-us" },
           ],
         },
         {
           label: "参考",
+          translations: { en: "Reference" },
           items: [{ autogenerate: { directory: "reference" } }],
         },
         {
           label: "公告",
+          translations: { en: "Announcements" },
           items: [{ autogenerate: { directory: "ann" } }],
         },
       ],
@@ -64,6 +71,9 @@ export default defineConfig({
         root: {
           label: "简体中文",
           lang: "zh-CN",
+        },
+        en: {
+          label: "English",
         },
       },
       plugins: [
