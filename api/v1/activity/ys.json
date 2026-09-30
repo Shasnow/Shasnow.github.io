@@ -34,13 +34,6 @@
       "cover": "https://i0.hdslb.com/bfs/new_dyn/5e0bb0eea63cedadb92b3b397addda1f401742377.png"
     },
     {
-      "name": "虹旅藏金·耀星烁熠",
-      "description": "登录福利活动，含佳礼来信邮件签到与耀星烁熠累计登录，可获取原石×1600、纠缠之缘×10等奖励。",
-      "startTime": "2026-09-23T11:00:00",
-      "endTime": "2026-11-04T05:59:59",
-      "cover": "https://i0.hdslb.com/bfs/new_dyn/c499d7f590120aec86c5e21c3f5a453e401742377.png"
-    },
-    {
       "name": "绮衣珍赏·晴暖",
       "description": "完成珍赏任务获得「珍赏见闻」与重现晶簇，「珍赏见闻」总值累计到特定值后即可领取自选奇偶装扮套装「午后蜜果」一套。",
       "startTime": "2026-09-23T11:00:00",
@@ -60,6 +53,13 @@
       "startTime": "2026-09-24T10:00:00",
       "endTime": "2026-10-12T03:59:59",
       "cover": "https://i0.hdslb.com/bfs/new_dyn/928aca829606c87e2fc80bb98b6ec8a8401742377.png"
+    },
+    {
+      "name": "虹旅藏金·耀星烁熠",
+      "description": "登录福利活动，含佳礼来信邮件签到与耀星烁熠累计登录，可获取原石×1600、纠缠之缘×10等奖励。",
+      "startTime": "2026-09-28T00:00:00",
+      "endTime": "2026-11-04T05:59:59",
+      "cover": "https://i0.hdslb.com/bfs/new_dyn/c499d7f590120aec86c5e21c3f5a453e401742377.png"
     }
   ]
 }
