@@ -9,15 +9,27 @@ const baseUrl = "https://starrailassistant.top/api/v1/activity";
 <Tabs>
   {games.map((game) => (
     <TabItem label={game.name}>
-      <Code code={`GET ${baseUrl}/${game.id}.json`} lang="text" frame="none" />
-      <LinkButton
-        href={`${baseUrl}/${game.id}.json`}
-        variant="secondary"
-        icon="external"
-        iconPlacement="start"
-      >
-        试一试：获取{game.name}活动数据
-      </LinkButton>
+      <Tabs>
+        {game.locales.map((locale) => {
+          const file = locale === game.defaultLocale ? `${game.id}.json` : `${game.id}-${locale}.json`;
+          const label = locale === game.defaultLocale
+            ? `试一试：获取${game.name}活动数据`
+            : `试一试：获取${game.name}活动数据（${locale}）`;
+          return (
+            <TabItem label={locale}>
+              <Code code={`GET ${baseUrl}/${file}`} lang="text" frame="none" />
+              <LinkButton
+                href={`${baseUrl}/${file}`}
+                variant="secondary"
+                icon="external"
+                icon-placement="start"
+              >
+                {label}
+              </LinkButton>
+            </TabItem>
+          );
+        })}
+      </Tabs>
     </TabItem>
   ))}
 </Tabs>
