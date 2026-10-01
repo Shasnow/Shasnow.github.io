@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# temp data fetched by scripts
+tmp/
 
 # dependencies
 node_modules/

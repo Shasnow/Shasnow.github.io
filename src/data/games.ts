@@ -12,6 +12,7 @@ export const games: Game[] = [
     "en-US": "https://hsr.hoyoverse.com/en-us/news?type=notice",
   } },
   { id: "ys", name: {"zh-CN": "原神", en: "Genshin Impact"}, locales: ["zh-CN", "en-US"], defaultLocale: "zh-CN", dataSources: {
+    "all" : "node scripts/fetch-ys-activity.mjs",
     "zh-CN": "https://ys.mihoyo.com/main/news",
     "en-US": "https://genshin.hoyoverse.com/en/news",
   } },
