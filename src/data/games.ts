@@ -49,6 +49,9 @@ export const games: Game[] = [
     "zh-CN": "https://endfield.hypergryph.com/news",
     // 活动与卡池的结构化数据在 AKEData（https://data.akedata.wiki），公告里文字含糊时以它为准
   } },
+  { id: "end-global", name: {"en-US": "Arknights: Endfield", "zh-CN": "明日方舟：终末地（国际服）"}, locales: ["en-US"], defaultLocale: "en-US", dataSources: {
+    "en-US": "https://endfield.gryphline.com/news",
+  } },
   { id: "ss", name: {"zh-CN": "星塔旅人", en: "Stella Sora"}, locales: ["zh-CN"], defaultLocale: "zh-CN", dataSources: {
     // 官网公告列表是 JS 渲染的，用它的接口：每页固定 6 条，翻页加 index
     "zh-CN": "https://stellasora.yostar.cn/api/resource/news?index=1",

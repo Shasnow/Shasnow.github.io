@@ -19,9 +19,10 @@
  *
  * 1. 请求必须带 `game-alias: ba` 头，站点靠它识别是哪个游戏，少了会返回
  *    `{"code":403,"msg":"缺少游戏信息"}`；`serverId` 区分服务器：15 日服、17 国际服、16 国服。
- * 2. 配图那个 CDN 校验 `Referer`，浏览器直接引用会吃到一张 HTML 而不是图片。这里只生成
- *    静态 JSON，给不出可用图，所以 `cover` 一律留空——消费端（如 AUTO-MAS）自己有图片
- *    中转的可以按活动名自行补图。
+ * 2. 配图那个 CDN 校验 `Referer`：不带它请求会拿到 `567` 与一张 HTML，浏览器直接引用同样
+ *    取不到图。这里照原样把图片地址写进 JSON（消费端自己能带 `Referer` 中转的就有图，
+ *    比如 AUTO-MAS 的图片代理），不做丢弃——真要让所有消费端都能取图，得把封面下载进仓库
+ *    （`public/api/v1/activity/img/` 之类），代价是仓库每期多几百 KB。
  * 3. 分类字段是中文：只有「活动」会开活动关，总力大决、爬塔、多倍活动、战术测试这些都不算；
  *    标题里带「战斗通行证」「网页活动」的同样不算（与 AUTO-MAS 侧口径一致）。
  *
@@ -71,6 +72,12 @@ const DEFAULT_OUT_DIR = path.join(REPO_ROOT, 'public', 'api', 'v1', 'activity')
 
 /** Unix 秒 → SRA 使用的无时区 ISO 8601 字符串（北京时间） */
 const toIso = seconds => new Date(seconds * 1000 + TIMEZONE_OFFSET_MS).toISOString().slice(0, 19)
+
+/** GameKee 的图片地址是协议相对 URL（//cdnimg...），补全为 https */
+const normalizeImage = image => {
+  if (!image) return ''
+  return image.startsWith('//') ? `https:${image}` : image
+}
 
 /** 结束时间按既有数据的惯例落到那一分钟的最后一秒（`03:59:59` 而不是 `03:59:00`） */
 const toEndIso = seconds => `${toIso(seconds).slice(0, 17)}59`
@@ -145,8 +152,8 @@ const buildActivities = (items, now) => {
       description: (item.description ?? '').trim().replace(/\s+/g, ' ').slice(0, 200),
       startTime: toIso(start),
       endTime: toEndIso(end),
-      // 配图 CDN 校验 Referer，静态 JSON 里给了也取不到，留空
-      cover: '',
+      // 地址照原样给出：这个 CDN 要带 Referer 才给图，能不能取到由消费端决定
+      cover: normalizeImage(item.picture),
       start,
       end,
     })
@@ -176,7 +183,7 @@ const main = async () => {
       versionName: `${label}活动`,
       startTime: head?.startTime ?? '',
       endTime: latest?.endTime ?? '',
-      cover: '',
+      cover: latest?.cover ?? '',
       activities,
     }
 
