@@ -74,7 +74,7 @@ Community contributions of activity data are welcome! If you want to add support
 
 ### Adding Support for a New Game
 
-1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/Shasnow.github.io) and fork it.
+1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/starrailassistant.top) and fork it.
 2. **Add the game entry**: add a new game entry to the `games` array in `src/data/games.ts`, filling in the game identifier, name, language list, and data sources (see format below).
 3. **Generate activity data** (or wait for the PR to be merged, then the maintainers will generate it): generate the activity JSON under `public/api/v1/activity/` from the data sources (for the AI extraction workflow, see `.agents/skills/game-activity-extractor/SKILL.md` in the repository).
 4. **Submit a PR**: create a Pull Request describing the newly added game support.
@@ -118,7 +118,7 @@ All types support the optional field `userAgent: "none"`: marks that the source 
 
 The following approach applies to simple content changes (such as fixing an activity's time, name, or description, or adding a cover image):
 
-1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/Shasnow.github.io) and fork it.
+1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/starrailassistant.top) and fork it.
 2. **Edit the data**: edit the corresponding JSON file under the `public/api/v1/activity/` directory. Default-language data lives in `/{game}.json` (Chinese); other languages live in `/{game}-{locale}.json` (e.g. `sr-en-US.json`).
 3. **Submit a PR**: create a Pull Request describing your changes.
 
@@ -160,6 +160,6 @@ When adding or updating activity data, please follow this format:
 - Make sure activity times are accurate; refer to official announcements when possible
 - Only write down times with a verifiable source; leave out or omit activities that cannot be verified
 - Check that the JSON is valid before submitting a PR
-- If you have questions, discuss them in [GitHub Issues](https://github.com/Shasnow/Shasnow.github.io/issues)
+- If you have questions, discuss them in [GitHub Issues](https://github.com/Shasnow/starrailassistant.top/issues)
 
 :::

@@ -1,12 +1,32 @@
 // @ts-check
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
+import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://starrailassistant.top",
+  vite: {
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
+    server: {
+      // 本地开发时将 /api 代理到 SRA 后端
+      proxy: {
+        "/api": {
+          target: "http://localhost:5035",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+    },
+  },
   integrations: [
+    vue(),
     starlight({
       title: "StarRailAssistant",
       description:
@@ -18,8 +38,13 @@ export default defineConfig({
           label: "GitHub",
           href: "https://github.com/Shasnow/StarRailAssistant",
         },
+        {
+          icon: "link-alt",
+          label: "攻略站",
+          href: "/strategy",
+        }
       ],
-      editLink: { baseUrl: "https://github.com/Shasnow/Shasnow.github.io" },
+      editLink: { baseUrl: "https://github.com/Shasnow/starrailassistant.top" },
       sidebar: [
         {
           label: "文档",

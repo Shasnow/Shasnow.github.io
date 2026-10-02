@@ -1,0 +1,20 @@
+---
+// 攻略站：复用 Starlight 页头，不显示文档侧边栏；交互由 Vue 岛屿负责
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import StrategyApp from "@/components/strategy/StrategyApp.vue";
+import "@/components/strategy/strategy.css";
+---
+
+<StarlightPage
+  frontmatter={{
+    title: "攻略站",
+    description: "分享与下载适用于 SRA 的货币战争攻略。",
+    template: "splash",
+  }}
+  hasSidebar={false}
+>
+  <!-- not-content：退出 Starlight 的 Markdown 排版规则（否则相邻 <button> 会被加上 margin-top: 1rem） -->
+  <div class="not-content">
+    <StrategyApp client:only="vue" />
+  </div>
+</StarlightPage>

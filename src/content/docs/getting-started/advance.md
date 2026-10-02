@@ -96,7 +96,7 @@ SRA 的货币战争任务使用预定义的攻略，参阅 `tasks/currency_wars/
 
 ### 下载攻略
 
-如果你不会自己编写攻略，你也可以在[SRA攻略站](https://starrailassistant.top/sra-strategy-site/)下载适用于 SRA 的攻略。
+如果你不会自己编写攻略，你也可以在[SRA攻略站](https://starrailassistant.top/strategy/)下载适用于 SRA 的攻略。
 
 ### 添加攻略
 

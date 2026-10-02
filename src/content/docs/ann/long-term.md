@@ -16,7 +16,7 @@ sidebar:
 
 ## 分享您的货币战争攻略，助力社区成长！
 
-[https://starrailassistant.top/sra-strategy-site/](https://starrailassistant.top/sra-strategy-site/)
+[https://starrailassistant.top/strategy/](https://starrailassistant.top/strategy/)
 
 ## 访问官网获取最新资讯与教程！
 

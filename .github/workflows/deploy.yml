@@ -35,6 +35,7 @@ jobs:
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=8192
+          VITE_APP_API_BASE_URL: https://shasnow.top/s/api
         run: |-
           pnpm run build
           > dist/.nojekyll
