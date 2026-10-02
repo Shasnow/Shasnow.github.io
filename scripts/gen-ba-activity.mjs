@@ -9,41 +9,49 @@
  *
  * 数据来源
  * --------
- * Kivo 古书馆时间轴公开接口：https://api.kivo.wiki/api/v1/timeline/
+ * GameKee 的活动表接口：https://www.gamekee.com/v1/activity/page-list
  *
- * 选它而不是 SchaleDB，是因为它同时给出**日服 / 国际服 / 国服**三份数据，并带封面图与
- * 描述文本；SchaleDB 的国服时间字段实测滞后（最后一条结束于 2026-07-16），且没有封面与描述。
+ * 选它而不是 Kivo 时间轴，是因为 Kivo 那份数据实测会滞后一到两周，而且把「战斗通行证」
+ * 这类没有活动关的付费内容也标成 `Event`；GameKee 的活动表三服都有，分类、起止时间与
+ * 配图都是结构化的，更新也更及时（AUTO-MAS 首页的碧蓝档案卡片用的就是它）。
  *
- * 两点使用注意事项：
+ * 三点使用注意事项：
  *
- * 1. 该接口对 `Origin` 做白名单校验（只放行 kivo.wiki 自己的来源）。脚本这类不带 `Origin`
- *    的请求可以正常拿到 200，但**浏览器直连会 403** —— 所以更新数据只能在 Node/Python 侧跑，
- *    不能靠页面里 fetch。
- * 2. 接口地址带上结尾斜杠；少了会先吃一个 301。
+ * 1. 请求必须带 `game-alias: ba` 头，站点靠它识别是哪个游戏，少了会返回
+ *    `{"code":403,"msg":"缺少游戏信息"}`；`serverId` 区分服务器：15 日服、17 国际服、16 国服。
+ * 2. 配图那个 CDN 校验 `Referer`：不带它请求会拿到 `567` 与一张 HTML，浏览器直接引用同样
+ *    取不到图。这里照原样把图片地址写进 JSON（消费端自己能带 `Referer` 中转的就有图，
+ *    比如 AUTO-MAS 的图片代理），不做丢弃——真要让所有消费端都能取图，得把封面下载进仓库
+ *    （`public/api/v1/activity/img/` 之类），代价是仓库每期多几百 KB。
+ * 3. 分类字段是中文：只有「活动」会开活动关，总力大决、爬塔、多倍活动、战术测试这些都不算；
+ *    标题里带「战斗通行证」「网页活动」的同样不算（与 AUTO-MAS 侧口径一致）。
  *
- * 与 skill 的关系
- * ---------------
- * `.agents/skills/game-activity-extractor` 描述的是「从官方公告（文章/图片）人工或 agent 提取」，
- * 适用于原神 / 星穹铁道 / 绝区零 / 鸣潮 / 异环这类有明确版本号的游戏。碧蓝档案没有版本号概念，
- * 且三服进度不同，公告分散在各服官网与社区，因此这里改用 Kivo 的结构化时间轴生成，
- * 再由人工核对后提交 —— 流程上仍属于「提取 → 复核 → 提交」，只是提取环节由脚本完成。
- *
- * 需要人工确认的部分：Kivo 的分类（`type`）偶尔会把同一活动拆成「活动」与「活动介绍PV」两条，
- * 脚本按标题去重并保留结束时间最晚的一条；版本字段（`version` / `versionName`）在碧蓝档案没有
- * 对应概念，用「当月 + 服务器名」占位，保证字段齐全。
+ * 需要人工确认的部分：同一活动可能被拆成多条记录，脚本按标题去重并保留结束时间最晚的一条；
+ * 版本字段（`version` / `versionName`）在碧蓝档案没有对应概念，用「当月 + 服务器名」占位，
+ * 保证字段齐全。
  */
 
 import { mkdir, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
-const API_URL = 'https://api.kivo.wiki/api/v1/timeline/'
+const API_URL = 'https://www.gamekee.com/v1/activity/page-list'
 
-/** 只取「活动」；卡池、掉落加倍、维护等分类不进活动数据 */
-const WANTED_TYPES = new Set(['Event'])
+/** 站点靠这个头识别游戏，少了会 403「缺少游戏信息」 */
+const GAMEKEE_HEADERS = {
+  'game-alias': 'ba',
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+  Accept: 'application/json',
+}
 
-/** 每页 50 条、按时间倒序，3 页足以覆盖最近数周 */
-const PAGE_SIZE = 50
+/** 只取「活动」；卡池、总力战、爬塔、多倍活动等分类不进活动数据 */
+const WANTED_KIND = '活动'
+
+/** 分类算「活动」但没有活动关的，按标题排除 */
+const SKIP_TITLE_KEYWORDS = ['战斗通行证', '网页活动']
+
+/** 每页 100 条、按开始时间倒序，3 页足以覆盖最近数周 */
+const PAGE_SIZE = 100
 const MAX_PAGES = 3
 
 /** 往前多带几天已经结束的活动，让数据在活动间隙里也有内容 */
@@ -52,11 +60,11 @@ const RECENT_WINDOW_DAYS = 14
 /** SRA 的时间字段不带时区标记，按其既有数据的惯例填北京时间 */
 const TIMEZONE_OFFSET_MS = 8 * 60 * 60 * 1000
 
-/** Kivo 的服务器标识 → 输出文件名（注意国际服的原文拼写是 Globle） */
+/** 服务器标识 → 输出文件名（`serverId` 取自 GameKee，国际服在它那儿叫 Globle） */
 const SERVERS = [
-  { key: 'jp', lineType: 'JP', label: '日服' },
-  { key: 'global', lineType: 'Globle', label: '国际服' },
-  { key: 'cn', lineType: 'CN', label: '国服' },
+  { key: 'jp', serverId: 15, label: '日服' },
+  { key: 'global', serverId: 17, label: '国际服' },
+  { key: 'cn', serverId: 16, label: '国服' },
 ]
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -65,15 +73,17 @@ const DEFAULT_OUT_DIR = path.join(REPO_ROOT, 'public', 'api', 'v1', 'activity')
 /** Unix 秒 → SRA 使用的无时区 ISO 8601 字符串（北京时间） */
 const toIso = seconds => new Date(seconds * 1000 + TIMEZONE_OFFSET_MS).toISOString().slice(0, 19)
 
-/** Kivo 的图片地址是协议相对 URL（//static...），补全为 https */
+/** GameKee 的图片地址是协议相对 URL（//cdnimg...），补全为 https */
 const normalizeImage = image => {
   if (!image) return ''
   return image.startsWith('//') ? `https:${image}` : image
 }
 
+/** 结束时间按既有数据的惯例落到那一分钟的最后一秒（`03:59:59` 而不是 `03:59:00`） */
+const toEndIso = seconds => `${toIso(seconds).slice(0, 17)}59`
+
 /** 当月（北京时间），用作碧蓝档案缺失的版本号占位 */
-const currentMonth = () =>
-  new Date(Date.now() + TIMEZONE_OFFSET_MS).toISOString().slice(0, 7)
+const currentMonth = () => new Date(Date.now() + TIMEZONE_OFFSET_MS).toISOString().slice(0, 7)
 
 const parseOutDir = () => {
   const index = process.argv.indexOf('--out-dir')
@@ -85,21 +95,31 @@ const parseOutDir = () => {
   return path.resolve(value)
 }
 
-const fetchTimeline = async lineType => {
+const fetchActivities = async serverId => {
   const items = []
   for (let page = 1; page <= MAX_PAGES; page += 1) {
     const url = new URL(API_URL)
-    url.searchParams.set('page', String(page))
-    url.searchParams.set('page_size', String(PAGE_SIZE))
-    url.searchParams.set('line_type', lineType)
+    url.searchParams.set('serverId', String(serverId))
+    url.searchParams.set('page_no', String(page))
+    url.searchParams.set('limit', String(PAGE_SIZE))
+    url.searchParams.set('status', '0')
+    url.searchParams.set('importance', '0')
+    url.searchParams.set('sort', '-1')
+    url.searchParams.set('keyword', '')
 
-    const response = await fetch(url, { headers: { Accept: 'application/json' } })
+    const response = await fetch(url, {
+      headers: { ...GAMEKEE_HEADERS, Referer: `https://www.gamekee.com/ba/huodong/${serverId}` },
+    })
     if (!response.ok) {
-      throw new Error(`${lineType} 第 ${page} 页请求失败：HTTP ${response.status}`)
+      throw new Error(`serverId=${serverId} 第 ${page} 页请求失败：HTTP ${response.status}`)
     }
 
     const payload = await response.json()
-    const batch = payload?.data?.timeline ?? []
+    if (payload?.code !== 0) {
+      throw new Error(`serverId=${serverId} 第 ${page} 页返回异常：${payload?.msg ?? payload?.code}`)
+    }
+
+    const batch = Array.isArray(payload?.data) ? payload.data : []
     if (batch.length === 0) break
     items.push(...batch)
   }
@@ -112,25 +132,28 @@ const buildActivities = (items, now) => {
   const picked = new Map()
 
   for (const item of items) {
-    if (!WANTED_TYPES.has(item?.type)) continue
-
-    const { start_time: start, end_time: end } = item
-    if (!Number.isFinite(start) || !Number.isFinite(end)) continue
-    if (end < horizon) continue
+    if (item?.activity_kind_name !== WANTED_KIND) continue
 
     const name = (item.title ?? '').trim()
     if (!name) continue
+    if (SKIP_TITLE_KEYWORDS.some(keyword => name.includes(keyword))) continue
 
-    // 同一活动可能被拆成多条记录，「保留结束时间最晚的那条」
+    const start = item.begin_at
+    const end = item.end_at
+    if (!Number.isFinite(start) || !Number.isFinite(end)) continue
+    if (end <= start || end < horizon) continue
+
+    // 同一活动可能被拆成多条记录：「保留结束时间最晚的那条」
     const existing = picked.get(name)
     if (existing && existing.end >= end) continue
 
     picked.set(name, {
       name,
-      description: (item.body_summary ?? '').trim().slice(0, 200),
+      description: (item.description ?? '').trim().replace(/\s+/g, ' ').slice(0, 200),
       startTime: toIso(start),
-      endTime: toIso(end),
-      cover: normalizeImage(item.image),
+      endTime: toEndIso(end),
+      // 地址照原样给出：这个 CDN 要带 Referer 才给图，能不能取到由消费端决定
+      cover: normalizeImage(item.picture),
       start,
       end,
     })
@@ -147,11 +170,11 @@ const main = async () => {
 
   await mkdir(outDir, { recursive: true })
 
-  for (const { key, lineType, label } of SERVERS) {
-    const activities = buildActivities(await fetchTimeline(lineType), now)
+  for (const { key, serverId, label } of SERVERS) {
+    const activities = buildActivities(await fetchActivities(serverId), now)
 
     // SRA 的 version / versionName 描述「当前版本」；碧蓝档案没有版本号概念，
-    // 用当月与服务器名占位，保证字段齐全。顶层 cover 取最新一条活动的封面。
+    // 用当月与服务器名占位，保证字段齐全。顶层时间取活动区间的首尾。
     const head = activities[0]
     const latest = activities.at(-1)
 
@@ -169,7 +192,7 @@ const main = async () => {
     console.log(`${label}: ${activities.length} 条 → ${path.relative(REPO_ROOT, file)}`)
   }
 
-  console.log('\n请人工核对最新活动后提交（各服进度不同，Kivo 的数据也会有延迟）。')
+  console.log('\n请人工核对最新活动后提交（各服进度不同，站点数据也会有延迟）。')
 }
 
 main().catch(error => {
