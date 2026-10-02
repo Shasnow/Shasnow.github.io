@@ -25,22 +25,51 @@ Read `src/data/games.ts` and locate the target game entry (match by `id` or `nam
 | `name`          | Game name in Chinese                                                                               |
 | `locales`       | All locales that must be produced                                                                  |
 | `defaultLocale` | Locale whose output omits the `-{locale}` suffix                                                   |
-| `dataSources`   | Map of locale → announcement list URL or a script, to collect data from, "all" key for all locales |
+| `dataSources`   | Map of locale → `GameDataSource[]` (see below), "all" key applies to all locales                   |
+
+**GameDataSource shape** (defined at the top of `src/data/games.ts`):
+
+| Field        | Applies to      | Description                                                                                                  |
+| ------------ | --------------- | ------------------------------------------------------------------------------------------------------------ |
+| `type`       | all             | `html` — announcement listing page; `script` — generator script; `pageData` — paginated JSON API             |
+| `url`        | html, pageData  | Listing page / JSON API endpoint                                                                             |
+| `script`     | script          | Script path relative to repo root, run with `node scripts/<file>`                                            |
+| `articleUrl` | pageData        | Article URL template; replace each `{field}` placeholder with the entry's same-named field value            |
+| `userAgent`  | html            | `"none"` — do **not** send a browser User-Agent when fetching (the source rejects bare browser UAs); absent = UA-insensitive |
 
 **Output file naming** — write to `public/api/v1/activity/`:
 
 - Default locale: `{id}.json` (e.g., `sr.json` for `defaultLocale: "zh-CN"`)
 - Other locales: `{id}-{locale}.json` (e.g., `sr-en-US.json`)
 
-Produce one file per entry in `locales`, collecting from that locale's `dataSources` URL. If the user provided an explicit announcement URL or image, fetch it directly for the corresponding locale instead of walking the data-source listing.
+Produce one file per entry in `locales`, collecting from that locale's `dataSources`. If the user provided an explicit announcement URL or image, fetch it directly for the corresponding locale instead of walking the data-source listing.
 
 ### Step 2: Fetch Source Content
 
-For each locale:
+Handle each source according to its `type`. A locale may list several sources — try them in order until one yields the version notice or activity data, and note in the Step 8 explanation which one was used.
 
-1. Use `WebFetch` when the `dataSources` is a URL (announcement/news listing page); Run script when the `dataSources` is a script (.mjs, .py, etc). 
-2. Locate the latest version update announcement — see "Priority Articles" below for which title to pick. 
+#### type: "html" — Announcement Listing Pages
+
+1. `WebFetch` the `url` (respecting `userAgent: "none"` if set) to list recent articles.
+2. Locate the latest version update announcement — see "Priority Articles" below for which title to pick.
 3. `WebFetch` the announcement article itself to get the full body.
+
+#### type: "script" — Generator Scripts
+
+1. Run `node scripts/<script>` from the repo root. Some scripts read credentials from `.env` — if it fails on missing config, the names it prints tell you what to add.
+2. Read the script's stdout: it states where the output was written and how to use it (cross-check reference, or already in output format).
+3. Follow that instruction — either treat the output as reference material for the announcement flow, or verify it and write it to `public/api/v1/activity/{id}[-{locale}].json` (2-space indentation, Step 7 structure).
+
+#### type: "pageData" — Paginated JSON APIs
+
+1. Fetch the `url` — the response is JSON, not a webpage. Inspect its shape: locate the entry array and what fields each entry carries (id, title, link, time, …).
+2. Build article/detail links:
+   - If `articleUrl` is set, replace each `{field}` placeholder with the entry's same-named field value.
+   - Otherwise look for a full link field on the entries themselves.
+3. Continue with the "html" flow (Priority Articles) on the built links to fetch the version notice.
+4. Paginate only if the target entry is not on the first page: infer the page parameter from the `url`'s existing query (e.g. change `page=1` / `index=1` to `2`, `3`, …) and walk pages until found.
+
+The subsections below (Priority Articles / Listing-Page Fallbacks / Probing) apply to both "html" and "pageData" sources — wherever they say "the listing", read "the listing or the first JSON page".
 
 #### Priority Articles: What to Focus On
 
@@ -88,7 +117,7 @@ Extract or infer the following version-level fields:
 | `versionName` | Version subtitle/name (e.g., "鸣笛于归寂之时") | Usually in quotes in the article title                        |
 | `startTime`   | Version start time (ISO 8601)                  | Maintenance/update start time stated in the article           |
 | `endTime`     | Version end time (ISO 8601)                    | Explicitly stated, or inferred from version cycle (\~42 days) |
-| `cover`       | Version cover image URL                        | Leave empty string `""` if not available                      |
+| `cover`       | Version cover image URL                        | Make a best-effort extraction attempt (see "Best-Effort Cover Extraction"); otherwise leave `""` |
 
 ### Step 4: Identify Activities to Include
 
@@ -123,7 +152,17 @@ For each included activity, extract:
 | `description` | Activity description           | Use the descriptive text from the article. If no description is provided, summarize the activity purpose in one sentence. |
 | `startTime`   | Activity start time (ISO 8601) | See "Time Format Rules" below                                                                                             |
 | `endTime`     | Activity end time (ISO 8601)   | See "Time Format Rules" below                                                                                             |
-| `cover`       | Activity cover image URL       | Leave empty string `""` if not available. For recurring activities with fixed covers (see below), use the fixed cover URL |
+| `cover`       | Activity cover image URL       | Make a best-effort extraction attempt (see below); use the fixed cover for recurring activities; otherwise leave `""` |
+
+#### Best-Effort Cover Extraction
+
+Before leaving a `cover` empty, make a reasonable attempt to find one in the source material:
+
+- `<img>` tags in the fetched page or announcement — check `src`, `data-src`, and `srcset` attributes.
+- Links ending in an image extension (`.jpg` / `.jpeg` / `.png` / `.webp` / `.gif` / `.avif`), including protocol-relative `//cdn…` URLs (prefix with `https:`) and image URLs inside JSON payloads (pageData sources).
+- Prefer images visually tied to the subject itself (the activity's banner / key art); avoid site chrome — icons, avatars, QR codes, sponsor logos, and shared page decorations.
+
+Still leave `""` when nothing plausibly matches — never guess or fabricate a URL.
 
 #### Fixed Covers for Recurring Activities
 
@@ -209,6 +248,6 @@ After writing the JSON, provide a brief **说明** (explanation) section coverin
 
 - **Language matching**: All output (JSON values, descriptions, explanations) must be in the language of the source used for that locale (zh-CN data source → Chinese; en-US data source → English). The 说明 section follows the user's message language.
 - **Description text**: Use the article's original descriptive text verbatim when available. If the article doesn't provide a description, write a concise one-sentence summary.
-- **Cover field**: Leave as empty string `""` unless a specific cover image URL is available for that activity.
+- **Cover field**: Make a best-effort extraction attempt (see "Best-Effort Cover Extraction" in Step 5) before leaving as empty string `""`; never guess or fabricate a URL.
 - **Ordering**: List activities in chronological order by start time.
 - **No fabrication**: Do not invent dates, times, or descriptions not present in or reasonably inferable from the source material. If information is missing, note it in the explanation.

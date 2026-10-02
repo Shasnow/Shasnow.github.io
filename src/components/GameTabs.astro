@@ -13,28 +13,45 @@ const gameName = (game: Game) =>
     : game.name[nameKey] ?? game.name[game.defaultLocale] ?? game.id;
 ---
 
-<Tabs>
-  {games.map((game) => (
-    <TabItem label={gameName(game)}>
-      <Tabs>
-        {game.locales.map((locale) => {
-          const file = locale === game.defaultLocale ? `${game.id}.json` : `${game.id}-${locale}.json`;
-          const label = Astro.locals.t( $ => $.gameTab.tryLabel, { name: gameName(game), locale })
-          return (
-            <TabItem label={locale}>
-              <Code code={`GET ${baseUrl}/${file}`} lang="text" frame="none" />
-              <LinkButton
-                href={`${baseUrl}/${file}`}
-                variant="secondary"
-                icon="external"
-                icon-placement="start"
-              >
-                {label}
-              </LinkButton>
-            </TabItem>
-          );
-        })}
-      </Tabs>
-    </TabItem>
-  ))}
-</Tabs>
+<div class="game-tabs">
+  <Tabs>
+    {games.map((game) => (
+      <TabItem label={gameName(game)}>
+        <Tabs>
+          {game.locales.map((locale) => {
+            const file = locale === game.defaultLocale ? `${game.id}.json` : `${game.id}-${locale}.json`;
+            const label = Astro.locals.t( $ => $.gameTab.tryLabel, { name: gameName(game), locale })
+            return (
+              <TabItem label={locale}>
+                <Code code={`GET ${baseUrl}/${file}`} lang="text" frame="none" />
+                <LinkButton
+                  href={`${baseUrl}/${file}`}
+                  variant="secondary"
+                  icon="external"
+                  icon-placement="start"
+                >
+                  {label}
+                </LinkButton>
+              </TabItem>
+            );
+          })}
+        </Tabs>
+      </TabItem>
+    ))}
+  </Tabs>
+</div>
+
+<style>
+  /* 游戏数量多，一级（游戏）标签栏改为换行显示，避免单行溢出只能横向滚动；
+     仅限定本组件的外层游戏标签，不影响站内其他 Tabs 与内层语言标签。 */
+  .game-tabs > :global(starlight-tabs .tablist-wrapper) {
+    overflow-x: visible;
+  }
+  .game-tabs > :global(starlight-tabs [role='tablist']) {
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+  }
+  .game-tabs > :global(starlight-tabs .tab > [role='tab']) {
+    padding-inline: 0.875rem;
+  }
+</style>

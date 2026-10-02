@@ -95,7 +95,7 @@ if (top) {
 }
 
 if (missing.length > 0) {
-  console.log("\n=== games.ts 已定义但尚无数据文件的项 ===");
+  console.log("\n=== missing ===");
   for (const m of missing) {
     console.log(`${m.game}（${m.locale}）  缺少 ${m.file}`);
   }

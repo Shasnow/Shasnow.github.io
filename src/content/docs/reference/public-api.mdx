@@ -75,27 +75,44 @@ GET /activity/{game}-{locale}.json
 ### 新增游戏支持
 
 1. **Fork 仓库**：访问 [StarRailAssistant 文档站仓库](https://github.com/Shasnow/Shasnow.github.io) 并 Fork
-2. **新增游戏支持**：在 `src/data/games.ts` 中新增游戏条目，填写游戏标识、名称、语言列表、数据源地址等。
-3. **提交 PR**：创建 Pull Request 并说明新增游戏支持。
-
-按照上面的步骤新增游戏支持后，一段时间后，游戏数据将自动更新。
+2. **新增游戏条目**：在 `src/data/games.ts` 的 `games` 数组中新增游戏条目，填写游戏标识、名称、语言列表和数据源（格式见下）
+3. **生成活动数据**（或等待PR合并后，由维护者生成）：按数据源生成 `public/api/v1/activity/` 下的活动 JSON（AI 提取流程参见仓库内 `.agents/skills/game-activity-extractor/SKILL.md`）
+4. **提交 PR**：创建 Pull Request 并说明新增游戏支持
 
 #### 游戏支持格式
 
-添加新的游戏支持/更新游戏支持时，请按照以下格式：
-
-```json
+```ts
 {
-  "id": "游戏标识", // 游戏标识，如 "sr"
-  "name": "可读游戏名称",
-  "locales": [
+  id: "sr", // 游戏标识，输出文件名的基准
+  name: { "zh-CN": "可读游戏名称", en: "English Name" },
+  locales: [
     "zh-CN", // 支持的语言列表
-    "en-US" // 其他语言名称
+    "en-US",
   ],
-  "defaultLocale": "zh-CN", // 默认语言，默认语言在生成文件时将省略语言标签后缀
-  "dataSource": "数据源" // 游戏活动数据的原始来源，此字段主要面向AI，告诉AI将如何获取游戏数据。
+  defaultLocale: "zh-CN", // 默认语言，生成文件时省略语言后缀
+  dataSources: {
+    // 数据源，键为语言；"all" 键对所有语言生效
+    // 每个语言可配置多个数据源，按顺序尝试
+    "zh-CN": [{ type: "html", url: "https://..." }],
+  },
 }
 ```
+
+`dataSources` 描述游戏活动数据的获取方式，主要面向 AI 提取流程。每个数据源按 `type` 区分：
+
+| type       | 适用字段             | 说明                                                                                   |
+| ---------- | -------------------- | -------------------------------------------------------------------------------------- |
+| `html`     | `url`                | 公告列表页（HTML），AI 从列表页定位版本公告并解析活动信息                               |
+| `script`   | `script`             | 生成脚本路径（相对仓库根目录，`node scripts/...` 运行），脚本自行抓取并转换数据         |
+| `pageData` | `url`、`articleUrl?` | 分页 JSON 接口；`articleUrl` 为文章路径模板，`{field}` 占位符替换为数据条目的同名字段    |
+
+所有类型均支持可选字段 `userAgent: "none"`：标记该源拒绝浏览器 User-Agent，抓取时不要携带浏览器 UA。
+
+##### script 类型脚本约定
+
+- 数据输出到 `tmp/` 目录的临时文件，**不直接覆盖** `public/api/v1/activity/` 下的正式数据
+- 脚本运行结束后在 stdout 打印输出位置与使用方法，便于人工或 AI 核对后再更新正式 JSON
+- 脚本内的联表、过滤、格式转换逻辑写在脚本头部注释中
 
 ### 维护活动数据
 
