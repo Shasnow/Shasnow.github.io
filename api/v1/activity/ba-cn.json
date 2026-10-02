@@ -1,0 +1,44 @@
+{
+  "version": "2026-10",
+  "versionName": "国服活动",
+  "startTime": "2026-09-10T14:00:00",
+  "endTime": "2026-10-29T14:00:59",
+  "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1920/h_1080/492704/2026/8/15/53522532mu2jlrll.webp",
+  "activities": [
+    {
+      "name": "限时活动【百芳丛中独一枝 ~堂堂正正，水上争锋~】",
+      "description": "",
+      "startTime": "2026-09-10T14:00:00",
+      "endTime": "2026-09-24T14:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1192/h_671/492704/2026/7/13/55317080msrdbics.webp"
+    },
+    {
+      "name": "限时活动【夏日天空的约定】",
+      "description": "",
+      "startTime": "2026-09-24T14:00:00",
+      "endTime": "2026-10-08T14:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1920/h_1080/492704/2026/8/15/26449051mu2jdaqp.webp"
+    },
+    {
+      "name": "限时活动【沙勒总决算】",
+      "description": "",
+      "startTime": "2026-10-08T04:00:00",
+      "endTime": "2026-10-22T14:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1920/h_1080/492704/2026/8/15/60027772mu2ji5pb.webp"
+    },
+    {
+      "name": "限时复刻活动【-ive aLIVE!】",
+      "description": "",
+      "startTime": "2026-10-08T14:00:00",
+      "endTime": "2026-10-22T14:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1920/h_1080/492704/2026/8/15/78326292mu2jhetf.webp"
+    },
+    {
+      "name": "限时复刻活动【Say-Bing!】",
+      "description": "",
+      "startTime": "2026-10-22T14:00:00",
+      "endTime": "2026-10-29T14:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1920/h_1080/492704/2026/8/15/53522532mu2jlrll.webp"
+    }
+  ]
+}

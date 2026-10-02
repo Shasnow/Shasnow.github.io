@@ -1,0 +1,23 @@
+{
+  "version": "2026-10",
+  "versionName": "日服活动",
+  "startTime": "2026-09-09T10:00:00",
+  "endTime": "2026-10-07T10:00:59",
+  "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1280/h_720/1609130/2026/8/22/31549132mucaytis.webp",
+  "activities": [
+    {
+      "name": "【复刻活动】「夏日天空的约定」",
+      "description": "",
+      "startTime": "2026-09-09T10:00:00",
+      "endTime": "2026-09-23T10:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/50580/images/w_1280/h_720/492704/2026/8/8/68986784mtslx4oi.webp"
+    },
+    {
+      "name": "「It's our Engine! ～逃离183号班！～」",
+      "description": "",
+      "startTime": "2026-09-23T10:00:00",
+      "endTime": "2026-10-07T10:00:59",
+      "cover": "https://cdnimg-v2.gamekee.com/wiki2.0/pro/829/images/w_1280/h_720/1609130/2026/8/22/31549132mucaytis.webp"
+    }
+  ]
+}
