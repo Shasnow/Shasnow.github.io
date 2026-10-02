@@ -1,0 +1,23 @@
+{
+  "version": "2026-10",
+  "versionName": "国际服活动",
+  "startTime": "2026-09-15T10:00:00",
+  "endTime": "2026-10-13T10:00:59",
+  "cover": "",
+  "activities": [
+    {
+      "name": "特殊作战：怪谈追踪篇",
+      "description": "",
+      "startTime": "2026-09-15T10:00:00",
+      "endTime": "2026-09-29T10:00:59",
+      "cover": ""
+    },
+    {
+      "name": "百中绽放的一朵﻿  ﻿~光明正大的水上对决~﻿  ﻿-复刻-",
+      "description": "",
+      "startTime": "2026-09-29T10:00:00",
+      "endTime": "2026-10-13T10:00:59",
+      "cover": ""
+    }
+  ]
+}

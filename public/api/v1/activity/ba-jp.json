@@ -1,0 +1,23 @@
+{
+  "version": "2026-10",
+  "versionName": "日服活动",
+  "startTime": "2026-09-09T10:00:00",
+  "endTime": "2026-10-07T10:00:59",
+  "cover": "",
+  "activities": [
+    {
+      "name": "【复刻活动】「夏日天空的约定」",
+      "description": "",
+      "startTime": "2026-09-09T10:00:00",
+      "endTime": "2026-09-23T10:00:59",
+      "cover": ""
+    },
+    {
+      "name": "「It's our Engine! ～逃离183号班！～」",
+      "description": "",
+      "startTime": "2026-09-23T10:00:00",
+      "endTime": "2026-10-07T10:00:59",
+      "cover": ""
+    }
+  ]
+}
