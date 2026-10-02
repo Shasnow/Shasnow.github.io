@@ -19,13 +19,13 @@ Collect game version activity information for a game from the data sources confi
 
 Read `src/data/games.ts` and locate the target game entry (match by `id` or `name`):
 
-| Field           | Description                                                      |
-| --------------- | ---------------------------------------------------------------- |
-| `id`            | Game identifier — base of the output filename (e.g., `sr`, `ys`) |
-| `name`          | Game name in Chinese                                             |
-| `locales`       | All locales that must be produced                                |
-| `defaultLocale` | Locale whose output omits the `-{locale}` suffix                 |
-| `dataSources`   | Map of locale → announcement list URL to collect data from       |
+| Field           | Description                                                                                        |
+| --------------- | -------------------------------------------------------------------------------------------------- |
+| `id`            | Game identifier — base of the output filename (e.g., `sr`, `ys`)                                   |
+| `name`          | Game name in Chinese                                                                               |
+| `locales`       | All locales that must be produced                                                                  |
+| `defaultLocale` | Locale whose output omits the `-{locale}` suffix                                                   |
+| `dataSources`   | Map of locale → announcement list URL or a script, to collect data from, "all" key for all locales |
 
 **Output file naming** — write to `public/api/v1/activity/`:
 
@@ -38,8 +38,8 @@ Produce one file per entry in `locales`, collecting from that locale's `dataSour
 
 For each locale:
 
-1. Use `WebFetch` on the locale's `dataSources` URL (announcement/news listing page).
-2. Locate the latest version update announcement — see "Priority Articles" below for which title to pick.
+1. Use `WebFetch` when the `dataSources` is a URL (announcement/news listing page); Run script when the `dataSources` is a script (.mjs, .py, etc). 
+2. Locate the latest version update announcement — see "Priority Articles" below for which title to pick. 
 3. `WebFetch` the announcement article itself to get the full body.
 
 #### Priority Articles: What to Focus On
@@ -49,7 +49,7 @@ Do **not** browse articles one by one. A single article type usually contains ev
 | Priority | Title Pattern (zh / en)                                                                                                              | Contains                                                                                  |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | **1**    | 「X.X版本更新说明」「X.X版本「副标题」更新公告」 / "Version X.X … Update Details", "… Update Announcement", "Ver. X.X … Patch Notes" | Version start/end + every activity with exact start/end times — **one article is enough** |
-| 2        | 「X.X版本内容一览」「活动速递」 (mainly 原神)                                                                                        | Full activity timetable, but may be image-only — cross-check against Priority 1 or wiki   |
+| 2        | 「X.X版本内容一览」「活动速递」                                                                                                      | Full activity timetable, but may be image-only — cross-check against Priority 1 or wiki   |
 | 3        | 「「活动名」活动说明」 / single-activity notices                                                                                     | Exact clock times for one activity — use only to verify individual entries                |
 | skip     | 「前瞻特别节目 情报回顾」, 专题页, 「Server Maintenance Notice」 (no version number)                                                 | Image-heavy / fragmented / no timetable — never the primary source                        |
 
@@ -68,10 +68,11 @@ Hoyo/kuro listing pages are often JS-rendered or serve stale snapshots that lack
 
 When a game's listing page behaves unexpectedly — or a **new game** has been added to `games.ts` with no prior notes — identify its fetch pattern with this generic checklist instead of assuming any site works like the known ones:
 
-1. **Classify the listing response.** After `WebFetch`ing the `dataSources` URL, determine which mode it is:
+1. **Classify the listing response.** After fetching the `dataSources` content, determine which mode it is:
    - _Static / SSR with links_ → pick the target article directly (still verify it is the **latest** version notice).
    - _JS-rendered shell or empty body_ → the listing is unusable; go to fallback 2 below.
    - _HTTP 200 but stale snapshot_ (old dates, expired IDs) → treat it as unusable even though it "succeeded"; go to fallback 2.
+   - _Structured JSON / JSON file output_ → parse the JSON content to extract activity information.
 2. **Discover the detail-page pattern from any working article.** Find one article URL (via listing, `WebSearch`, or a shared link), then generalize its shape: where the numeric/encoded ID sits, whether a date or locale segment is embedded (e.g. `/{yyyyMMdd}/{id}.html`, `/en/` prefix), and whether query params are required. Try to fetch the target article by substituting IDs if needed.
 3. **Test the mobile-mirror variant early.** If the desktop detail page fails with a resource-loading error or empty shell, retry the same path prefixed with `/m/` (a common pattern on hoyo-family sites).
 4. **Learn the ID behavior before probing.** Adjacent-ID probing (±1 around a known related article) only helps if IDs are dense and sequential; some sites use sparse or per-category IDs where probing wastes calls. Also verify — never assume — that IDs are **not** shared across language subdomains (they usually differ per locale).
