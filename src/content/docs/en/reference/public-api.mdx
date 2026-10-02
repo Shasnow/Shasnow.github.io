@@ -75,25 +75,44 @@ Community contributions of activity data are welcome! If you want to add support
 ### Adding Support for a New Game
 
 1. **Fork the repository**: visit the [StarRailAssistant docs site repository](https://github.com/Shasnow/Shasnow.github.io) and fork it.
-2. **Add the game**: add a new game entry in `src/data/games.ts`, filling in the game identifier, name, language list, data source URL, etc.
-3. **Submit a PR**: create a Pull Request describing the newly added game support.
+2. **Add the game entry**: add a new game entry to the `games` array in `src/data/games.ts`, filling in the game identifier, name, language list, and data sources (see format below).
+3. **Generate activity data** (or wait for the PR to be merged, then the maintainers will generate it): generate the activity JSON under `public/api/v1/activity/` from the data sources (for the AI extraction workflow, see `.agents/skills/game-activity-extractor/SKILL.md` in the repository).
+4. **Submit a PR**: create a Pull Request describing the newly added game support.
 
-### Game Entry Format
+#### Game Entry Format
 
-When adding or updating game support, please follow this format:
-
-```json
+```ts
 {
-  "id": "game-id", // Game identifier, e.g. "sr"
-  "name": "Readable game name",
-  "locales": [
+  id: "sr", // Game identifier, base of the output filename
+  name: { "zh-CN": "可读游戏名称", en: "English Name" },
+  locales: [
     "zh-CN", // Supported language list
-    "en-US" // Other languages
+    "en-US",
   ],
-  "defaultLocale": "zh-CN", // Default language; the default-language file omits the locale suffix when generated
-  "dataSource": "Data source URL" // The original source of the game's activity data. This field is mainly for AI, telling it how to fetch the game data.
+  defaultLocale: "zh-CN", // Default locale; its generated file omits the locale suffix
+  dataSources: {
+    // Data sources, keyed by locale; the "all" key applies to every locale
+    // Each locale can list multiple data sources, tried in order
+    "zh-CN": [{ type: "html", url: "https://..." }],
+  },
 }
 ```
+
+`dataSources` describes how the game's activity data is fetched, mainly for the AI extraction workflow. Each data source is distinguished by its `type`:
+
+| type       | Applicable fields    | Description                                                                                                                                      |
+| ---------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `html`     | `url`                | Announcement listing page (HTML); the AI locates the version announcement from the listing and parses activity information                        |
+| `script`   | `script`             | Generator script path (relative to the repository root, run with `node scripts/...`); the script fetches and converts the data itself            |
+| `pageData` | `url`, `articleUrl?` | Paginated JSON API; `articleUrl` is an article path template whose `{field}` placeholders are replaced with the entry's same-named field values |
+
+All types support the optional field `userAgent: "none"`: marks that the source rejects browser User-Agents, so do not send a browser UA when fetching.
+
+##### Script Conventions for `script` Type
+
+- Data is output to a temporary file in the `tmp/` directory and **does not directly overwrite** the official data under `public/api/v1/activity/`
+- After the script finishes, it prints the output location and usage instructions to stdout, so humans or AI can verify before updating the official JSON
+- Join/filter/format-conversion logic inside the script is documented in the script's header comments
 
 ### Manual Maintenance
 
