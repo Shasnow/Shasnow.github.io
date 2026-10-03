@@ -8,6 +8,9 @@ import vue from "@astrojs/vue";
 // https://astro.build/config
 export default defineConfig({
   site: "https://starrailassistant.top",
+  redirects: {
+    "/sra-strategy-site": "/strategy",
+  },
   vite: {
     resolve: {
       alias: {
