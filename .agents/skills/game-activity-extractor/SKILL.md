@@ -69,7 +69,7 @@ Handle each source according to its `type`. A locale may list several sources �
 3. Continue with the "html" flow (Priority Articles) on the built links to fetch the version notice.
 4. Paginate only if the target entry is not on the first page: infer the page parameter from the `url`'s existing query (e.g. change `page=1` / `index=1` to `2`, `3`, …) and walk pages until found.
 
-The subsections below (Priority Articles / Listing-Page Fallbacks / Probing) apply to both "html" and "pageData" sources — wherever they say "the listing", read "the listing or the first JSON page".
+The subsections below (Priority Articles / Fallback) apply to both "html" and "pageData" sources — wherever they say "the listing", read "the listing or the first JSON page".
 
 #### Priority Articles: What to Focus On
 
@@ -84,28 +84,25 @@ Do **not** browse articles one by one. A single article type usually contains ev
 
 Gacha banners, shop, compensation mail, and permanent-content articles are never sources (see Step 4 exclusions).
 
-#### Listing-Page Fallbacks
+#### Fallback
 
-Hoyo/kuro listing pages are often JS-rendered or serve stale snapshots that lack the latest notice. Escalate in this order, and note which fallback was used in the Step 8 explanation:
+Listing pages are often JS-rendered or serve stale snapshots that lack the latest notice — and a **new game** added to `games.ts` may have no prior notes. Instead of assuming any site works like the known ones, escalate in this order, and note which fallback was used in the Step 8 explanation:
 
-1. `WebFetch` the listing → if the latest version notice is not linked, go to 2.
+1. `WebFetch` the listing and **classify the response**:
+   - _Static / SSR with links_ → pick the target article directly (still verify it is the **latest** version notice); if the latest version notice is not linked, go to 2.
+   - _JS-rendered shell or empty body_ → the listing is unusable; go to 2.
+   - _HTTP 200 but stale snapshot_ (old dates, expired IDs) → treat it as unusable even though it "succeeded"; go to 2.
+   - _Structured JSON / JSON file output_ → parse the JSON content to extract activity information.
 2. `WebSearch` for the exact title pattern (e.g. `{game} {version}版本更新说明 site:{domain}`), then `WebFetch` the detail URL.
 
 **Article IDs are NOT shared across languages** — zh and en notices always have different IDs (e.g. ys zh 166392 vs en 166383). Never reuse a URL from one locale for the other.
 
-#### Probing an Unfamiliar Data Source
+Once a fallback works, identify the source's fetch pattern so future updates can skip straight to it:
 
-When a game's listing page behaves unexpectedly — or a **new game** has been added to `games.ts` with no prior notes — identify its fetch pattern with this generic checklist instead of assuming any site works like the known ones:
-
-1. **Classify the listing response.** After fetching the `dataSources` content, determine which mode it is:
-   - _Static / SSR with links_ → pick the target article directly (still verify it is the **latest** version notice).
-   - _JS-rendered shell or empty body_ → the listing is unusable; go to fallback 2 below.
-   - _HTTP 200 but stale snapshot_ (old dates, expired IDs) → treat it as unusable even though it "succeeded"; go to fallback 2.
-   - _Structured JSON / JSON file output_ → parse the JSON content to extract activity information.
-2. **Discover the detail-page pattern from any working article.** Find one article URL (via listing, `WebSearch`, or a shared link), then generalize its shape: where the numeric/encoded ID sits, whether a date or locale segment is embedded (e.g. `/{yyyyMMdd}/{id}.html`, `/en/` prefix), and whether query params are required. Try to fetch the target article by substituting IDs if needed.
-3. **Test the mobile-mirror variant early.** If the desktop detail page fails with a resource-loading error or empty shell, retry the same path prefixed with `/m/` (a common pattern on hoyo-family sites).
-4. **Learn the ID behavior before probing.** Adjacent-ID probing (±1 around a known related article) only helps if IDs are dense and sequential; some sites use sparse or per-category IDs where probing wastes calls. Also verify — never assume — that IDs are **not** shared across language subdomains (they usually differ per locale).
-5. **Record the outcome in the Step 8 explanation**: which listing mode the site used, the working detail-URL pattern, and which fallback succeeded, so future updates of the same game can skip steps 1–4.
+3. **Discover the detail-page pattern from any working article.** Find one article URL (via listing, `WebSearch`, or a shared link), then generalize its shape: where the numeric/encoded ID sits, whether a date or locale segment is embedded (e.g. `/{yyyyMMdd}/{id}.html`, `/en/` prefix), and whether query params are required. Try to fetch the target article by substituting IDs if needed.
+4. **Test the mobile-mirror variant early.** If the desktop detail page fails with a resource-loading error or empty shell, retry the same path prefixed with `/m/` (a common pattern on hoyo-family sites).
+5. **Learn the ID behavior before probing.** Adjacent-ID probing (±1 around a known related article) only helps if IDs are dense and sequential; some sites use sparse or per-category IDs where probing wastes calls. Also verify — never assume — that IDs are **not** shared across language subdomains (they usually differ per locale).
+6. **Record the outcome in the Step 8 explanation**: which listing mode the site used, the working detail-URL pattern, and which fallback succeeded, so future updates of the same game can skip steps 1–5.
 
 ### Step 3: Identify Version-Level Information
 
@@ -149,7 +146,7 @@ For each included activity, extract:
 | Field         | Description                    | How to Determine                                                                                                          |
 | ------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | `name`        | Activity name                  | Use exact text from the article, including special characters like 「」・·                                                |
-| `kind`        | Activity category              | The category the source itself uses (e.g. `叙事活动`, `挑战活动`, `登录活动`, `矢量突破`). Leave `""` when the source gives none — never invent one |
+| `kind`        | Activity category              | The category the source itself uses (e.g. `叙事活动`, `挑战活动`, `登录活动`). Leave `""` when the source gives none |
 | `description` | Activity description           | Use the descriptive text from the article. If no description is provided, summarize the activity purpose in one sentence. |
 | `startTime`   | Activity start time (ISO 8601) | See "Time Format Rules" below                                                                                             |
 | `endTime`     | Activity end time (ISO 8601)   | See "Time Format Rules" below                                                                                             |
@@ -234,7 +231,7 @@ Write the result to `public/api/v1/activity/{id}.json` (default locale) or `publ
 }
 ```
 
-When writing, overwrite the whole file with `Write`, keeping 2-space indentation. Keep `kind` right after `name`; write `""` when the source gives no category rather than dropping the key — consumers rely on the shape staying stable.
+When writing, overwrite the whole file with `Write`, keeping 2-space indentation. 
 
 ### Step 8: Provide Explanations
 
@@ -248,7 +245,7 @@ After writing the JSON, provide a brief **说明** (explanation) section coverin
 
 ## Additional Rules
 
-- **Language matching**: All output (JSON values, descriptions, explanations) must be in the language of the source used for that locale (zh-CN data source → Chinese; en-US data source → English). The 说明 section follows the user's message language.
+- **Language matching**: All output (JSON values, descriptions, explanations) must be in the language of the source used for that locale (zh-CN data source → Chinese; en-US data source → English). The explanation section follows the user's message language.
 - **Description text**: Use the article's original descriptive text verbatim when available. If the article doesn't provide a description, write a concise one-sentence summary.
 - **Cover field**: Make a best-effort extraction attempt (see "Best-Effort Cover Extraction" in Step 5) before leaving as empty string `""`; never guess or fabricate a URL.
 - **Ordering**: List activities in chronological order by start time.

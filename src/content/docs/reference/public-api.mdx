@@ -64,7 +64,7 @@ GET /activity/{game}-{locale}.json
 | `cover?`                   | string? | 版本封面图 URL           |
 | `activities`               | array   | 活动列表                 |
 | `activities[].name`        | string  | 活动名称                 |
-| `activities[].kind`        | string  | 活动分类（数据源没给就是空串，如 `叙事活动`、`登录活动`） |
+| `activities[].kind?`       | string? | 活动分类                 |
 | `activities[].description` | string  | 活动描述                 |
 | `activities[].startTime`   | string  | 活动开始时间（ISO 8601） |
 | `activities[].endTime`     | string  | 活动结束时间（ISO 8601） |

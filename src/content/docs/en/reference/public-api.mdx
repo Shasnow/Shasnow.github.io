@@ -64,7 +64,7 @@ GET /activity/{game}-{locale}.json
 | `cover?`                   | string? | Version cover image URL              |
 | `activities`               | array   | List of activities                   |
 | `activities[].name`        | string  | Activity name                        |
-| `activities[].kind`        | string  | Activity category (empty string when the source has none, e.g. `叙事活动`, `登录活动`) |
+| `activities[].kind?`       | string? | Activity category (empty string when the source has none, e.g. `叙事活动`, `登录活动`) |
 | `activities[].description` | string  | Activity description                 |
 | `activities[].startTime`   | string  | Activity start time (ISO 8601)       |
 | `activities[].endTime`     | string  | Activity end time (ISO 8601)         |
