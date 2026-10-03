@@ -149,6 +149,7 @@ For each included activity, extract:
 | Field         | Description                    | How to Determine                                                                                                          |
 | ------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | `name`        | Activity name                  | Use exact text from the article, including special characters like 「」・·                                                |
+| `kind`        | Activity category              | The category the source itself uses (e.g. `叙事活动`, `挑战活动`, `登录活动`, `矢量突破`). Leave `""` when the source gives none — never invent one |
 | `description` | Activity description           | Use the descriptive text from the article. If no description is provided, summarize the activity purpose in one sentence. |
 | `startTime`   | Activity start time (ISO 8601) | See "Time Format Rules" below                                                                                             |
 | `endTime`     | Activity end time (ISO 8601)   | See "Time Format Rules" below                                                                                             |
@@ -223,6 +224,7 @@ Write the result to `public/api/v1/activity/{id}.json` (default locale) or `publ
   "activities": [
     {
       "name": "活动名称",
+      "kind": "活动分类",
       "description": "活动描述",
       "startTime": "YYYY-MM-DDTHH:mm:ss",
       "endTime": "YYYY-MM-DDTHH:mm:ss",
@@ -232,7 +234,7 @@ Write the result to `public/api/v1/activity/{id}.json` (default locale) or `publ
 }
 ```
 
-When writing, overwrite the whole file with `Write`, keeping 2-space indentation.
+When writing, overwrite the whole file with `Write`, keeping 2-space indentation. Keep `kind` right after `name`; write `""` when the source gives no category rather than dropping the key — consumers rely on the shape staying stable.
 
 ### Step 8: Provide Explanations
 
